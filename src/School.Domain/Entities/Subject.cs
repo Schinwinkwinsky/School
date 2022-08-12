@@ -5,6 +5,6 @@
         public string Name { get; set; } = string.Empty;
 
         public int KnowledgeAreaId { get; set; }
-        public KnowledgeArea KnowledgeArea { get; set; } = new();
+        public KnowledgeArea? KnowledgeArea { get; set; }
     }
 }
