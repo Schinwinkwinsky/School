@@ -21,6 +21,7 @@ namespace School.WebAPI.Controllers
             => await _mediator.Send(new GetAllKnowledgeAreasRequest { IncludeDeleted = includeDeleted }, cancellationToken);
 
         [HttpGet("id")]
+        [EnableQueryResult]
         public async Task<IEnumerable<KnowledgeArea>> GetByIdAsync(int id, bool includeDeleted, CancellationToken cancellationToken)
             => await _mediator.Send(new GetKnowledgeAreaByIdRequest { Id = id, IncludeDeleted = includeDeleted }, cancellationToken);
 

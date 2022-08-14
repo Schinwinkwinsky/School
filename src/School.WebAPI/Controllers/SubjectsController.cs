@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using School.Application.CQRS.KnowledgeAreas;
 using School.Application.CQRS.Subjects;
 using School.Domain.Entities;
+using School.WebAPI.Other;
 
 namespace School.WebAPI.Controllers
 {
@@ -16,10 +17,12 @@ namespace School.WebAPI.Controllers
             => _mediator = mediator;
 
         [HttpGet]
+        [EnableQueryPaginatedResult]
         public async Task<IEnumerable<Subject>> GetAllAsync(bool includeDeleted, CancellationToken cancellationToken)
             => await _mediator.Send(new GetAllSubjectsRequest { IncludeDeleted = includeDeleted }, cancellationToken);
 
         [HttpGet("id")]
+        [EnableQueryResult]
         public async Task<IEnumerable<Subject>> GetByIdAsync(int id, bool includeDeleted, CancellationToken cancellationToken)
             => await _mediator.Send(new GetSubjectByIdRequest { Id = id, IncludeDeleted = includeDeleted }, cancellationToken);
 
