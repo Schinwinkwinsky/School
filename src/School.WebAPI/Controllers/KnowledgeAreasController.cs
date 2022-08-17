@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using School.Application.CQRS.KnowledgeAreas;
+using School.Application.DTO;
 using School.Domain.Entities;
 using School.WebAPI.Other;
 
@@ -17,7 +18,7 @@ namespace School.WebAPI.Controllers
 
         [HttpGet]
         [EnableQueryPaginatedResult]
-        public async Task<IEnumerable<KnowledgeArea>> GetAllAsync(bool includeDeleted, CancellationToken cancellationToken)
+        public async Task<IEnumerable<KnowledgeAreaDTO>> GetAllAsync(bool includeDeleted, CancellationToken cancellationToken)
             => await _mediator.Send(new GetAllKnowledgeAreasRequest { IncludeDeleted = includeDeleted }, cancellationToken);
 
         [HttpGet("id")]

@@ -1,22 +1,29 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
+using School.Application.DTO;
 using School.Domain;
 using School.Domain.Entities;
 
 namespace School.Application.CQRS.KnowledgeAreas
 {
-    public class GetAllKnowledgeAreasRequest : IRequest<IQueryable<KnowledgeArea>>
+    public class GetAllKnowledgeAreasRequest : IRequest<IQueryable<KnowledgeAreaDTO>>
     {
         public bool IncludeDeleted { get; set; } = false;
     }
 
-    public class GetAllKnowledgeAreasRequestHandler : IRequestHandler<GetAllKnowledgeAreasRequest, IQueryable<KnowledgeArea>>
+    public class GetAllKnowledgeAreasRequestHandler : IRequestHandler<GetAllKnowledgeAreasRequest, IQueryable<KnowledgeAreaDTO>>
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public GetAllKnowledgeAreasRequestHandler(IUnitOfWork unitOfWork)
-            => _unitOfWork = unitOfWork;
+        public GetAllKnowledgeAreasRequestHandler(IMapper mapper, IUnitOfWork unitOfWork)
+        {
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
+        }
 
-        public async Task<IQueryable<KnowledgeArea>> Handle(GetAllKnowledgeAreasRequest request, CancellationToken cancellationToken)
+        public async Task<IQueryable<KnowledgeAreaDTO>> Handle(GetAllKnowledgeAreasRequest request, CancellationToken cancellationToken)
         {
             IQueryable<KnowledgeArea> queryable;
 
@@ -28,7 +35,7 @@ namespace School.Application.CQRS.KnowledgeAreas
                     .GetAllAsync(predicate: k => k.DeletedAt == DateTime.MinValue
                         && k.DeletedBy == 0, cancellationToken: cancellationToken);
 
-            return queryable;
+            return queryable.ProjectTo<KnowledgeAreaDTO>(_mapper.ConfigurationProvider);
         }
     }
 }

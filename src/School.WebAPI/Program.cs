@@ -19,6 +19,8 @@ builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Confi
 
 builder.Services.AddMediatR(Assembly.Load("School.Application"));
 
+builder.Services.AddAutoMapper(Assembly.Load("School.Application"));
+
 builder.Services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
