@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using School.Domain;
 using School.Domain.Entities;
+using System.Data;
+using System.Net;
 
 namespace School.Application.CQRS.KnowledgeAreas
 {
@@ -29,6 +31,11 @@ namespace School.Application.CQRS.KnowledgeAreas
         public async Task<Subject> Handle(PostSubjectRequest request, CancellationToken cancellationToken)
         {
             var subject = request.ToSubject();
+
+            var area = await _unitOfWork.Repository<KnowledgeArea>().GetByIdAsync(subject.KnowledgeAreaId);
+
+            if (area == null || area.IsDeleted)
+                throw new HttpRequestException($"KnowledgeArea with id = {subject.KnowledgeAreaId} was not found.", null, HttpStatusCode.NotFound);
 
             subject.CreatedAt = DateTime.UtcNow;
 

@@ -40,13 +40,13 @@ namespace School.WebAPI.Controllers
         [EnableQueryResult]
         public async Task<IQueryable<KnowledgeAreaDTO>> GetByIdAsync(ODataQueryOptions options, int id, bool includeDeleted, CancellationToken cancellationToken)
         {
-            var area = await _mediator.Send(new GetKnowledgeAreaByIdRequest { Id = id }, cancellationToken);
+            var areas = await _mediator.Send(new GetKnowledgeAreaByIdRequest { Id = id }, cancellationToken);
 
             var expand = Expand.GetMembersToExpandNames(options);
 
-            var areaDto = area.ProjectTo<KnowledgeAreaDTO>(_mapper.ConfigurationProvider, null, expand);
+            var areasDto = areas.ProjectTo<KnowledgeAreaDTO>(_mapper.ConfigurationProvider, null, expand);
 
-            return areaDto;
+            return areasDto;
         }
 
         [HttpPost]

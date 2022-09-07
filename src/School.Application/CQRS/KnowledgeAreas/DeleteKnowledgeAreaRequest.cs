@@ -21,7 +21,7 @@ namespace School.Application.CQRS.KnowledgeAreas
         {
             var area = await _unitOfWork.Repository<KnowledgeArea>().GetByIdAsync(request.Id, false, cancellationToken);
 
-            if (area == null || area.DeletedAt != DateTime.MinValue)
+            if (area == null || area.IsDeleted)
                 throw new HttpRequestException($"KnowledgeArea with id = {request.Id} was not found.", null, HttpStatusCode.NotFound);
 
             area.DeletedAt = DateTime.Now;

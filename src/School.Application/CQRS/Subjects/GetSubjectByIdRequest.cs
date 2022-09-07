@@ -32,7 +32,7 @@ namespace School.Application.CQRS.Subjects
                             && k.DeletedBy == 0), cancellationToken: cancellationToken);
 
             if (!queryable.Any())
-                throw new HttpRequestException("Item not found.", null, HttpStatusCode.NotFound);
+                throw new HttpRequestException($"Subject with id = {request.Id} was not found.", null, HttpStatusCode.NotFound);
 
             return queryable;
         }
