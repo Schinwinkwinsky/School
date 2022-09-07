@@ -1,9 +1,12 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using School.Application.CQRS.KnowledgeAreas;
 using School.Application.DTO;
-using School.Domain.Entities;
-using School.WebAPI.Other;
+using School.Application.Results;
+using School.WebAPI.Helpers;
 
 namespace School.WebAPI.Controllers
 {
@@ -11,27 +14,79 @@ namespace School.WebAPI.Controllers
     [ApiController]
     public class KnowledgeAreasController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
-        public KnowledgeAreasController(IMediator mediator)
-            => _mediator = mediator;
+        public KnowledgeAreasController(IMapper mapper, IMediator mediator)
+        {
+            _mapper = mapper;
+            _mediator = mediator;
+        }
 
         [HttpGet]
         [EnableQueryPaginatedResult]
-        public async Task<IEnumerable<KnowledgeAreaDTO>> GetAllAsync(bool includeDeleted, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetAllKnowledgeAreasRequest { IncludeDeleted = includeDeleted }, cancellationToken);
+        public async Task<IQueryable<KnowledgeAreaDTO>> GetAllAsync(ODataQueryOptions options, bool includeDeleted, CancellationToken cancellationToken)
+        {
+            var areas = await _mediator.Send(new GetAllKnowledgeAreasRequest { IncludeDeleted = includeDeleted }, cancellationToken);
 
-        [HttpGet("id")]
+            var expand = Expand.GetMembersToExpandNames(options);
+
+            var areasDto = areas.ProjectTo<KnowledgeAreaDTO>(_mapper.ConfigurationProvider, null, expand);
+
+            return areasDto;
+        }
+
+        [HttpGet("{id}")]
         [EnableQueryResult]
-        public async Task<IEnumerable<KnowledgeArea>> GetByIdAsync(int id, bool includeDeleted, CancellationToken cancellationToken)
-            => await _mediator.Send(new GetKnowledgeAreaByIdRequest { Id = id, IncludeDeleted = includeDeleted }, cancellationToken);
+        public async Task<IQueryable<KnowledgeAreaDTO>> GetByIdAsync(ODataQueryOptions options, int id, bool includeDeleted, CancellationToken cancellationToken)
+        {
+            var area = await _mediator.Send(new GetKnowledgeAreaByIdRequest { Id = id, IncludeDeleted = includeDeleted }, cancellationToken);
+
+            var expand = Expand.GetMembersToExpandNames(options);
+
+            var areaDto = area.ProjectTo<KnowledgeAreaDTO>(_mapper.ConfigurationProvider, null, expand);
+
+            return areaDto;
+        }
 
         [HttpPost]
         public async Task<IActionResult> PostAsync(PostKnowledgeAreaRequest request, CancellationToken cancellationToken)
         {
-            var knowledgeArea = await _mediator.Send(request, cancellationToken);
+            var area = await _mediator.Send(request, cancellationToken);
 
-            return CreatedAtAction("GetById", "KnowledgeAreas", new { id = knowledgeArea.Id }, knowledgeArea);
+            var areaDto = _mapper.Map<KnowledgeAreaDTO>(area);
+
+            var result = Result<KnowledgeAreaDTO>.Success(areaDto);
+
+            return CreatedAtAction("GetById", "KnowledgeAreas", new { id = area.Id }, result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync(PutKnowledgeAreaRequest request, int id, CancellationToken cancellationToken)
+        {
+            request.Id = id;
+
+            var area = await _mediator.Send(request, cancellationToken);
+
+            var areaDto = _mapper.Map<KnowledgeAreaDTO>(area);
+
+            var result = Result<KnowledgeAreaDTO>.Success(areaDto);
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(DeleteKnowledgeAreaRequest request, int id, CancellationToken cancellationToken)
+        {
+            request.Id = id;
+
+            var area = await _mediator.Send(request, cancellationToken);
+
+            var areaDto = _mapper.Map<KnowledgeAreaDTO>(area);
+
+            var result = Result<KnowledgeAreaDTO>.Success(areaDto);
+
+            return Ok(result);
         }
     }
 }

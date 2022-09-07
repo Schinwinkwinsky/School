@@ -1,7 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace School.WebAPI.Other
+namespace School.WebAPI.Helpers
 {
     public class EnableQueryFilter : IOperationFilter
     {

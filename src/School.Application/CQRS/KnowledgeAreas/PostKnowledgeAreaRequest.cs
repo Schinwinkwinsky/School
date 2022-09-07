@@ -28,14 +28,14 @@ namespace School.Application.CQRS.KnowledgeAreas
 
         public async Task<KnowledgeArea> Handle(PostKnowledgeAreaRequest request, CancellationToken cancellationToken)
         {
-            var knowledgeArea = request.ToKnowledgeArea();
+            var area = request.ToKnowledgeArea();
 
-            knowledgeArea.CreatedAt = DateTime.UtcNow;
+            area.CreatedAt = DateTime.UtcNow;
 
-            await _unitOfWork.Repository<KnowledgeArea>().AddAsync(knowledgeArea, cancellationToken);
+            await _unitOfWork.Repository<KnowledgeArea>().AddAsync(area, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return knowledgeArea;
+            return area;
         }
     }
 }

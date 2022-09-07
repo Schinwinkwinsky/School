@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using School.Application.CQRS.KnowledgeAreas;
 using School.Application.CQRS.Subjects;
 using School.Domain.Entities;
-using School.WebAPI.Other;
+using School.WebAPI.Helpers;
 
 namespace School.WebAPI.Controllers
 {

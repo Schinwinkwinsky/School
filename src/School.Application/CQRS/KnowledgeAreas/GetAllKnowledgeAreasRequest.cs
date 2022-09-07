@@ -7,12 +7,12 @@ using School.Domain.Entities;
 
 namespace School.Application.CQRS.KnowledgeAreas
 {
-    public class GetAllKnowledgeAreasRequest : IRequest<IQueryable<KnowledgeAreaDTO>>
+    public class GetAllKnowledgeAreasRequest : IRequest<IQueryable<KnowledgeArea>>
     {
         public bool IncludeDeleted { get; set; } = false;
     }
 
-    public class GetAllKnowledgeAreasRequestHandler : IRequestHandler<GetAllKnowledgeAreasRequest, IQueryable<KnowledgeAreaDTO>>
+    public class GetAllKnowledgeAreasRequestHandler : IRequestHandler<GetAllKnowledgeAreasRequest, IQueryable<KnowledgeArea>>
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
@@ -23,7 +23,7 @@ namespace School.Application.CQRS.KnowledgeAreas
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IQueryable<KnowledgeAreaDTO>> Handle(GetAllKnowledgeAreasRequest request, CancellationToken cancellationToken)
+        public async Task<IQueryable<KnowledgeArea>> Handle(GetAllKnowledgeAreasRequest request, CancellationToken cancellationToken)
         {
             IQueryable<KnowledgeArea> queryable;
 
@@ -35,7 +35,7 @@ namespace School.Application.CQRS.KnowledgeAreas
                     .GetAllAsync(predicate: k => k.DeletedAt == DateTime.MinValue
                         && k.DeletedBy == 0, cancellationToken: cancellationToken);
 
-            return queryable.ProjectTo<KnowledgeAreaDTO>(_mapper.ConfigurationProvider);
+            return queryable;
         }
     }
 }
