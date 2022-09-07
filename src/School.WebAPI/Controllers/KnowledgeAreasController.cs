@@ -25,9 +25,9 @@ namespace School.WebAPI.Controllers
 
         [HttpGet]
         [EnableQueryPaginatedResult]
-        public async Task<IQueryable<KnowledgeAreaDTO>> GetAllAsync(ODataQueryOptions options, bool includeDeleted, CancellationToken cancellationToken)
+        public async Task<IQueryable<KnowledgeAreaDTO>> GetAllAsync(ODataQueryOptions options, CancellationToken cancellationToken)
         {
-            var areas = await _mediator.Send(new GetAllKnowledgeAreasRequest { IncludeDeleted = includeDeleted }, cancellationToken);
+            var areas = await _mediator.Send(new GetAllKnowledgeAreasRequest(), cancellationToken);
 
             var expand = Expand.GetMembersToExpandNames(options);
 
@@ -40,7 +40,7 @@ namespace School.WebAPI.Controllers
         [EnableQueryResult]
         public async Task<IQueryable<KnowledgeAreaDTO>> GetByIdAsync(ODataQueryOptions options, int id, bool includeDeleted, CancellationToken cancellationToken)
         {
-            var area = await _mediator.Send(new GetKnowledgeAreaByIdRequest { Id = id, IncludeDeleted = includeDeleted }, cancellationToken);
+            var area = await _mediator.Send(new GetKnowledgeAreaByIdRequest { Id = id }, cancellationToken);
 
             var expand = Expand.GetMembersToExpandNames(options);
 
@@ -76,17 +76,13 @@ namespace School.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(DeleteKnowledgeAreaRequest request, int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteAsync(int id, CancellationToken cancellationToken)
         {
-            request.Id = id;
+            await _mediator.Send(new DeleteKnowledgeAreaRequest { Id = id }, cancellationToken);
 
-            var area = await _mediator.Send(request, cancellationToken);
+            var result = Result<KnowledgeAreaDTO>.Success();
 
-            var areaDto = _mapper.Map<KnowledgeAreaDTO>(area);
-
-            var result = Result<KnowledgeAreaDTO>.Success(areaDto);
-
-            return Ok(result);
+            return NoContent();
         }
     }
 }
