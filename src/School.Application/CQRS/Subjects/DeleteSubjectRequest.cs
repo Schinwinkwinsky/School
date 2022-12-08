@@ -19,14 +19,13 @@ namespace School.Application.CQRS.Subjects
 
         public async Task<Unit> Handle(DeleteSubjectRequest request, CancellationToken cancellationToken)
         {
-            var subject = await _unitOfWork.Repository<Subject>().GetByIdAsync(request.Id, false, cancellationToken);
+            var subject = await _unitOfWork.Repository<Subject>().GetAsync(request.Id, cancellationToken);
 
             if (subject == null || subject.IsDeleted)
                 throw new HttpRequestException($"Subject with id = {request.Id} was not found.", null, HttpStatusCode.NotFound);
 
             subject.DeletedAt = DateTime.Now;
 
-            await _unitOfWork.Repository<Subject>().UpdateAsync(subject, cancellationToken);
             await _unitOfWork.SaveChangesAsync();
 
             return Unit.Value;

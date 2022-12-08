@@ -1,27 +1,21 @@
-﻿using School.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
 namespace School.Domain
 {
-    public interface IRepository<TEntity> where TEntity : EntityBase
+    public interface IRepository<T> where T : class
     {
-        IQueryable<TEntity> GetAll(List<Expression<Func<TEntity, object>>>? includes = null, Expression<Func<TEntity, bool>>? predicate = null, bool tracking = true);
-        Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>>? includes = null, Expression<Func<TEntity, bool>>? predicate = null, bool tracking = true, CancellationToken cancellationToken = default);
-
-        TEntity? GetById(int id, bool tracking = true);
-        Task<TEntity?> GetByIdAsync(int id, bool tracking = true, CancellationToken cancellationToken = default);
-
-        void Add(TEntity entity);
-        Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
-        void AddRange(IEnumerable<TEntity> entities);
-        Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
-
-        void Remove(TEntity entity);
-        Task RemoveAsync(TEntity entity, CancellationToken cancellationToken = default);
-        void RemoveRange(IEnumerable<TEntity> entities);
-        Task RemoveRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
-
-        void Update(TEntity entity);
-        Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
+        IQueryable<T> GetAll();
+        T? Get(int id);
+        Task<T?> GetAsync(int id, CancellationToken cancellationToken);
+        EntityEntry<T> Add(T entity);
+        Task<EntityEntry<T>> AddAsync(T entity, CancellationToken cancellationToken);
+        bool Any(Expression<Func<T, bool>> predicate);
+        Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
+        void AddRange(IEnumerable<T> entities);
+        EntityEntry<T> Attach(T entity);
+        EntityEntry<T> Update(T entity);
+        EntityEntry<T> Remove(T entity);
+        void RemoveRange(IEnumerable<T> entities);
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using School.Domain;
 using School.Domain.Entities;
 
@@ -9,20 +8,18 @@ namespace School.Application.CQRS.KnowledgeAreas
 
     public class GetAllKnowledgeAreasRequestHandler : IRequestHandler<GetAllKnowledgeAreasRequest, IQueryable<KnowledgeArea>>
     {
-        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public GetAllKnowledgeAreasRequestHandler(IMapper mapper, IUnitOfWork unitOfWork)
-        {
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
-        }
+        public GetAllKnowledgeAreasRequestHandler(IUnitOfWork unitOfWork)
+            => _unitOfWork = unitOfWork;
 
         public async Task<IQueryable<KnowledgeArea>> Handle(GetAllKnowledgeAreasRequest request, CancellationToken cancellationToken)
         {
-            return await _unitOfWork.Repository<KnowledgeArea>()
-                .GetAllAsync(predicate: k => k.DeletedAt == DateTime.MinValue
-                    && k.DeletedBy == 0, cancellationToken: cancellationToken); ;
+            var areas = _unitOfWork.Repository<KnowledgeArea>().GetAll()
+                .Where(ka => ka.DeletedAt == DateTime.MinValue
+                    && ka.DeletedBy == 0);
+
+            return await Task.FromResult(areas);
         }
     }
 }

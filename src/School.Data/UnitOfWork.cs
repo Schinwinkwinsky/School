@@ -1,5 +1,4 @@
-﻿using School.Domain.Entities;
-using School.Domain;
+﻿using School.Domain;
 using System.Collections;
 using School.Data.Repositories;
 
@@ -13,9 +12,9 @@ namespace School.Data
         public UnitOfWork(DataContext context)
             => _context = context;
 
-        public IRepository<TEntity> Repository<TEntity>() where TEntity : EntityBase
+        public IRepository<T> Repository<T>() where T : class
         {
-            var type = typeof(TEntity).Name;
+            var type = typeof(T).Name;
 
             if (!_repositories.ContainsKey(type))
             {
@@ -23,12 +22,12 @@ namespace School.Data
 
                 var repositoryInstance =
                     Activator.CreateInstance(repositoryType
-                        .MakeGenericType(typeof(TEntity)), _context);
+                        .MakeGenericType(typeof(T)), _context);
 
                 _repositories.Add(type, repositoryInstance);
             }
 
-            return (IRepository<TEntity>)_repositories[type]!;
+            return (IRepository<T>)_repositories[type]!;
         }
 
         public void SaveChanges()

@@ -2,7 +2,7 @@
 {
     public class KnowledgeArea : EntityBase
     {
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; } = null!;
         public string? Description { get; set; }
 
         // Navigation properties.

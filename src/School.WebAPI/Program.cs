@@ -1,8 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.OData;
-using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Net.Http.Headers;
 using School.Data;
 using School.Domain;
 using School.WebAPI.Helpers;

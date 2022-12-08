@@ -20,21 +20,15 @@ namespace School.Application.CQRS.Subjects
 
         public async Task<IQueryable<Subject>> Handle(GetSubjectByIdRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Subject> queryable;
+            var subjects = _unitOfWork.Repository<Subject>()
+                .GetAll()
+                .Where(s => s.DeletedAt == DateTime.MinValue
+                    && s.DeletedBy == 0);
 
-            if (request.IncludeDeleted)
-                queryable = await _unitOfWork.Repository<Subject>()
-                    .GetAllAsync(predicate: k => k.Id == request.Id, cancellationToken: cancellationToken);
-            else
-                queryable = await _unitOfWork.Repository<Subject>()
-                    .GetAllAsync(predicate: k => k.Id == request.Id
-                        && (k.DeletedAt == DateTime.MinValue
-                            && k.DeletedBy == 0), cancellationToken: cancellationToken);
-
-            if (!queryable.Any())
+            if (!subjects.Any())
                 throw new HttpRequestException($"Subject with id = {request.Id} was not found.", null, HttpStatusCode.NotFound);
 
-            return queryable;
+            return await Task.FromResult(subjects);
         }
     }
 }

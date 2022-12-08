@@ -32,7 +32,7 @@ namespace School.Application.CQRS.KnowledgeAreas
         {
             var subject = request.ToSubject();
 
-            var area = await _unitOfWork.Repository<KnowledgeArea>().GetByIdAsync(subject.KnowledgeAreaId);
+            var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(subject.KnowledgeAreaId, cancellationToken);
 
             if (area == null || area.IsDeleted)
                 throw new HttpRequestException($"KnowledgeArea with id = {subject.KnowledgeAreaId} was not found.", null, HttpStatusCode.NotFound);

@@ -31,12 +31,12 @@ namespace School.Application.CQRS.Subjects
 
         public async Task<Subject> Handle(PutSubjectRequest request, CancellationToken cancellationToken)
         {
-            var subject = await _unitOfWork.Repository<Subject>().GetByIdAsync(request.Id, false, cancellationToken);
+            var subject = await _unitOfWork.Repository<Subject>().GetAsync(request.Id, cancellationToken);
 
             if (subject == null || subject.IsDeleted)
                 throw new HttpRequestException($"Subject with id = {request.Id} was not found.", null, HttpStatusCode.NotFound);
 
-            var area = await _unitOfWork.Repository<KnowledgeArea>().GetByIdAsync(request.KnowledgeAreaId, cancellationToken: cancellationToken);
+            var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(request.KnowledgeAreaId, cancellationToken);
 
             if (area == null || area.IsDeleted)
                 throw new HttpRequestException($"KnowledgeArea with id = {request.KnowledgeAreaId} was not found.", null, HttpStatusCode.NotFound);
@@ -45,7 +45,6 @@ namespace School.Application.CQRS.Subjects
 
             subject.UpdatedAt = DateTime.UtcNow;
 
-            await _unitOfWork.Repository<Subject>().UpdateAsync(subject, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return subject;

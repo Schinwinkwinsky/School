@@ -32,7 +32,7 @@ namespace School.Application.CQRS.KnowledgeAreas
         public async Task<KnowledgeArea> Handle(PutKnowledgeAreaRequest request, CancellationToken cancellationToken)
         {
             var area = await _unitOfWork.Repository<KnowledgeArea>()
-                .GetByIdAsync(request.Id, false, cancellationToken);
+                .GetAsync(request.Id, cancellationToken);
 
             if (area == null || area.IsDeleted)
                 throw new HttpRequestException($"KnowledgeArea with id = {request.Id} was not found.", null, HttpStatusCode.NotFound);
@@ -41,7 +41,6 @@ namespace School.Application.CQRS.KnowledgeAreas
 
             area.UpdatedAt = DateTime.Now;
 
-            await _unitOfWork.Repository<KnowledgeArea>().UpdateAsync(area, cancellationToken);
             await _unitOfWork.SaveChangesAsync();
 
             return area;

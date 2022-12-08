@@ -4,7 +4,7 @@ namespace School.Domain
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<TEntity> Repository<TEntity>() where TEntity : EntityBase;
+        IRepository<T> Repository<T>() where T : class;
 
         void SaveChanges();
 

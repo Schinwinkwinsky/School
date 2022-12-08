@@ -1,81 +1,39 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using School.Domain.Entities;
 using School.Domain;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace School.Data.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBase
+    public class Repository<T> : IRepository<T> where T : class
     {
         protected readonly DataContext _context;
 
-        public Repository(DataContext context)
-            => _context = context;
+        public Repository(DataContext context) => _context = context;
 
-        public void Add(TEntity entity)
-            => _context.Set<TEntity>().Add(entity);
+        public IQueryable<T> GetAll() => _context.Set<T>();
 
-        public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
-            => await _context.Set<TEntity>().AddAsync(entity, cancellationToken);
+        public T? Get(int id) => _context.Set<T>().Find(id);
 
-        public void AddRange(IEnumerable<TEntity> entities)
-            => _context.Set<TEntity>().AddRange(entities);
+        public async Task<T?> GetAsync(int id, CancellationToken cancellationToken) => await _context.Set<T>().FindAsync(id, cancellationToken);
 
-        public Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
-            => _context.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
+        public EntityEntry<T> Add(T entity) => _context.Set<T>().Add(entity);
 
-        public IQueryable<TEntity> GetAll(List<Expression<Func<TEntity, object>>>? includes = null, Expression<Func<TEntity, bool>>? predicate = null, bool tracking = true)
-        {
-            var query = tracking ? _context.Set<TEntity>() : _context.Set<TEntity>().AsNoTracking();
+        public async Task<EntityEntry<T>> AddAsync(T entity, CancellationToken cancellationToken)
+            => await _context.Set<T>().AddAsync(entity, cancellationToken);
 
-            if (includes is not null)
-                query = includes.Aggregate(query, (current, include) => current.Include(include));
+        public bool Any(Expression<Func<T, bool>> predicate) => _context.Set<T>().Any(predicate);
 
-            if (predicate is not null)
-                query = query.Where(predicate);
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate) => await _context.Set<T>().AnyAsync(predicate);
 
-            return query;
-        }
+        public void AddRange(IEnumerable<T> entities) => _context.Set<T>().AddRange(entities);
 
-        public async Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>>? includes = null, Expression<Func<TEntity, bool>>? predicate = null, bool tracking = true, CancellationToken cancellationToken = default)
-        {
-            var query = tracking ? _context.Set<TEntity>() : _context.Set<TEntity>().AsNoTracking();
+        public EntityEntry<T> Attach(T entity) => _context.Set<T>().Attach(entity);
 
-            if (includes is not null)
-                query = includes.Aggregate(query, (current, include) => current.Include(include));
+        public EntityEntry<T> Update(T entity) => _context.Set<T>().Update(entity);
 
-            if (predicate is not null)
-                query = query.Where(predicate);
+        public EntityEntry<T> Remove(T entity) => _context.Set<T>().Remove(entity);
 
-            return await Task.FromResult(query);
-        }
-
-        public TEntity? GetById(int id, bool tracking = true)
-            => tracking
-                ? _context.Set<TEntity>().FirstOrDefault(e => e.Id == id)
-                : _context.Set<TEntity>().AsNoTracking().FirstOrDefault(e => e.Id == id);
-
-        public async Task<TEntity?> GetByIdAsync(int id, bool tracking = true, CancellationToken cancellationToken = default)
-            => tracking
-                ? await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken)
-                : await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-
-        public void Remove(TEntity entity)
-            => _context.Set<TEntity>().Remove(entity);
-
-        public async Task RemoveAsync(TEntity entity, CancellationToken cancellationToken = default)
-            => await Task.Run(() => _context.Set<TEntity>().Remove(entity), cancellationToken);
-
-        public void RemoveRange(IEnumerable<TEntity> entities)
-            => _context.Set<TEntity>().RemoveRange(entities);
-
-        public async Task RemoveRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
-            => await Task.Run(() => _context.Set<TEntity>().RemoveRange(), cancellationToken);
-
-        public void Update(TEntity entity)
-            => _context.Set<TEntity>().Update(entity);
-
-        public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
-            => await Task.Run(() => _context.Set<TEntity>().Update(entity), cancellationToken);
+        public void RemoveRange(IEnumerable<T> entities) => _context.Set<T>().RemoveRange(entities);
     }
 }

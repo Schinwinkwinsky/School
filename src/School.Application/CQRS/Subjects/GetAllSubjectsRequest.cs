@@ -15,9 +15,12 @@ namespace School.Application.CQRS.Subjects
 
         public async Task<IQueryable<Subject>> Handle(GetAllSubjectsRequest request, CancellationToken cancellationToken)
         {
-            return await _unitOfWork.Repository<Subject>()
-                    .GetAllAsync(predicate: k => k.DeletedAt == DateTime.MinValue
-                        && k.DeletedBy == 0, cancellationToken: cancellationToken); ;
+            var subjects = _unitOfWork.Repository<Subject>()
+                .GetAll()
+                .Where(s => s.DeletedAt == DateTime.MinValue
+                    && s.DeletedBy == 0);
+
+            return await Task.FromResult(subjects);
         }
     }
 }

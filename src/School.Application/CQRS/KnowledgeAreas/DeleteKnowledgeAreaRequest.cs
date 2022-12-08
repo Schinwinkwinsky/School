@@ -19,14 +19,13 @@ namespace School.Application.CQRS.KnowledgeAreas
 
         public async Task<Unit> Handle(DeleteKnowledgeAreaRequest request, CancellationToken cancellationToken)
         {
-            var area = await _unitOfWork.Repository<KnowledgeArea>().GetByIdAsync(request.Id, false, cancellationToken);
+            var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(request.Id, cancellationToken);
 
             if (area == null || area.IsDeleted)
                 throw new HttpRequestException($"KnowledgeArea with id = {request.Id} was not found.", null, HttpStatusCode.NotFound);
 
             area.DeletedAt = DateTime.Now;
 
-            await _unitOfWork.Repository<KnowledgeArea>().UpdateAsync(area, cancellationToken);
             await _unitOfWork.SaveChangesAsync();
 
             return Unit.Value;

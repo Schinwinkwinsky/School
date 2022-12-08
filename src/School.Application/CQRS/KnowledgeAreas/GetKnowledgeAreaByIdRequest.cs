@@ -1,12 +1,7 @@
 ﻿using MediatR;
 using School.Domain;
 using School.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace School.Application.CQRS.KnowledgeAreas
 {
@@ -24,15 +19,16 @@ namespace School.Application.CQRS.KnowledgeAreas
 
         public async Task<IQueryable<KnowledgeArea>> Handle(GetKnowledgeAreaByIdRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<KnowledgeArea> queryable = await _unitOfWork.Repository<KnowledgeArea>()
-                    .GetAllAsync(predicate: k => k.Id == request.Id 
-                        && (k.DeletedAt == DateTime.MinValue
-                            && k.DeletedBy == 0), cancellationToken: cancellationToken);
+            var areas = _unitOfWork.Repository<KnowledgeArea>()
+                .GetAll()
+                .Where(ka => ka.Id == request.Id
+                    && ka.DeletedAt == DateTime.MinValue
+                    && ka.DeletedBy == 0);
 
-            if (!queryable.Any())
+            if (!areas.Any())
                 throw new HttpRequestException($"KnowledgeArea with id = {request.Id} was not found.", null, HttpStatusCode.NotFound);
 
-            return queryable;
+            return await Task.FromResult(areas);
         }
     }
 }
