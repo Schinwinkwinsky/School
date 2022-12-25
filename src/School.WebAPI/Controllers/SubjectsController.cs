@@ -26,26 +26,26 @@ namespace School.WebAPI.Controllers
 
         [HttpGet]
         [EnableQueryPaginatedResult]
-        public async Task<IQueryable<SubjectDTO>> GetAllAsync(ODataQueryOptions options, CancellationToken cancellationToken)
+        public async Task<IQueryable<SubjectDto>> GetAllAsync(ODataQueryOptions options, CancellationToken cancellationToken)
         {
             var subjects = await _mediator.Send(new GetAllSubjectsRequest(), cancellationToken);
 
             var expand = Expand.GetMembersToExpandNames(options);
 
-            var subjectsDto = subjects.ProjectTo<SubjectDTO>(_mapper.ConfigurationProvider, null, expand);
+            var subjectsDto = subjects.ProjectTo<SubjectDto>(_mapper.ConfigurationProvider, null, expand);
 
             return subjectsDto;
         }
 
         [HttpGet("{id}")]
         [EnableQueryResult]
-        public async Task<IQueryable<SubjectDTO>> GetByIdAsync(ODataQueryOptions options, int id, CancellationToken cancellationToken)
+        public async Task<IQueryable<SubjectDto>> GetByIdAsync(ODataQueryOptions options, int id, CancellationToken cancellationToken)
         {
             var subjects = await _mediator.Send(new GetSubjectByIdRequest { Id = id }, cancellationToken);
 
             var expand = Expand.GetMembersToExpandNames(options);
 
-            var subjectsDto = subjects.ProjectTo<SubjectDTO>(_mapper.ConfigurationProvider, null, expand);
+            var subjectsDto = subjects.ProjectTo<SubjectDto>(_mapper.ConfigurationProvider, null, expand);
 
             return subjectsDto;
 
@@ -56,9 +56,9 @@ namespace School.WebAPI.Controllers
         {
             var subject = await _mediator.Send(request, cancellationToken);
 
-            var subjectDto = _mapper.Map<SubjectDTO>(subject);
+            var subjectDto = _mapper.Map<SubjectDto>(subject);
 
-            var result = Result<SubjectDTO>.Success(subjectDto);
+            var result = Result<SubjectDto>.Success(subjectDto);
 
             return CreatedAtAction("GetById", "Subjects", new { id = subject.Id }, result);
         }
@@ -70,9 +70,9 @@ namespace School.WebAPI.Controllers
 
             var subject = await _mediator.Send(request, cancellationToken);
 
-            var subjectDto = _mapper.Map<SubjectDTO>(subject);
+            var subjectDto = _mapper.Map<SubjectDto>(subject);
 
-            var result = Result<SubjectDTO>.Success(subjectDto);
+            var result = Result<SubjectDto>.Success(subjectDto);
 
             return Ok(result);
         }
@@ -82,7 +82,7 @@ namespace School.WebAPI.Controllers
         {
             await _mediator.Send(new DeleteSubjectRequest { Id = id }, cancellationToken);
 
-            var result = Result<SubjectDTO>.Success();
+            var result = Result<SubjectDto>.Success();
 
             return NoContent();
         }

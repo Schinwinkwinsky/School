@@ -8,7 +8,7 @@ namespace School.Application.Profiles
     {
         public SubjectProfile()
         {
-            CreateMap<Subject, SubjectDTO>()
+            CreateMap<Subject, SubjectDto>()
                 .ForMember(dest => dest.KnowledgeArea, opt => opt.ExplicitExpansion());
         }
     }

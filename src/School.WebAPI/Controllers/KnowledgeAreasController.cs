@@ -25,26 +25,26 @@ namespace School.WebAPI.Controllers
 
         [HttpGet]
         [EnableQueryPaginatedResult]
-        public async Task<IQueryable<KnowledgeAreaDTO>> GetAllAsync(ODataQueryOptions options, CancellationToken cancellationToken)
+        public async Task<IQueryable<KnowledgeAreaDto>> GetAllAsync(ODataQueryOptions options, CancellationToken cancellationToken)
         {
             var areas = await _mediator.Send(new GetAllKnowledgeAreasRequest(), cancellationToken);
 
             var expand = Expand.GetMembersToExpandNames(options);
 
-            var areasDto = areas.ProjectTo<KnowledgeAreaDTO>(_mapper.ConfigurationProvider, null, expand);
+            var areasDto = areas.ProjectTo<KnowledgeAreaDto>(_mapper.ConfigurationProvider, null, expand);
 
             return areasDto;
         }
 
         [HttpGet("{id}")]
         [EnableQueryResult]
-        public async Task<IQueryable<KnowledgeAreaDTO>> GetByIdAsync(ODataQueryOptions options, int id, bool includeDeleted, CancellationToken cancellationToken)
+        public async Task<IQueryable<KnowledgeAreaDto>> GetByIdAsync(ODataQueryOptions options, int id, bool includeDeleted, CancellationToken cancellationToken)
         {
             var areas = await _mediator.Send(new GetKnowledgeAreaByIdRequest { Id = id }, cancellationToken);
 
             var expand = Expand.GetMembersToExpandNames(options);
 
-            var areasDto = areas.ProjectTo<KnowledgeAreaDTO>(_mapper.ConfigurationProvider, null, expand);
+            var areasDto = areas.ProjectTo<KnowledgeAreaDto>(_mapper.ConfigurationProvider, null, expand);
 
             return areasDto;
         }
@@ -54,9 +54,9 @@ namespace School.WebAPI.Controllers
         {
             var area = await _mediator.Send(request, cancellationToken);
 
-            var areaDto = _mapper.Map<KnowledgeAreaDTO>(area);
+            var areaDto = _mapper.Map<KnowledgeAreaDto>(area);
 
-            var result = Result<KnowledgeAreaDTO>.Success(areaDto);
+            var result = Result<KnowledgeAreaDto>.Success(areaDto);
 
             return CreatedAtAction("GetById", "KnowledgeAreas", new { id = area.Id }, result);
         }
@@ -68,9 +68,9 @@ namespace School.WebAPI.Controllers
 
             var area = await _mediator.Send(request, cancellationToken);
 
-            var areaDto = _mapper.Map<KnowledgeAreaDTO>(area);
+            var areaDto = _mapper.Map<KnowledgeAreaDto>(area);
 
-            var result = Result<KnowledgeAreaDTO>.Success(areaDto);
+            var result = Result<KnowledgeAreaDto>.Success(areaDto);
 
             return Ok(result);
         }
@@ -80,7 +80,7 @@ namespace School.WebAPI.Controllers
         {
             await _mediator.Send(new DeleteKnowledgeAreaRequest { Id = id }, cancellationToken);
 
-            var result = Result<KnowledgeAreaDTO>.Success();
+            var result = Result<KnowledgeAreaDto>.Success();
 
             return NoContent();
         }
