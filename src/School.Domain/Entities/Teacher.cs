@@ -3,6 +3,7 @@
     public class Teacher : Person
     {
         // Navigation properties.
-        public IEnumerable<KnowledgeArea> KnowledgeAreas { get; set; } = null!;
+        public ICollection<KnowledgeArea>? KnowledgeAreas { get; set; }
+        public ICollection<SchoolClass>? SchoolClasses { get; set; }
     }
 }

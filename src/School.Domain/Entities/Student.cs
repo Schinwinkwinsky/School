@@ -3,6 +3,6 @@
     public class Student : Person
     {
         // Navigation properties.
-        public IEnumerable<SchoolClass>? SchoolClasses { get; set; }
+        public ICollection<SchoolClass>? SchoolClasses { get; set; }
     }
 }

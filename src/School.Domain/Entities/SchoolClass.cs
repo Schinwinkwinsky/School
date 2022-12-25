@@ -13,6 +13,6 @@
         public int TeacherId { get; set; }
         public Teacher Teacher { get; set; } = null!;
 
-        public IEnumerable<Student>? Students { get; set; }
+        public ICollection<Student>? Students { get; set; }
     }
 }

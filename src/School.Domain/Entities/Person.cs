@@ -5,8 +5,8 @@
         public string Name { get; set; } = null!;
         public DateTime Birth { get; set; }
 
-        public IEnumerable<Address> Addresses { get; set; } = null!;
-        public IEnumerable<Email> Emails { get; set; } = null!;
-        public IEnumerable<Phone> Phones { get; set; } = null!;
+        public ICollection<Address>? Addresses { get; set; }
+        public ICollection<Email>? Emails { get; set; }
+        public ICollection<Phone>? Phones { get; set; }
     }
 }
