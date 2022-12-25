@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using School.Data;
 using School.Domain;
-using School.WebAPI.Helpers;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -24,16 +23,16 @@ builder.Services.AddAutoMapper(Assembly.Load("School.Application"));
 builder.Services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(opt => opt.OperationFilter<EnableQueryFilter>());
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen(opt => opt.OperationFilter<EnableQueryFilter>());
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    //app.UseSwagger();
+    //app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
