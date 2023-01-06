@@ -12,7 +12,7 @@ using School.Data;
 namespace School.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221226132436_1stMigration")]
+    [Migration("20230106164853_1stMigration")]
     partial class _1stMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,7 +139,7 @@ namespace School.Data.Migrations
                     b.Property<int>("DeletedBy")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsClosed")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<int>("SubjectId")
@@ -182,6 +182,9 @@ namespace School.Data.Migrations
 
                     b.Property<int>("DeletedBy")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
@@ -258,6 +261,9 @@ namespace School.Data.Migrations
 
                     b.Property<int>("DeletedBy")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PersonId")
                         .HasColumnType("int");

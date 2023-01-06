@@ -137,7 +137,7 @@ namespace School.Data.Migrations
                     b.Property<int>("DeletedBy")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsClosed")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<int>("SubjectId")
@@ -180,6 +180,9 @@ namespace School.Data.Migrations
 
                     b.Property<int>("DeletedBy")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
@@ -256,6 +259,9 @@ namespace School.Data.Migrations
 
                     b.Property<int>("DeletedBy")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
