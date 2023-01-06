@@ -7,5 +7,6 @@
 
         // Navigation properties.
         public ICollection<Subject>? Subjects { get; set; }
+        public ICollection<Teacher>? Teachers { get; set; }
     }
 }

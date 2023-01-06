@@ -3,8 +3,7 @@
     public class SchoolClass : EntityBase
     {
         public string Code { get; set; } = null!;
-        public bool IsClosed { get; set; }
-
+        public bool IsActive { get; set; }
 
         // Navigation properties.
         public int SubjectId { get; set; }

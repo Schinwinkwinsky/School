@@ -11,6 +11,7 @@ namespace School.Data
 
         public DbSet<KnowledgeArea> KnowledgeAreas { get; set; } = null!;
         public DbSet<Person> People { get; set; } = null!;
+        public DbSet<SchoolClass> SchoolClasses { get; set; } = null!;
         public DbSet<Student> Students { get; set; } = null!;
         public DbSet<Subject> Subjects { get; set; } = null!;
         public DbSet<Teacher> Teachers { get; set; } = null!;

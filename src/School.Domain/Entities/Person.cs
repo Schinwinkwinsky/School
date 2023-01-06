@@ -8,5 +8,7 @@
         public ICollection<Address>? Addresses { get; set; }
         public ICollection<Email>? Emails { get; set; }
         public ICollection<Phone>? Phones { get; set; }
+        public ICollection<Student>? Students { get; set; }
+        public ICollection<Teacher>? Teachers { get; set; }
     }
 }
