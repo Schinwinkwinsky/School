@@ -56,7 +56,6 @@ namespace School.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    KnowledgeAreaId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -67,12 +66,6 @@ namespace School.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Subjects", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Subjects_KnowledgeAreas_KnowledgeAreaId",
-                        column: x => x.KnowledgeAreaId,
-                        principalTable: "KnowledgeAreas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -202,6 +195,30 @@ namespace School.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "KnowledgeAreaSubject",
+                columns: table => new
+                {
+                    KnowledgeAreasId = table.Column<int>(type: "int", nullable: false),
+                    SubjectsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KnowledgeAreaSubject", x => new { x.KnowledgeAreasId, x.SubjectsId });
+                    table.ForeignKey(
+                        name: "FK_KnowledgeAreaSubject_KnowledgeAreas_KnowledgeAreasId",
+                        column: x => x.KnowledgeAreasId,
+                        principalTable: "KnowledgeAreas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_KnowledgeAreaSubject_Subjects_SubjectsId",
+                        column: x => x.SubjectsId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "KnowledgeAreaTeacher",
                 columns: table => new
                 {
@@ -263,25 +280,30 @@ namespace School.Data.Migrations
                 name: "SchoolClassStudent",
                 columns: table => new
                 {
-                    SchoolClassesId = table.Column<int>(type: "int", nullable: false),
-                    StudentsId = table.Column<int>(type: "int", nullable: false)
+                    SchoolClassId = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SchoolClassStudent", x => new { x.SchoolClassesId, x.StudentsId });
+                    table.PrimaryKey("PK_SchoolClassStudent", x => new { x.SchoolClassId, x.StudentId });
                     table.ForeignKey(
-                        name: "FK_SchoolClassStudent_SchoolClasses_SchoolClassesId",
-                        column: x => x.SchoolClassesId,
+                        name: "FK_SchoolClassStudent_SchoolClasses_SchoolClassId",
+                        column: x => x.SchoolClassId,
                         principalTable: "SchoolClasses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SchoolClassStudent_Students_StudentsId",
-                        column: x => x.StudentsId,
+                        name: "FK_SchoolClassStudent_Students_StudentId",
+                        column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KnowledgeAreaSubject_SubjectsId",
+                table: "KnowledgeAreaSubject",
+                column: "SubjectsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_KnowledgeAreaTeacher_TeachersId",
@@ -299,19 +321,14 @@ namespace School.Data.Migrations
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SchoolClassStudent_StudentsId",
+                name: "IX_SchoolClassStudent_StudentId",
                 table: "SchoolClassStudent",
-                column: "StudentsId");
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_PersonId",
                 table: "Students",
                 column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Subjects_KnowledgeAreaId",
-                table: "Subjects",
-                column: "KnowledgeAreaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teachers_PersonId",
@@ -321,6 +338,9 @@ namespace School.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "KnowledgeAreaSubject");
+
             migrationBuilder.DropTable(
                 name: "KnowledgeAreaTeacher");
 
@@ -337,6 +357,9 @@ namespace School.Data.Migrations
                 name: "SchoolClassStudent");
 
             migrationBuilder.DropTable(
+                name: "KnowledgeAreas");
+
+            migrationBuilder.DropTable(
                 name: "SchoolClasses");
 
             migrationBuilder.DropTable(
@@ -347,9 +370,6 @@ namespace School.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Teachers");
-
-            migrationBuilder.DropTable(
-                name: "KnowledgeAreas");
 
             migrationBuilder.DropTable(
                 name: "People");

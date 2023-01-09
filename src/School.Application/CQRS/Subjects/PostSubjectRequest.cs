@@ -1,21 +1,19 @@
 ﻿using MediatR;
 using School.Domain;
 using School.Domain.Entities;
-using System.Data;
 using System.Net;
 
 namespace School.Application.CQRS.KnowledgeAreas
 {
     public class PostSubjectRequest : IRequest<Subject>
     {
-        public int KnowledgeAreaId { get; set; }
+        public List<int> KnowledgeAreaIds { get; set; } = default!;
         public string Name { get; set; } = string.Empty;
 
         public Subject ToSubject()
         {
             return new Subject
             {
-                KnowledgeAreaId = KnowledgeAreaId,
                 Name = Name
             };
         }
@@ -32,12 +30,23 @@ namespace School.Application.CQRS.KnowledgeAreas
         {
             var subject = request.ToSubject();
 
-            var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(subject.KnowledgeAreaId, cancellationToken);
+            var areas = new List<KnowledgeArea>();
 
-            if (area == null || area.IsDeleted)
-                throw new HttpRequestException($"KnowledgeArea with id = {subject.KnowledgeAreaId} was not found.", null, HttpStatusCode.NotFound);
+            request.KnowledgeAreaIds
+                .ForEach(async id =>
+                {
+                    var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(id, cancellationToken);
+
+                    if (area != null)
+                        areas.Add(area);
+                });
+
+            if (areas.Count == 0)
+                throw new HttpRequestException("KnowledgeArea ids are invalid or empty. It's not possible to add a Subject with no KnowledgeArea.",
+                    null, HttpStatusCode.BadRequest);
 
             subject.CreatedAt = DateTime.UtcNow;
+            subject.KnowledgeAreas = areas;
 
             await _unitOfWork.Repository<Subject>().AddAsync(subject, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

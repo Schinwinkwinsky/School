@@ -8,7 +8,7 @@ namespace School.Application.CQRS.Subjects
     public class PutSubjectRequest : IRequest<Subject>
     {
         public int Id { get; set; }
-        public int KnowledgeAreaId { get; set; }
+        public List<int> KnowledgeAreaIds { get; set; } = default!;
         public string Name { get; set; } = string.Empty;
 
         public Subject ToSubject()
@@ -16,7 +16,6 @@ namespace School.Application.CQRS.Subjects
             return new Subject
             {
                 Id = Id,
-                KnowledgeAreaId = KnowledgeAreaId,
                 Name = Name
             };
         }
@@ -36,13 +35,24 @@ namespace School.Application.CQRS.Subjects
             if (subject == null || subject.IsDeleted)
                 throw new HttpRequestException($"Subject with id = {request.Id} was not found.", null, HttpStatusCode.NotFound);
 
-            var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(request.KnowledgeAreaId, cancellationToken);
-
-            if (area == null || area.IsDeleted)
-                throw new HttpRequestException($"KnowledgeArea with id = {request.KnowledgeAreaId} was not found.", null, HttpStatusCode.NotFound);
-
             subject = request.ToSubject();
 
+            var areas = new List<KnowledgeArea>();
+
+            request.KnowledgeAreaIds
+                .ForEach(async id =>
+                {
+                    var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(id, cancellationToken);
+
+                    if (area != null)
+                        areas.Add(area);
+                });
+
+            if (areas.Count == 0)
+                throw new HttpRequestException("KnowledgeArea ids are invalid or empty. It's not possible to add a Subject with no KnowledgeArea.",
+                    null, HttpStatusCode.BadRequest);
+
+            subject.KnowledgeAreas = areas;
             subject.UpdatedAt = DateTime.UtcNow;
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);

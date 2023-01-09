@@ -22,6 +22,21 @@ namespace School.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("KnowledgeAreaSubject", b =>
+                {
+                    b.Property<int>("KnowledgeAreasId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("KnowledgeAreasId", "SubjectsId");
+
+                    b.HasIndex("SubjectsId");
+
+                    b.ToTable("KnowledgeAreaSubject");
+                });
+
             modelBuilder.Entity("KnowledgeAreaTeacher", b =>
                 {
                     b.Property<int>("KnowledgeAreasId")
@@ -161,6 +176,21 @@ namespace School.Data.Migrations
                     b.ToTable("SchoolClasses");
                 });
 
+            modelBuilder.Entity("School.Domain.Entities.SchoolClassStudent", b =>
+                {
+                    b.Property<int>("SchoolClassId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SchoolClassId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("SchoolClassStudent");
+                });
+
             modelBuilder.Entity("School.Domain.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -220,9 +250,6 @@ namespace School.Data.Migrations
                     b.Property<int>("DeletedBy")
                         .HasColumnType("int");
 
-                    b.Property<int>("KnowledgeAreaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -234,8 +261,6 @@ namespace School.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("KnowledgeAreaId");
 
                     b.ToTable("Subjects");
                 });
@@ -279,19 +304,19 @@ namespace School.Data.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("SchoolClassStudent", b =>
+            modelBuilder.Entity("KnowledgeAreaSubject", b =>
                 {
-                    b.Property<int>("SchoolClassesId")
-                        .HasColumnType("int");
+                    b.HasOne("School.Domain.Entities.KnowledgeArea", null)
+                        .WithMany()
+                        .HasForeignKey("KnowledgeAreasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("StudentsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SchoolClassesId", "StudentsId");
-
-                    b.HasIndex("StudentsId");
-
-                    b.ToTable("SchoolClassStudent");
+                    b.HasOne("School.Domain.Entities.Subject", null)
+                        .WithMany()
+                        .HasForeignKey("SubjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("KnowledgeAreaTeacher", b =>
@@ -456,64 +481,45 @@ namespace School.Data.Migrations
                     b.Navigation("Teacher");
                 });
 
+            modelBuilder.Entity("School.Domain.Entities.SchoolClassStudent", b =>
+                {
+                    b.HasOne("School.Domain.Entities.SchoolClass", "SchoolClass")
+                        .WithMany()
+                        .HasForeignKey("SchoolClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("School.Domain.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SchoolClass");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("School.Domain.Entities.Student", b =>
                 {
                     b.HasOne("School.Domain.Entities.Person", "Person")
-                        .WithMany("Students")
+                        .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("School.Domain.Entities.Subject", b =>
-                {
-                    b.HasOne("School.Domain.Entities.KnowledgeArea", "KnowledgeArea")
-                        .WithMany("Subjects")
-                        .HasForeignKey("KnowledgeAreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("KnowledgeArea");
                 });
 
             modelBuilder.Entity("School.Domain.Entities.Teacher", b =>
                 {
                     b.HasOne("School.Domain.Entities.Person", "Person")
-                        .WithMany("Teachers")
+                        .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("SchoolClassStudent", b =>
-                {
-                    b.HasOne("School.Domain.Entities.SchoolClass", null)
-                        .WithMany()
-                        .HasForeignKey("SchoolClassesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("School.Domain.Entities.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("School.Domain.Entities.KnowledgeArea", b =>
-                {
-                    b.Navigation("Subjects");
-                });
-
-            modelBuilder.Entity("School.Domain.Entities.Person", b =>
-                {
-                    b.Navigation("Students");
-
-                    b.Navigation("Teachers");
                 });
 
             modelBuilder.Entity("School.Domain.Entities.Teacher", b =>
