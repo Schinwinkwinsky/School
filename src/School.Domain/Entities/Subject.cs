@@ -2,10 +2,9 @@
 {
     public class Subject : EntityBase
     {
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = default!;
 
         // Navigation properties.
-        public int KnowledgeAreaId { get; set; }
-        public KnowledgeArea KnowledgeArea { get; set; } = null!;
+        public virtual ICollection<KnowledgeArea> KnowledgeAreas { get; set; } = default!;
     }
 }

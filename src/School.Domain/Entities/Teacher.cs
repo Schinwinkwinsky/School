@@ -6,9 +6,9 @@
 
         // Navigation properties.
         public int PersonId { get; set; }
-        public Person Person { get; set; } = null!;
+        public virtual Person Person { get; set; } = default!;
 
-        public ICollection<KnowledgeArea>? KnowledgeAreas { get; set; }
-        public ICollection<SchoolClass>? SchoolClasses { get; set; }
+        public virtual ICollection<KnowledgeArea> KnowledgeAreas { get; set; } = default!;
+        public virtual ICollection<SchoolClass> SchoolClasses { get; set; } = default!;
     }
 }

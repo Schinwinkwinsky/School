@@ -2,16 +2,16 @@
 {
     public class SchoolClass : EntityBase
     {
-        public string Code { get; set; } = null!;
+        public string Code { get; set; } = default!;
         public bool IsActive { get; set; }
 
         // Navigation properties.
         public int SubjectId { get; set; }
-        public Subject Subject { get; set; } = null!;
+        public virtual Subject Subject { get; set; } = default!;
 
         public int TeacherId { get; set; }
-        public Teacher Teacher { get; set; } = null!;
+        public virtual Teacher Teacher { get; set; } = default!;
 
-        public ICollection<Student>? Students { get; set; }
+        public virtual ICollection<Student> Students { get; set; } = default!;
     }
 }

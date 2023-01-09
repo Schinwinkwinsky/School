@@ -2,13 +2,11 @@
 {
     public class Person : EntityBase
     {
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = default!;
         public DateTime Birth { get; set; }
 
-        public ICollection<Address>? Addresses { get; set; }
-        public ICollection<Email>? Emails { get; set; }
-        public ICollection<Phone>? Phones { get; set; }
-        public ICollection<Student>? Students { get; set; }
-        public ICollection<Teacher>? Teachers { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; } = default!;
+        public virtual ICollection<Email> Emails { get; set; } = default!;
+        public virtual ICollection<Phone> Phones { get; set; } = default!;
     }
 }
