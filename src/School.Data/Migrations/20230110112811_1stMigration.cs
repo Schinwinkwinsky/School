@@ -165,7 +165,7 @@ namespace School.Data.Migrations
                         column: x => x.PersonId,
                         principalTable: "People",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,7 +191,7 @@ namespace School.Data.Migrations
                         column: x => x.PersonId,
                         principalTable: "People",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -280,21 +280,21 @@ namespace School.Data.Migrations
                 name: "SchoolClassStudent",
                 columns: table => new
                 {
-                    SchoolClassId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false)
+                    SchoolClassesId = table.Column<int>(type: "int", nullable: false),
+                    StudentsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SchoolClassStudent", x => new { x.SchoolClassId, x.StudentId });
+                    table.PrimaryKey("PK_SchoolClassStudent", x => new { x.SchoolClassesId, x.StudentsId });
                     table.ForeignKey(
-                        name: "FK_SchoolClassStudent_SchoolClasses_SchoolClassId",
-                        column: x => x.SchoolClassId,
+                        name: "FK_SchoolClassStudent_SchoolClasses_SchoolClassesId",
+                        column: x => x.SchoolClassesId,
                         principalTable: "SchoolClasses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SchoolClassStudent_Students_StudentId",
-                        column: x => x.StudentId,
+                        name: "FK_SchoolClassStudent_Students_StudentsId",
+                        column: x => x.StudentsId,
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -321,9 +321,9 @@ namespace School.Data.Migrations
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SchoolClassStudent_StudentId",
+                name: "IX_SchoolClassStudent_StudentsId",
                 table: "SchoolClassStudent",
-                column: "StudentId");
+                column: "StudentsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_PersonId",
