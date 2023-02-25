@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.OData.Query;
 using School.Application.CQRS.KnowledgeAreas;
 using School.Application.DTO;
 using School.Application.Results;
+using School.WebAPI.Attributes;
 using School.WebAPI.Helpers;
 
 namespace School.WebAPI.Controllers
@@ -79,8 +80,6 @@ namespace School.WebAPI.Controllers
         public async Task<IActionResult> DeleteAsync(int id, CancellationToken cancellationToken)
         {
             await _mediator.Send(new DeleteKnowledgeAreaRequest { Id = id }, cancellationToken);
-
-            var result = Result<KnowledgeAreaDto>.Success();
 
             return NoContent();
         }

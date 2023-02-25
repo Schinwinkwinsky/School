@@ -7,6 +7,7 @@ using School.Application.CQRS.KnowledgeAreas;
 using School.Application.CQRS.Subjects;
 using School.Application.DTO;
 using School.Application.Results;
+using School.WebAPI.Attributes;
 using School.WebAPI.Helpers;
 
 namespace School.WebAPI.Controllers
@@ -81,8 +82,6 @@ namespace School.WebAPI.Controllers
         public async Task<IActionResult> DeleteAsync(int id, CancellationToken cancellationToken)
         {
             await _mediator.Send(new DeleteSubjectRequest { Id = id }, cancellationToken);
-
-            var result = Result<SubjectDto>.Success();
 
             return NoContent();
         }

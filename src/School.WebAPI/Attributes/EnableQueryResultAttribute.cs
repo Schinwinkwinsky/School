@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.OData.Query;
 using School.Application.Results;
 
-namespace School.WebAPI.Helpers
+namespace School.WebAPI.Attributes
 {
     public class EnableQueryResultAttribute : EnableQueryAttribute
     {
