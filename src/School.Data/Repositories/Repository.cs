@@ -15,7 +15,8 @@ namespace School.Data.Repositories
 
         public T? Get(int id) => _context.Set<T>().Find(id);
 
-        public async Task<T?> GetAsync(int id, CancellationToken cancellationToken) => await _context.Set<T>().FindAsync(id, cancellationToken);
+        public async Task<T?> GetAsync(int id, CancellationToken cancellationToken) 
+            => await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken:cancellationToken);
 
         public EntityEntry<T> Add(T entity) => _context.Set<T>().Add(entity);
 
@@ -24,7 +25,8 @@ namespace School.Data.Repositories
 
         public bool Any(Expression<Func<T, bool>> predicate) => _context.Set<T>().Any(predicate);
 
-        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate) => await _context.Set<T>().AnyAsync(predicate);
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate) 
+            => await _context.Set<T>().AnyAsync(predicate);
 
         public void AddRange(IEnumerable<T> entities) => _context.Set<T>().AddRange(entities);
 

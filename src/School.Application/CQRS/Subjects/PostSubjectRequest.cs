@@ -32,14 +32,13 @@ namespace School.Application.CQRS.KnowledgeAreas
 
             var areas = new List<KnowledgeArea>();
 
-            request.KnowledgeAreaIds
-                .ForEach(async id =>
-                {
-                    var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(id, cancellationToken);
+            foreach (var id in request.KnowledgeAreaIds)
+            {
+                var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(id, cancellationToken);
 
-                    if (area != null)
-                        areas.Add(area);
-                });
+                if (area != null)
+                    areas.Add(area);
+            }
 
             if (areas.Count == 0)
                 throw new HttpRequestException("KnowledgeArea ids are invalid or empty. It's not possible to add a Subject with no KnowledgeArea.",
