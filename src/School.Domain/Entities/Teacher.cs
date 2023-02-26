@@ -2,8 +2,6 @@
 {
     public class Teacher : EntityBase
     {
-        public bool IsActive { get; set; }
-
         // Navigation properties.
         public int PersonId { get; set; }
         public virtual Person Person { get; set; } = default!;
