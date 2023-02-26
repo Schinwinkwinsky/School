@@ -6,6 +6,6 @@
         public string Name { get; set; } = string.Empty;
 
         // Navigation properties.
-        public virtual ICollection<KnowledgeAreaDto> KnowledgeAreas { get; set; } = default!;
+        public ICollection<KnowledgeAreaDto>? KnowledgeAreas { get; set; }
     }
 }

@@ -7,6 +7,7 @@
         public string? Description { get; set; }
 
         // Navigation properties.
-        public IEnumerable<SubjectDto>? Subjects { get; set; }
+        public ICollection<SubjectDto>? Subjects { get; set; }
+        public ICollection<TeacherDto>? Teachers { get; set; }
     }
 }
