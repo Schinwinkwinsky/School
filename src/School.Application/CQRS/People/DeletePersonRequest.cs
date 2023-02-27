@@ -8,6 +8,11 @@ namespace School.Application.CQRS.People
     public class DeletePersonRequest : IRequest
     {
         public int Id { get; set; }
+
+        public DeletePersonRequest(int id)
+        {
+            Id = id;
+        }
     }
 
     public class DeletePersonRequestHandler : IRequestHandler<DeletePersonRequest, Unit>

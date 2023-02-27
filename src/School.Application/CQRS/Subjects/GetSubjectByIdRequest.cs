@@ -8,7 +8,11 @@ namespace School.Application.CQRS.Subjects
     public class GetSubjectByIdRequest : IRequest<IQueryable<Subject>>
     {
         public int Id { get; set; }
-        public bool IncludeDeleted { get; set; } = false;
+
+        public GetSubjectByIdRequest(int id)
+        {
+            Id = id;
+        }
     }
 
     public class GetSubjectByIdRequestHandler : IRequestHandler<GetSubjectByIdRequest, IQueryable<Subject>>

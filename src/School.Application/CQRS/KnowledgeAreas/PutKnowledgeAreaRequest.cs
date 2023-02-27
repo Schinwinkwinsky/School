@@ -5,7 +5,7 @@ using System.Net;
 
 namespace School.Application.CQRS.KnowledgeAreas
 {
-    public class PutKnowledgeAreaRequest : IRequest<KnowledgeArea>
+    public class PutKnowledgeAreaRequest : IRequest<KnowledgeArea>, IIdentifiable
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

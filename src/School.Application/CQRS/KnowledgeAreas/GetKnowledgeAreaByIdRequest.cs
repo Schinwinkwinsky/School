@@ -8,6 +8,11 @@ namespace School.Application.CQRS.KnowledgeAreas
     public class GetKnowledgeAreaByIdRequest : IRequest<IQueryable<KnowledgeArea>>
     {
         public int Id { get; set; }
+
+        public GetKnowledgeAreaByIdRequest(int id)
+        {
+            Id = id;
+        }
     }
 
     public class GetKnowledgeAreaByIdRequestHandler : IRequestHandler<GetKnowledgeAreaByIdRequest, IQueryable<KnowledgeArea>>

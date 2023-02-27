@@ -8,6 +8,11 @@ namespace School.Application.CQRS.Teachers
     public class GetTeacherByIdRequest : IRequest<IQueryable<Teacher>>
     {
         public int Id { get; set; }
+
+        public GetTeacherByIdRequest(int id)
+        {
+            Id = id;
+        }
     }
 
     public class GetTeacherByIdRequestHandler : IRequestHandler<GetTeacherByIdRequest, IQueryable<Teacher>>

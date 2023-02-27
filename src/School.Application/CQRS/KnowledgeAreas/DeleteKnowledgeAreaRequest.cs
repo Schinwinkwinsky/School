@@ -8,6 +8,11 @@ namespace School.Application.CQRS.KnowledgeAreas
     public class DeleteKnowledgeAreaRequest : IRequest
     {
         public int Id { get; set; }
+
+        public DeleteKnowledgeAreaRequest(int id)
+        {
+            Id = id;
+        }
     }
 
     public class DeleteKnowledgeAreaRequestHandler : IRequestHandler<DeleteKnowledgeAreaRequest, Unit>

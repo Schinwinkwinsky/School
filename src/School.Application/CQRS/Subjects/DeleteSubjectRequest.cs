@@ -8,6 +8,11 @@ namespace School.Application.CQRS.Subjects
     public class DeleteSubjectRequest : IRequest
     {
         public int Id { get; set; }
+
+        public DeleteSubjectRequest(int id)
+        {
+            Id = id;
+        }
     }
 
     public class DeleteSubjectRequestHandler : IRequestHandler<DeleteSubjectRequest, Unit>

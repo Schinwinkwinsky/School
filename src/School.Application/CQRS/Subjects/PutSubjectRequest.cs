@@ -5,7 +5,7 @@ using System.Net;
 
 namespace School.Application.CQRS.Subjects
 {
-    public class PutSubjectRequest : IRequest<Subject>
+    public class PutSubjectRequest : IRequest<Subject>, IIdentifiable
     {
         public int Id { get; set; }
         public List<int> KnowledgeAreasIds { get; set; } = default!;

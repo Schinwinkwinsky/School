@@ -5,7 +5,7 @@ using System.Net;
 
 namespace School.Application.CQRS.People
 {
-    public class PutPersonRequest : IRequest<Person>
+    public class PutPersonRequest : IRequest<Person>, IIdentifiable
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;
