@@ -6,9 +6,9 @@ namespace School.Application.DTO
     {
         // Navigation properties.
         public int PersonId { get; set; }
-        public Person? Person { get; set; }
+        public PersonDto? Person { get; set; }
 
-        public ICollection<KnowledgeArea>? KnowledgeAreas { get; set; }
-        public ICollection<SchoolClass>? SchoolClasses { get; set; }
+        public ICollection<KnowledgeAreaDto>? KnowledgeAreas { get; set; }
+        public ICollection<SchoolClassDto>? SchoolClasses { get; set; }
     }
 }

@@ -7,8 +7,8 @@ namespace School.Application.CQRS.KnowledgeAreas
 {
     public class PostSubjectRequest : IRequest<Subject>
     {
-        public List<int> KnowledgeAreaIds { get; set; } = default!;
         public string Name { get; set; } = string.Empty;
+        public IEnumerable<int> KnowledgeAreasIds { get; set; } = default!;
 
         public Subject ToSubject()
         {
@@ -32,7 +32,7 @@ namespace School.Application.CQRS.KnowledgeAreas
 
             var areas = new List<KnowledgeArea>();
 
-            foreach (var id in request.KnowledgeAreaIds)
+            foreach (var id in request.KnowledgeAreasIds)
             {
                 var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(id, cancellationToken);
 

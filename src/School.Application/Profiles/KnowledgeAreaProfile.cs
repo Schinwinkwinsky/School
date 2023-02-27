@@ -9,7 +9,7 @@ namespace School.Application.Profiles
         public KnowledgeAreaProfile()
         {
             CreateMap<KnowledgeArea, KnowledgeAreaDto>()
-                .ForMember(dest => dest.Subjects, opt => opt.ExplicitExpansion());
+                .ForMember(ka => ka.Subjects, opt => opt.ExplicitExpansion());
         }
     }
 }

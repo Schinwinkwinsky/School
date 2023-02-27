@@ -8,7 +8,7 @@ namespace School.Application.CQRS.Subjects
     public class PutSubjectRequest : IRequest<Subject>
     {
         public int Id { get; set; }
-        public List<int> KnowledgeAreaIds { get; set; } = default!;
+        public List<int> KnowledgeAreasIds { get; set; } = default!;
         public string Name { get; set; } = string.Empty;
 
         public Subject ToSubject()
@@ -39,17 +39,16 @@ namespace School.Application.CQRS.Subjects
 
             var areas = new List<KnowledgeArea>();
 
-            request.KnowledgeAreaIds
-                .ForEach(async id =>
-                {
-                    var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(id, cancellationToken);
+            foreach (var id in request.KnowledgeAreasIds)
+            {
+                var area = await _unitOfWork.Repository<KnowledgeArea>().GetAsync(id, cancellationToken);
 
-                    if (area != null)
-                        areas.Add(area);
-                });
+                if (area != null)
+                    areas.Add(area);
+            }
 
             if (areas.Count == 0)
-                throw new HttpRequestException("KnowledgeArea ids are invalid or empty. It's not possible to add a Subject with no KnowledgeArea.",
+                throw new HttpRequestException("KnowledgeArea ids are invalid or empty. It's not possible to update a Subject with no KnowledgeArea.",
                     null, HttpStatusCode.BadRequest);
 
             subject.KnowledgeAreas = areas;

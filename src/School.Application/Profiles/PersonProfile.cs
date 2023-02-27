@@ -9,9 +9,9 @@ namespace School.Application.Profiles
         public PersonProfile()
         {
             CreateMap<Person, PersonDto>()
-                .ForMember(dest => dest.Addresses, opt => opt.ExplicitExpansion())
-                .ForMember(dest => dest.Emails, opt => opt.ExplicitExpansion())
-                .ForMember(dest => dest.Phones, opt => opt.ExplicitExpansion());
+                .ForMember(p => p.Addresses, opt => opt.ExplicitExpansion())
+                .ForMember(p => p.Emails, opt => opt.ExplicitExpansion())
+                .ForMember(p => p.Phones, opt => opt.ExplicitExpansion());
         }            
     }
 }
