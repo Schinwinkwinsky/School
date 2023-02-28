@@ -3,7 +3,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
-using School.Application;
+using School.Application.Interfaces;
 using School.Application.Results;
 using School.Domain.Entities;
 using School.WebAPI.Attributes;

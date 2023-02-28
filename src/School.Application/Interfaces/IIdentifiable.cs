@@ -1,4 +1,4 @@
-﻿namespace School.Application
+﻿namespace School.Application.Interfaces
 {
     public interface IIdentifiable
     {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.Data;
 
@@ -11,9 +12,10 @@ using School.Data;
 namespace School.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230227180612_RemovedStudentIsActiveProperty")]
+    partial class RemovedStudentIsActiveProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace School.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("CourseSubject", b =>
-                {
-                    b.Property<int>("CoursesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubjectsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CoursesId", "SubjectsId");
-
-                    b.HasIndex("SubjectsId");
-
-                    b.ToTable("CourseSubject");
-                });
 
             modelBuilder.Entity("KnowledgeAreaSubject", b =>
                 {
@@ -65,41 +52,6 @@ namespace School.Data.Migrations
                     b.HasIndex("TeachersId");
 
                     b.ToTable("KnowledgeAreaTeacher");
-                });
-
-            modelBuilder.Entity("School.Domain.Entities.Course", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("School.Domain.Entities.KnowledgeArea", b =>
@@ -138,57 +90,6 @@ namespace School.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("KnowledgeAreas");
-                });
-
-            modelBuilder.Entity("School.Domain.Entities.Period", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("Period");
                 });
 
             modelBuilder.Entity("School.Domain.Entities.Person", b =>
@@ -253,8 +154,8 @@ namespace School.Data.Migrations
                     b.Property<int>("DeletedBy")
                         .HasColumnType("int");
 
-                    b.Property<int>("PeriodId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
@@ -269,8 +170,6 @@ namespace School.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PeriodId");
 
                     b.HasIndex("SubjectId");
 
@@ -401,21 +300,6 @@ namespace School.Data.Migrations
                     b.ToTable("SchoolClassStudent");
                 });
 
-            modelBuilder.Entity("CourseSubject", b =>
-                {
-                    b.HasOne("School.Domain.Entities.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("School.Domain.Entities.Subject", null)
-                        .WithMany()
-                        .HasForeignKey("SubjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("KnowledgeAreaSubject", b =>
                 {
                     b.HasOne("School.Domain.Entities.KnowledgeArea", null)
@@ -444,21 +328,6 @@ namespace School.Data.Migrations
                         .HasForeignKey("TeachersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("School.Domain.Entities.Period", b =>
-                {
-                    b.HasOne("School.Domain.Entities.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("School.Domain.Entities.Subject", null)
-                        .WithMany("Periods")
-                        .HasForeignKey("SubjectId");
-
-                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("School.Domain.Entities.Person", b =>
@@ -591,12 +460,6 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Domain.Entities.SchoolClass", b =>
                 {
-                    b.HasOne("School.Domain.Entities.Period", "Period")
-                        .WithMany("SchoolClasses")
-                        .HasForeignKey("PeriodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("School.Domain.Entities.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
@@ -608,8 +471,6 @@ namespace School.Data.Migrations
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Period");
 
                     b.Navigation("Subject");
 
@@ -651,16 +512,6 @@ namespace School.Data.Migrations
                         .HasForeignKey("StudentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("School.Domain.Entities.Period", b =>
-                {
-                    b.Navigation("SchoolClasses");
-                });
-
-            modelBuilder.Entity("School.Domain.Entities.Subject", b =>
-                {
-                    b.Navigation("Periods");
                 });
 
             modelBuilder.Entity("School.Domain.Entities.Teacher", b =>

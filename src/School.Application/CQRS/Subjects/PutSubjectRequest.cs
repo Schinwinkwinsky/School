@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using School.Application.Interfaces;
 using School.Domain;
 using School.Domain.Entities;
 using System.Net;
@@ -46,10 +47,6 @@ namespace School.Application.CQRS.Subjects
                 if (area != null)
                     areas.Add(area);
             }
-
-            if (areas.Count == 0)
-                throw new HttpRequestException("KnowledgeArea ids are invalid or empty. It's not possible to update a Subject with no KnowledgeArea.",
-                    null, HttpStatusCode.BadRequest);
 
             subject.KnowledgeAreas = areas;
             subject.UpdatedAt = DateTime.UtcNow;

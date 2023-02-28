@@ -40,10 +40,6 @@ namespace School.Application.CQRS.KnowledgeAreas
                     areas.Add(area);
             }
 
-            if (areas.Count == 0)
-                throw new HttpRequestException("KnowledgeArea ids are invalid or empty. It's not possible to add a Subject with no KnowledgeArea.",
-                    null, HttpStatusCode.BadRequest);
-
             subject.CreatedAt = DateTime.UtcNow;
             subject.KnowledgeAreas = areas;
 

@@ -45,10 +45,6 @@ namespace School.Application.CQRS.Teachers
                     areas.Add(area);
             }
 
-            if (areas.Count == 0)
-                throw new HttpRequestException("KnowledgeArea ids are invalid or empty. It's not possible to add a Teacher with no KnowledgeArea.",
-                    null, HttpStatusCode.BadRequest);
-
             teacher.CreatedAt = DateTime.UtcNow;
             teacher.KnowledgeAreas = areas;
 

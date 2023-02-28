@@ -3,9 +3,11 @@
     public class SchoolClass : EntityBase
     {
         public string Code { get; set; } = default!;
-        public bool IsActive { get; set; }
 
         // Navigation properties.
+        public int PeriodId { get; set; }
+        public virtual Period Period { get; set; } = default!;
+
         public int SubjectId { get; set; }
         public virtual Subject Subject { get; set; } = default!;
 

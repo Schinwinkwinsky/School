@@ -1,8 +1,11 @@
-﻿namespace School.Domain.Entities
+﻿using School.Domain.Entities;
+
+namespace School.Application.DTO
 {
-    public class Student : EntityBase
+    public class StudentDto
     {
-        // Navigation properties.
+        public int Id { get; set; }
+
         public int PersonId { get; set; }
         public virtual Person Person { get; set; } = default!;
 
