@@ -1,8 +1,8 @@
 ﻿using School.Domain.Entities;
 
-namespace School.Application.DTO
+namespace School.Application.Models
 {
-    public class PhoneDto
+    public class PhoneModel
     {
         public string GlobalCode { get; set; } = default!;
         public string LocalCode { get; set; } = default!;
@@ -10,14 +10,14 @@ namespace School.Application.DTO
 
         public string? Description { get; set; }
 
-        public static implicit operator Phone(PhoneDto dto)
+        public static implicit operator Phone(PhoneModel model)
         {
             return new Phone
             {
-                GlobalCode = dto.GlobalCode,
-                LocalCode = dto.LocalCode,
-                PhoneNumber = dto.PhoneNumber,
-                Description = dto.Description
+                GlobalCode = model.GlobalCode,
+                LocalCode = model.LocalCode,
+                PhoneNumber = model.PhoneNumber,
+                Description = model.Description
             };
         }
     }

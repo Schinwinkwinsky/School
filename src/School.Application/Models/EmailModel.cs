@@ -1,19 +1,19 @@
 ﻿using School.Domain.Entities;
 
-namespace School.Application.DTO
+namespace School.Application.Models
 {
-    public class EmailDto
+    public class EmailModel
     {
         public string Address { get; set; } = default!;
 
         public string? Description { get; set; }
 
-        public static implicit operator Email(EmailDto dto)
+        public static implicit operator Email(EmailModel model)
         {
             return new Email
             {
-                Address = dto.Address,
-                Description = dto.Description
+                Address = model.Address,
+                Description = model.Description
             };
         }
     }

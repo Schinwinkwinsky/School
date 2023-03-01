@@ -3,7 +3,8 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
-using School.Application.Interfaces;
+using School.Application.DTO;
+using School.Application.Models;
 using School.Application.Results;
 using School.Domain.Entities;
 using School.WebAPI.Attributes;
@@ -12,12 +13,26 @@ using School.WebAPI.Helpers;
 namespace School.WebAPI.Controllers
 {
     [ApiController]
-    public class ApiControllerBase<T,TDto,U,V,W,X,Y> : ControllerBase 
-        where T : EntityBase 
-        where X : IIdentifiable
+    public class ApiControllerBase<
+        T,
+        TModel,
+        TDto,
+        TGetAllRequest,
+        TGetByIdRequest,
+        TPostRequest,
+        TPutRequest,
+        TDeleteRequest> : ControllerBase 
+        where T : EntityBase
+        where TModel : IModel<T>
+        where TDto : IDto<T>
+        where TGetAllRequest : IRequest<IQueryable<T>>
+        where TGetByIdRequest : IRequest<IQueryable<T>>
+        where TPostRequest : IRequest<T>
+        where TPutRequest : IRequest<T>
+        where TDeleteRequest : IRequest
     {
-        private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
+        protected readonly IMapper _mapper;
+        protected readonly IMediator _mediator;
 
         public ApiControllerBase(IMapper mapper, IMediator mediator)
         {
@@ -29,9 +44,9 @@ namespace School.WebAPI.Controllers
         [EnableQueryPaginatedResult]
         public async Task<IQueryable<TDto>> GetAllAsync(ODataQueryOptions options, CancellationToken cancellationToken)
         {
-            var handle = Activator.CreateInstance<U>();
+            var handler = Activator.CreateInstance<TGetAllRequest>();
 
-            var items = await _mediator.Send(handle!, cancellationToken) as IQueryable<T>;
+            var items = await _mediator.Send(handler!, cancellationToken) as IQueryable<T>;
 
             var expand = Expand.GetMembersToExpandNames(options);
 
@@ -44,9 +59,9 @@ namespace School.WebAPI.Controllers
         [EnableQueryResult]
         public async Task<IQueryable<TDto>> GetByIdAsync(ODataQueryOptions options, int id, bool includeDeleted, CancellationToken cancellationToken)
         {
-            var handle = Activator.CreateInstance(typeof(V), id);
+            var handler = Activator.CreateInstance(typeof(TGetByIdRequest), id);
 
-            var items = await _mediator.Send(handle!, cancellationToken) as IQueryable<T>;
+            var items = await _mediator.Send(handler!, cancellationToken) as IQueryable<T>;
 
             var expand = Expand.GetMembersToExpandNames(options);
 
@@ -56,9 +71,11 @@ namespace School.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(W request, CancellationToken cancellationToken)
+        public async Task<IActionResult> PostAsync(TModel model, CancellationToken cancellationToken)
         {
-            var item = await _mediator.Send(request!, cancellationToken) as T;
+            var handler = Activator.CreateInstance(typeof(TPostRequest), model);
+
+            var item = await _mediator.Send(handler!, cancellationToken) as T;
 
             var itemDto = _mapper.Map<TDto>(item);
 
@@ -68,11 +85,13 @@ namespace School.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(X request, int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> PutAsync(TDto dto, int id, CancellationToken cancellationToken)
         {
-            request.Id = id;
+            dto.Id = id;
 
-            var item = await _mediator.Send(request, cancellationToken) as T;
+            var handler = Activator.CreateInstance(typeof(TPutRequest), dto);
+
+            var item = await _mediator.Send(handler!, cancellationToken) as T;
 
             var itemDto = _mapper.Map<TDto>(item);
 
@@ -84,9 +103,9 @@ namespace School.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id, CancellationToken cancellationToken)
         {
-            var handle = Activator.CreateInstance(typeof(Y), id);
+            var handler = Activator.CreateInstance(typeof(TDeleteRequest), id);
 
-            await _mediator.Send(handle!, cancellationToken);
+            await _mediator.Send(handler!, cancellationToken);
 
             return NoContent();
         }

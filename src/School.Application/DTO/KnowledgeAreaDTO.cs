@@ -1,6 +1,8 @@
-﻿namespace School.Application.DTO
+﻿using School.Domain.Entities;
+
+namespace School.Application.DTO
 {
-    public class KnowledgeAreaDto
+    public class KnowledgeAreaDto : IDto<KnowledgeArea>
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -9,5 +11,11 @@
         // Navigation properties.
         public ICollection<SubjectDto>? Subjects { get; set; }
         public ICollection<TeacherDto>? Teachers { get; set; }
+
+        public void CopyToEntity(KnowledgeArea area)
+        {
+            area.Name = Name;
+            area.Description = Description;
+        }
     }
 }

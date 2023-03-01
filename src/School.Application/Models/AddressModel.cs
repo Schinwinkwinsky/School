@@ -1,8 +1,8 @@
 ﻿using School.Domain.Entities;
 
-namespace School.Application.DTO
+namespace School.Application.Models
 {
-    public class AddressDto
+    public class AddressModel
     {
         public string Street { get; set; } = default!;
         public string Number { get; set; } = default!;
@@ -18,20 +18,20 @@ namespace School.Application.DTO
 
         public string? Description { get; set; }
 
-        public static implicit operator Address(AddressDto dto)
+        public static implicit operator Address(AddressModel model)
         {
             return new Address
             {
-                Street = dto.Street,
-                Number = dto.Number,
-                District = dto.District,
-                City = dto.City,
-                State = dto.State,
-                Country = dto.Country,
-                PostCode = dto.PostCode,
-                Latitude = dto.Latitude,
-                Longitude = dto.Longitude,
-                Description = dto.Description
+                Street = model.Street,
+                Number = model.Number,
+                District = model.District,
+                City = model.City,
+                State = model.State,
+                Country = model.Country,
+                PostCode = model.PostCode,
+                Latitude = model.Latitude,
+                Longitude = model.Longitude,
+                Description = model.Description
             };
         }
     }

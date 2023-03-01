@@ -2,9 +2,11 @@ using MediatR;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OData.ModelBuilder;
+using School.Application.CQRS.Generics;
 using School.Data;
 using School.Domain;
 using School.Domain.Entities;
+using School.WebAPI.Extensions;
 using School.WebAPI.Middlewares;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -29,6 +31,7 @@ builder.Services.AddControllers()
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb")));
 
 builder.Services.AddMediatR(Assembly.Load("School.Application"));
+builder.Services.RegiesterMediatrHandlers();
 
 builder.Services.AddAutoMapper(Assembly.Load("School.Application"));
 

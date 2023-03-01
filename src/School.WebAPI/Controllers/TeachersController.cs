@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using School.Application.CQRS.Teachers;
+using School.Application.CQRS.Generics;
 using School.Application.DTO;
+using School.Application.Models;
 using School.Domain.Entities;
 
 namespace School.WebAPI.Controllers
@@ -11,12 +12,13 @@ namespace School.WebAPI.Controllers
     [ApiController]
     public class TeachersController : ApiControllerBase<
         Teacher,
+        TeacherModel,
         TeacherDto,
-        GetAllTeachersRequest,
-        GetTeacherByIdRequest,
-        PostTeacherRequest,
-        PutTeacherRequest,
-        DeleteTeacherRequest>
+        GetAllRequest<Teacher>,
+        GetByIdRequest<Teacher>,
+        PostRequest<Teacher, TeacherModel>,
+        PutRequest<Teacher, TeacherDto>,
+        DeleteRequest<Teacher>>
     {
         public TeachersController(IMapper mapper, IMediator mediator)
             : base(mapper, mediator) { }
