@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+using School.Application.CQRS.Generics;
 using School.Application.DTO;
 using School.Application.Models;
 using School.Application.Results;
@@ -41,12 +42,12 @@ namespace School.WebAPI.Controllers
         }
 
         [HttpGet]
-        [EnableQueryPaginatedResult]
+        [EnableQueryPaginatedResult(MaxExpansionDepth = 3, MaxAnyAllExpressionDepth = 2)]
         public async Task<IQueryable<TDto>> GetAllAsync(ODataQueryOptions options, CancellationToken cancellationToken)
         {
-            var handler = Activator.CreateInstance<TGetAllRequest>();
+            var request = Activator.CreateInstance<TGetAllRequest>();
 
-            var items = await _mediator.Send(handler!, cancellationToken) as IQueryable<T>;
+            var items = await _mediator.Send(request!, cancellationToken) as IQueryable<T>;
 
             var expand = Expand.GetMembersToExpandNames(options);
 
@@ -57,11 +58,11 @@ namespace School.WebAPI.Controllers
 
         [HttpGet("{id}")]
         [EnableQueryResult]
-        public async Task<IQueryable<TDto>> GetByIdAsync(ODataQueryOptions options, int id, bool includeDeleted, CancellationToken cancellationToken)
+        public async Task<IQueryable<TDto>> GetByIdAsync(ODataQueryOptions options, Guid id, bool includeDeleted, CancellationToken cancellationToken)
         {
-            var handler = Activator.CreateInstance(typeof(TGetByIdRequest), id);
+            var request = Activator.CreateInstance(typeof(TGetByIdRequest), id);
 
-            var items = await _mediator.Send(handler!, cancellationToken) as IQueryable<T>;
+            var items = await _mediator.Send(request!, cancellationToken) as IQueryable<T>;
 
             var expand = Expand.GetMembersToExpandNames(options);
 
@@ -73,9 +74,9 @@ namespace School.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync(TModel model, CancellationToken cancellationToken)
         {
-            var handler = Activator.CreateInstance(typeof(TPostRequest), model);
+            var request = Activator.CreateInstance(typeof(TPostRequest), model);
 
-            var item = await _mediator.Send(handler!, cancellationToken) as T;
+            var item = await _mediator.Send(request!, cancellationToken) as T;
 
             var itemDto = _mapper.Map<TDto>(item);
 
@@ -85,13 +86,13 @@ namespace School.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(TDto dto, int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> PutAsync(TDto dto, Guid id, CancellationToken cancellationToken)
         {
             dto.Id = id;
 
-            var handler = Activator.CreateInstance(typeof(TPutRequest), dto);
+            var request = Activator.CreateInstance(typeof(TPutRequest), dto);
 
-            var item = await _mediator.Send(handler!, cancellationToken) as T;
+            var item = await _mediator.Send(request!, cancellationToken) as T;
 
             var itemDto = _mapper.Map<TDto>(item);
 
@@ -101,13 +102,69 @@ namespace School.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            var handler = Activator.CreateInstance(typeof(TDeleteRequest), id);
+            var request = Activator.CreateInstance(typeof(TDeleteRequest), id);
 
-            await _mediator.Send(handler!, cancellationToken);
+            await _mediator.Send(request!, cancellationToken);
 
             return NoContent();
+        }
+
+        [HttpPost("{id}/{propertyName}/add")]
+        public async Task<IActionResult> AddRelatedItems(Guid id, string propertyName, RelatedEntitiesModel model, CancellationToken cancellationToken)
+        {
+            var normalizedPropertyName = propertyName.Substring(0, 1).ToUpper() + propertyName.Substring(1);
+
+            var property = typeof(T).GetProperty(normalizedPropertyName);
+
+            if (property is null)
+                return NotFound();            
+            
+            var propertyGenericTypeArguments = property.PropertyType.GenericTypeArguments;
+
+            if (propertyGenericTypeArguments.Length == 0)
+                return NotFound();
+
+            var constructedType = typeof(AddRelatedEntitiesRequest<,>).MakeGenericType(typeof(T), propertyGenericTypeArguments[0]);
+
+            var request = Activator.CreateInstance(constructedType, new object[] { id, normalizedPropertyName, model.ItemsIds});
+
+            var item = await _mediator.Send(request!, cancellationToken) as T;
+
+            var itemDto = _mapper.Map<TDto>(item);
+
+            var result = Result<TDto>.Success(itemDto);
+
+            return Ok(result);
+        }
+
+        [HttpPost("{id}/{propertyName}/remove")]
+        public async Task<IActionResult> RemoveRelatedItems(Guid id, string propertyName, RelatedEntitiesModel model, CancellationToken cancellationToken)
+        {
+            var normalizedPropertyName = propertyName.Substring(0, 1).ToUpper() + propertyName.Substring(1);
+
+            var property = typeof(T).GetProperty(normalizedPropertyName);
+
+            if (property is null)
+                return NotFound();
+
+            var propertyGenericTypeArguments = property.PropertyType.GenericTypeArguments;
+
+            if (propertyGenericTypeArguments.Length == 0)
+                return NotFound();
+
+            var constructedType = typeof(RemoveRelatedEntitiesRequest<,>).MakeGenericType(typeof(T), propertyGenericTypeArguments[0]);
+
+            var request = Activator.CreateInstance(constructedType, new object[] { id, normalizedPropertyName, model.ItemsIds });
+
+            var item = await _mediator.Send(request!, cancellationToken) as T;
+
+            var itemDto = _mapper.Map<TDto>(item);
+
+            var result = Result<TDto>.Success(itemDto);
+
+            return Ok(result);
         }
     }
 }

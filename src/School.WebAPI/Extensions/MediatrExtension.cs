@@ -16,6 +16,8 @@ namespace School.WebAPI.Extensions
             services.AddTransient(typeof(IRequestHandler<PostRequest<KnowledgeArea, KnowledgeAreaModel>, KnowledgeArea>), typeof(PostRequestHandler<KnowledgeArea, KnowledgeAreaModel>));
             services.AddTransient(typeof(IRequestHandler<PutRequest<KnowledgeArea, KnowledgeAreaDto>, KnowledgeArea>), typeof(PutRequestHandler<KnowledgeArea, KnowledgeAreaDto>));
             services.AddTransient(typeof(IRequestHandler<DeleteRequest<KnowledgeArea>, Unit>), typeof(DeleteRequestHandler<KnowledgeArea>));
+            services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<KnowledgeArea, Subject>, KnowledgeArea>), typeof(AddRelatedEntitiesHandler<KnowledgeArea, Subject>));
+            services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<KnowledgeArea, Subject>, KnowledgeArea>), typeof(RemoveRelatedEntitiesHandler<KnowledgeArea, Subject>));
 
             // Subject
             services.AddTransient(typeof(IRequestHandler<GetAllRequest<Subject>, IQueryable<Subject>>), typeof(GetAllRequestHandler<Subject>));
@@ -23,6 +25,8 @@ namespace School.WebAPI.Extensions
             services.AddTransient(typeof(IRequestHandler<PostRequest<Subject, SubjectModel>, Subject>), typeof(PostRequestHandler<Subject, SubjectModel>));
             services.AddTransient(typeof(IRequestHandler<PutRequest<Subject, SubjectDto>, Subject>), typeof(PutRequestHandler<Subject, SubjectDto>));
             services.AddTransient(typeof(IRequestHandler<DeleteRequest<Subject>, Unit>), typeof(DeleteRequestHandler<Subject>));
+            services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<Subject, KnowledgeArea>, Subject>), typeof(AddRelatedEntitiesHandler<Subject, KnowledgeArea>));
+            services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<Subject, KnowledgeArea>, Subject>), typeof(RemoveRelatedEntitiesHandler<Subject, KnowledgeArea>));
 
             // Person
             services.AddTransient(typeof(IRequestHandler<GetAllRequest<Person>, IQueryable<Person>>), typeof(GetAllRequestHandler<Person>));
@@ -37,6 +41,8 @@ namespace School.WebAPI.Extensions
             services.AddTransient(typeof(IRequestHandler<PostRequest<Course, CourseModel>, Course>), typeof(PostRequestHandler<Course, CourseModel>));
             services.AddTransient(typeof(IRequestHandler<PutRequest<Course, CourseDto>, Course>), typeof(PutRequestHandler<Course, CourseDto>));
             services.AddTransient(typeof(IRequestHandler<DeleteRequest<Course>, Unit>), typeof(DeleteRequestHandler<Course>));
+            services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<Course, Subject>, Course>), typeof(AddRelatedEntitiesHandler<Course, Subject>));
+            services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<Course, Subject>, Course>), typeof(RemoveRelatedEntitiesHandler<Course, Subject>));
 
             // Teacher
             services.AddTransient(typeof(IRequestHandler<GetAllRequest<Teacher>, IQueryable<Teacher>>), typeof(GetAllRequestHandler<Teacher>));

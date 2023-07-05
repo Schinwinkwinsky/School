@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using School.Application.CQRS.Courses;
 using School.Application.CQRS.Generics;
 using School.Application.DTO;
 using School.Application.Models;
+using School.Application.Results;
 using School.Domain.Entities;
 
 namespace School.WebAPI.Controllers
@@ -22,5 +24,19 @@ namespace School.WebAPI.Controllers
     {
         public CoursesController(IMapper mapper, IMediator mediator)
             : base(mapper, mediator) { }
+
+        [HttpPost("{id}/subjects/add")]
+        public async Task<IActionResult> AddSubjectsAsync(Guid id, AddCourseSubjectsRequest request, CancellationToken cancellationToken)
+        {
+            request.Id = id;
+
+            var course = await _mediator.Send(request, cancellationToken);
+
+            var courseDto = _mapper.Map<CourseDto>(course);
+
+            var result = Result<CourseDto>.Success(courseDto);
+
+            return Ok(result);
+        }
     }
 }
