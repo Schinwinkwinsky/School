@@ -8,9 +8,9 @@ namespace School.Application.CQRS.Generics
     public class DeleteRequest<T> : IRequest
         where T : EntityBase
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
-        public DeleteRequest(int id)
+        public DeleteRequest(Guid id)
             => Id = id;
     }
 
@@ -31,7 +31,7 @@ namespace School.Application.CQRS.Generics
 
             item.DeletedAt = DateTime.Now;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

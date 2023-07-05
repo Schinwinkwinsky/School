@@ -13,9 +13,9 @@ namespace School.Data.Repositories
 
         public IQueryable<T> GetAll() => _context.Set<T>();
 
-        public T? Get(int id) => _context.Set<T>().Find(id);
+        public T? Get(Guid id) => _context.Set<T>().Find(id);
 
-        public async Task<T?> GetAsync(int id, CancellationToken cancellationToken) 
+        public async Task<T?> GetAsync(Guid id, CancellationToken cancellationToken) 
             => await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken:cancellationToken);
 
         public EntityEntry<T> Add(T entity) => _context.Set<T>().Add(entity);
@@ -36,6 +36,6 @@ namespace School.Data.Repositories
 
         public EntityEntry<T> Remove(T entity) => _context.Set<T>().Remove(entity);
 
-        public void RemoveRange(IEnumerable<T> entities) => _context.Set<T>().RemoveRange(entities);
+        public void RemoveRange(IEnumerable<T> entities) => _context.Set<T>().RemoveRange(entities);        
     }
 }

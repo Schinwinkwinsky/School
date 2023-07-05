@@ -1,4 +1,6 @@
-﻿namespace School.Domain.Entities
+﻿using School.Domain.ValueObjects;
+
+namespace School.Domain.Entities
 {
     public class Person : EntityBase
     {

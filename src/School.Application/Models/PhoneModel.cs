@@ -1,4 +1,4 @@
-﻿using School.Domain.Entities;
+﻿using School.Domain.ValueObjects;
 
 namespace School.Application.Models
 {

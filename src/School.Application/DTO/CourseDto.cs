@@ -4,10 +4,10 @@ namespace School.Application.DTO
 {
     public class CourseDto : IDto<Course>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; } = default!;
 
-        public ICollection<Subject> Subjects { get; set; } = default!;
+        public ICollection<SubjectDto> Subjects { get; set; } = default!;
 
         public void CopyToEntity(Course item)
         {

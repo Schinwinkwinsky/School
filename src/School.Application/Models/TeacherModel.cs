@@ -4,7 +4,7 @@ namespace School.Application.Models
 {
     public class TeacherModel : IModel<Teacher>
     {
-        public int PersonId { get; set; }
+        public Guid PersonId { get; set; }
 
         public Teacher ToEntity()
         {

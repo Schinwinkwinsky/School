@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using School.Application.DTO;
-using School.Domain.Entities;
+using School.Domain.ValueObjects;
 
 namespace School.Application.Profiles
 {

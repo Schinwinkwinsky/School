@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using School.Domain.Entities;
+using School.Domain.ValueObjects;
 
 namespace School.Data.EntityTypeConfigurations
 {

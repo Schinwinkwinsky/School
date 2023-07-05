@@ -8,8 +8,8 @@ namespace School.Application.Profiles
     {
         public CourseProfile()
         {
-            //CreateMap<Course, CourseDto>()
-            //    .ForMember(c => c.Subjects, opt => opt.ExplicitExpansion());
+            CreateMap<Course, CourseDto>()
+                .ForMember(c => c.Subjects, opt => opt.ExplicitExpansion());
         }
     }
 }

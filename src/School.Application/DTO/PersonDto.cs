@@ -4,7 +4,7 @@ namespace School.Application.DTO
 {
     public class PersonDto : IDto<Person>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; } = null!;
         public DateTime Birth { get; set; }
 

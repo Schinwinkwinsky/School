@@ -24,11 +24,11 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("CourseSubject", b =>
                 {
-                    b.Property<int>("CoursesId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CoursesId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SubjectsId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SubjectsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CoursesId", "SubjectsId");
 
@@ -39,11 +39,11 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("KnowledgeAreaSubject", b =>
                 {
-                    b.Property<int>("KnowledgeAreasId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("KnowledgeAreasId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SubjectsId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SubjectsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("KnowledgeAreasId", "SubjectsId");
 
@@ -54,11 +54,11 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("KnowledgeAreaTeacher", b =>
                 {
-                    b.Property<int>("KnowledgeAreasId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("KnowledgeAreasId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("TeachersId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TeachersId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("KnowledgeAreasId", "TeachersId");
 
@@ -69,11 +69,9 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Domain.Entities.Course", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -104,11 +102,9 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Domain.Entities.KnowledgeArea", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -142,18 +138,16 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Domain.Entities.Period", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -173,8 +167,8 @@ namespace School.Data.Migrations
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -193,11 +187,9 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Domain.Entities.Person", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Birth")
                         .HasColumnType("datetime2");
@@ -231,11 +223,9 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Domain.Entities.SchoolClass", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -253,14 +243,14 @@ namespace School.Data.Migrations
                     b.Property<int>("DeletedBy")
                         .HasColumnType("int");
 
-                    b.Property<int>("PeriodId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PeriodId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -281,11 +271,9 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Domain.Entities.Student", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -299,8 +287,8 @@ namespace School.Data.Migrations
                     b.Property<int>("DeletedBy")
                         .HasColumnType("int");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -317,11 +305,9 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Domain.Entities.Subject", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -352,11 +338,9 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Domain.Entities.Teacher", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -370,8 +354,8 @@ namespace School.Data.Migrations
                     b.Property<int>("DeletedBy")
                         .HasColumnType("int");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -388,11 +372,11 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("SchoolClassStudent", b =>
                 {
-                    b.Property<int>("SchoolClassesId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SchoolClassesId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("StudentsId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("StudentsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("SchoolClassesId", "StudentsId");
 
@@ -463,10 +447,10 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Domain.Entities.Person", b =>
                 {
-                    b.OwnsMany("School.Domain.Entities.Address", "Addresses", b1 =>
+                    b.OwnsMany("School.Domain.ValueObjects.Address", "Addresses", b1 =>
                         {
-                            b1.Property<int>("PersonId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("PersonId")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
@@ -522,10 +506,10 @@ namespace School.Data.Migrations
                                 .HasForeignKey("PersonId");
                         });
 
-                    b.OwnsMany("School.Domain.Entities.Email", "Emails", b1 =>
+                    b.OwnsMany("School.Domain.ValueObjects.Email", "Emails", b1 =>
                         {
-                            b1.Property<int>("PersonId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("PersonId")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
@@ -548,10 +532,10 @@ namespace School.Data.Migrations
                                 .HasForeignKey("PersonId");
                         });
 
-                    b.OwnsMany("School.Domain.Entities.Phone", "Phones", b1 =>
+                    b.OwnsMany("School.Domain.ValueObjects.Phone", "Phones", b1 =>
                         {
-                            b1.Property<int>("PersonId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("PersonId")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()

@@ -1,4 +1,4 @@
-﻿namespace School.Domain.Entities
+﻿namespace School.Domain.ValueObjects
 {
     public class Phone
     {

@@ -8,9 +8,9 @@ namespace School.Application.CQRS.Generics
     public class GetByIdRequest<T> : IRequest<IQueryable<T>> 
         where T : EntityBase
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
-        public GetByIdRequest(int id)
+        public GetByIdRequest(Guid id)
             => Id = id;
     }
 

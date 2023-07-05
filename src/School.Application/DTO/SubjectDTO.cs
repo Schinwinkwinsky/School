@@ -4,7 +4,7 @@ namespace School.Application.DTO
 {
     public class SubjectDto : IDto<Subject>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
 
         // Navigation properties.

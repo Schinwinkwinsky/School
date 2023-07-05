@@ -4,10 +4,10 @@ namespace School.Application.DTO
 {
     public class TeacherDto : IDto<Teacher>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         // Navigation properties.
-        public int PersonId { get; set; }
+        public Guid PersonId { get; set; }
         public PersonDto? Person { get; set; }
 
         public ICollection<KnowledgeAreaDto>? KnowledgeAreas { get; set; }

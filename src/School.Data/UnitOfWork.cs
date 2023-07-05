@@ -7,7 +7,7 @@ namespace School.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DataContext _context;
-        private Hashtable _repositories = new();
+        private readonly Hashtable _repositories = new();
 
         public UnitOfWork(DataContext context)
             => _context = context;
