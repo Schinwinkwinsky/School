@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using School.Application.CQRS.Generics;
 using School.Application.DTO;
+using School.Application.Helpers;
 using School.Application.Models;
 using School.Application.Results;
 using School.Domain.Entities;
@@ -114,21 +115,22 @@ namespace School.WebAPI.Controllers
         [HttpPost("{id}/{propertyName}/add")]
         public async Task<IActionResult> AddRelatedItems(Guid id, string propertyName, RelatedEntitiesModel model, CancellationToken cancellationToken)
         {
-            var normalizedPropertyName = propertyName.Substring(0, 1).ToUpper() + propertyName.Substring(1);
+            var normalizedPropertyName = propertyName.Capitalize();
 
             var property = typeof(T).GetProperty(normalizedPropertyName);
 
             if (property is null)
-                return NotFound();            
-            
-            var propertyGenericTypeArguments = property.PropertyType.GenericTypeArguments;
-
-            if (propertyGenericTypeArguments.Length == 0)
                 return NotFound();
 
-            var constructedType = typeof(AddRelatedEntitiesRequest<,>).MakeGenericType(typeof(T), propertyGenericTypeArguments[0]);
+            var relatedType = property.PropertyType.GenericTypeArguments.FirstOrDefault();
 
-            var request = Activator.CreateInstance(constructedType, new object[] { id, normalizedPropertyName, model.ItemsIds});
+            if (relatedType is null
+                || property.PropertyType != typeof(ICollection<>).MakeGenericType(relatedType))
+                return NotFound();
+
+            var request = Activator.CreateInstance(
+                typeof(AddRelatedEntitiesRequest<,>).MakeGenericType(typeof(T), relatedType),
+                new object[] { id, normalizedPropertyName, model.ItemsIds });
 
             var item = await _mediator.Send(request!, cancellationToken) as T;
 
@@ -142,21 +144,22 @@ namespace School.WebAPI.Controllers
         [HttpPost("{id}/{propertyName}/remove")]
         public async Task<IActionResult> RemoveRelatedItems(Guid id, string propertyName, RelatedEntitiesModel model, CancellationToken cancellationToken)
         {
-            var normalizedPropertyName = propertyName.Substring(0, 1).ToUpper() + propertyName.Substring(1);
+            var normalizedPropertyName = propertyName.Capitalize();
 
             var property = typeof(T).GetProperty(normalizedPropertyName);
 
             if (property is null)
                 return NotFound();
 
-            var propertyGenericTypeArguments = property.PropertyType.GenericTypeArguments;
+            var relatedType = property.PropertyType.GenericTypeArguments.FirstOrDefault();
 
-            if (propertyGenericTypeArguments.Length == 0)
+            if (relatedType is null 
+                || property.PropertyType != typeof(ICollection<>).MakeGenericType(relatedType))
                 return NotFound();
 
-            var constructedType = typeof(RemoveRelatedEntitiesRequest<,>).MakeGenericType(typeof(T), propertyGenericTypeArguments[0]);
-
-            var request = Activator.CreateInstance(constructedType, new object[] { id, normalizedPropertyName, model.ItemsIds });
+            var request = Activator.CreateInstance(
+                typeof(RemoveRelatedEntitiesRequest<,>).MakeGenericType(typeof(T), relatedType),
+                new object[] { id, normalizedPropertyName, model.ItemsIds });
 
             var item = await _mediator.Send(request!, cancellationToken) as T;
 
