@@ -43,7 +43,7 @@ namespace School.Application.CQRS.Generics
             if (entity is null)
                 throw new HttpRequestException($"{typeof(T).Name} with id = {request.Id} was not found.", null, HttpStatusCode.NotFound);
 
-            PropertyInfo property = entity.GetType().GetProperty(request.PropertyName)!;
+            PropertyInfo property = typeof(T).GetProperty(request.PropertyName)!;
 
             bool isItemUpdated = false;
 

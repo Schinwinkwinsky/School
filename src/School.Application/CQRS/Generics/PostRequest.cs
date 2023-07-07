@@ -26,7 +26,7 @@ namespace School.Application.CQRS.Generics
 
         public async Task<T> Handle(PostRequest<T, TModel> request, CancellationToken cancellationToken)
         {
-            var item = request.Model!.ToEntity();
+            var item = request.Model.ToEntity();
 
             item.CreatedAt = DateTime.UtcNow;
 

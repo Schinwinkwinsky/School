@@ -9,12 +9,12 @@ namespace School.Data
         public DataContext(DbContextOptions<DataContext> options) 
             : base(options) { }
 
-        public DbSet<KnowledgeArea> KnowledgeAreas { get; set; } = null!;
-        public DbSet<Person> People { get; set; } = null!;
-        public DbSet<SchoolClass> SchoolClasses { get; set; } = null!;
-        public DbSet<Student> Students { get; set; } = null!;
-        public DbSet<Subject> Subjects { get; set; } = null!;
-        public DbSet<Teacher> Teachers { get; set; } = null!;
+        public DbSet<KnowledgeArea> KnowledgeAreas { get; set; } = default!;
+        public DbSet<Person> People { get; set; } = default!;
+        public DbSet<SchoolClass> SchoolClasses { get; set; } = default!;
+        public DbSet<Student> Students { get; set; } = default!;
+        public DbSet<Subject> Subjects { get; set; } = default!;
+        public DbSet<Teacher> Teachers { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
