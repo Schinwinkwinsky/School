@@ -6,7 +6,7 @@ namespace School.Application.DTO
     {
         public string GlobalCode { get; set; } = default!;
         public string LocalCode { get; set; } = default!;
-        public string PhoneNumber { get; set; } = default!;
+        public string Number { get; set; } = default!;
 
         public string? Description { get; set; }
 
@@ -16,7 +16,7 @@ namespace School.Application.DTO
             {
                 GlobalCode = dto.GlobalCode,
                 LocalCode = dto.LocalCode,
-                PhoneNumber = dto.PhoneNumber,
+                Number = dto.Number,
                 Description = dto.Description
             };
         }
