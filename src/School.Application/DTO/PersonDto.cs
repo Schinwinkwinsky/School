@@ -1,4 +1,5 @@
 ﻿using School.Domain.Entities;
+using School.Domain.ValueObjects;
 
 namespace School.Application.DTO
 {
@@ -12,23 +13,14 @@ namespace School.Application.DTO
         public ICollection<EmailDto>? Emails { get; set; }
         public ICollection<PhoneDto>? Phones { get; set; }
 
-        public void CopyToEntity(Person item)
+        public void CopyToEntity(Person person)
         {
-            item.Id = Id;
-            item.Name = Name;
-            item.Birth = Birth;
-
-            if (Addresses is not  null)
-                foreach (var dto in Addresses)            
-                    item.Addresses.Add(dto);
-
-            if (Emails is not null)
-                foreach (var dto in Emails)
-                    item.Emails.Add(dto);
-
-            if (Phones is not null)
-                foreach (var dto in Phones)
-                    item.Phones.Add(dto);
+            person.Id = Id;
+            person.Name = Name;
+            person.Birth = Birth;
+            person.Addresses = Addresses?.Select<AddressDto, Address>(a => a).ToList() ?? new List<Address>();
+            person.Emails = Emails?.Select<EmailDto, Email>(e => e).ToList() ?? new List<Email>();
+            person.Phones = Phones?.Select<PhoneDto, Phone>(p => p).ToList() ?? new List<Phone>();
         }
     }
 }
