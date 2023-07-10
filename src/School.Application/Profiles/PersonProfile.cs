@@ -8,10 +8,7 @@ namespace School.Application.Profiles
     {
         public PersonProfile()
         {
-            CreateMap<Person, PersonDto>()
-                .ForMember(p => p.Addresses, opt => opt.ExplicitExpansion())
-                .ForMember(p => p.Emails, opt => opt.ExplicitExpansion())
-                .ForMember(p => p.Phones, opt => opt.ExplicitExpansion());
+            CreateMap<Person, PersonDto>();
         }            
     }
 }
