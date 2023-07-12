@@ -32,7 +32,7 @@ builder.Services.AddControllers()
 
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb")));
 
-builder.Services.AddMediatR(Assembly.Load("School.Application"));
+builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.Load("School.Application")));
 builder.Services.RegisterMediatrHandlers();
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));

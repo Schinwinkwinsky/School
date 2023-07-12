@@ -14,7 +14,7 @@ namespace School.Application.CQRS.Generics
             => Id = id;
     }
 
-    public class DeleteRequestHandler<T> : IRequestHandler<DeleteRequest<T>, Unit>
+    public class DeleteRequestHandler<T> : IRequestHandler<DeleteRequest<T>>
         where T : EntityBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -22,7 +22,7 @@ namespace School.Application.CQRS.Generics
         public DeleteRequestHandler(IUnitOfWork unitOfWork)
             => _unitOfWork = unitOfWork;
 
-        public async Task<Unit> Handle(DeleteRequest<T> request, CancellationToken cancellationToken)
+        public async Task Handle(DeleteRequest<T> request, CancellationToken cancellationToken)
         {
             var item = await _unitOfWork.Repository<T>().GetAsync(request.Id, cancellationToken);
 
@@ -31,9 +31,7 @@ namespace School.Application.CQRS.Generics
 
             item.DeletedAt = DateTime.Now;
 
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
+            await _unitOfWork.SaveChangesAsync(cancellationToken);            
         }
     }
 }
