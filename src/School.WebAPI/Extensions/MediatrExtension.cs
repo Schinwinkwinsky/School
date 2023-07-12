@@ -8,7 +8,7 @@ namespace School.WebAPI.Extensions
 {
     public static class MediatrExtension
     {
-        public static void RegiesterMediatrHandlers(this IServiceCollection services)
+        public static void RegisterMediatrHandlers(this IServiceCollection services)
         {
             // KnowledgeArea
             services.AddTransient(typeof(IRequestHandler<GetAllRequest<KnowledgeArea>, IQueryable<KnowledgeArea>>), typeof(GetAllRequestHandler<KnowledgeArea>));

@@ -1,3 +1,4 @@
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
@@ -32,12 +33,16 @@ builder.Services.AddControllers()
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb")));
 
 builder.Services.AddMediatR(Assembly.Load("School.Application"));
-builder.Services.RegiesterMediatrHandlers();
+builder.Services.RegisterMediatrHandlers();
+
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+builder.Services.AddValidatorsFromAssembly(Assembly.Load("School.Application"));
 
 builder.Services.AddAutoMapper(Assembly.Load("School.Application"));
 
 builder.Services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
+
+builder.Services.AddTransient<ExceptionHandlerMiddleware>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 //builder.Services.AddEndpointsApiExplorer();

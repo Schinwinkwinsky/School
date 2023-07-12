@@ -1,25 +1,21 @@
 ﻿using School.Application.Results;
 using System.Net;
-using System.Text.Json;
+using IResult = School.Application.Results.IResult;
 
 namespace School.WebAPI.Middlewares
 {
-    public class ExceptionHandlerMiddleware
+    public class ExceptionHandlerMiddleware : IMiddleware
     {
-        private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionHandlerMiddleware> _logger;
 
-        public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
-        {
-            _next = next;
-            _logger = logger;
-        }
+        public ExceptionHandlerMiddleware(ILogger<ExceptionHandlerMiddleware> logger)
+            => _logger = logger;
 
-        public async Task Invoke(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
             {
-                await _next(context);
+                await next(context);
             }
             catch (Exception ex)
             {
@@ -44,8 +40,7 @@ namespace School.WebAPI.Middlewares
             
             context.Response.ContentType = "application/json";
 
-            var result = JsonSerializer.Serialize(Result.Fail(exception.Message));
-            await context.Response.WriteAsync(result);
+            await context.Response.WriteAsJsonAsync<IResult>(Result.Fail(exception.Message));
         }
     }
 }
