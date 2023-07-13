@@ -9,7 +9,6 @@ using School.Domain.Entities;
 namespace School.WebAPI.Controllers;
 
 [Route("api/[controller]")]
-[ApiController]
 public class KnowledgeAreasController : ApiControllerBase<
     KnowledgeArea,
     KnowledgeAreaModel,

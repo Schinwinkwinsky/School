@@ -1,4 +1,5 @@
-﻿using School.Application.Results;
+﻿using FluentValidation;
+using School.Application.Results;
 using System.Net;
 using IResult = School.Application.Results.IResult;
 
@@ -30,6 +31,11 @@ public class ExceptionHandlerMiddleware : IMiddleware
             case HttpRequestException ex:
                 _logger.LogInformation(exception.Message);
                 context.Response.StatusCode = (int)ex.StatusCode!;
+                break;
+
+            case ValidationException validEx:
+                _logger.LogInformation(validEx.Message);
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 break;
 
             default:

@@ -26,7 +26,7 @@ modelBuilder.ComplexType<Address>();
 modelBuilder.ComplexType<Phone>();
 modelBuilder.ComplexType<Email>();
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(opt => opt.ModelValidatorProviders.Clear())
     .AddOData(options => options.EnableQueryFeatures(100).AddRouteComponents("odata", modelBuilder.GetEdmModel()))
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 

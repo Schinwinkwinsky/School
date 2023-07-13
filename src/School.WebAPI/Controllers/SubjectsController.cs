@@ -9,7 +9,6 @@ using School.Domain.Entities;
 namespace School.WebAPI.Controllers;
 
 [Route("api/[controller]")]
-[ApiController]
 public class SubjectsController : ApiControllerBase<
     Subject,
     SubjectModel,
