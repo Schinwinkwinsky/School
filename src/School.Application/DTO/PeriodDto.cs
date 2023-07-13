@@ -8,8 +8,8 @@ public class PeriodDto : IDto<Period>
 
     public string Code { get; set; } = string.Empty;
 
-    public DateTime Start { get; set; }
-    public DateTime End { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
 
     // Navigation properties.
     public Guid CourseId { get; set; }
@@ -21,8 +21,8 @@ public class PeriodDto : IDto<Period>
     {
         period.Id = Id;
         period.Code = Code;
-        period.Start = Start;
-        period.End = End;
+        period.StartDate = StartDate;
+        period.EndDate = EndDate;
         period.CourseId = CourseId;
     }
 }

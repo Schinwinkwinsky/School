@@ -4,8 +4,8 @@ public class Period : EntityBase
 {
     public string Code { get; set; } = string.Empty;
 
-    public DateTime Start { get; set; }
-    public DateTime End { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
 
     // Navigation properties.
     public Guid CourseId { get; set; }
