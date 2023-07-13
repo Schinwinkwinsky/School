@@ -5,7 +5,7 @@ namespace School.Application.DTO;
 public class KnowledgeAreaDto : IDto<KnowledgeArea>
 {
     public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = default!;
     public string? Description { get; set; }
 
     // Navigation properties.

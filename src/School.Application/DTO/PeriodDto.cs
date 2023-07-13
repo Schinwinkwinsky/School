@@ -6,7 +6,7 @@ public class PeriodDto : IDto<Period>
 {
     public Guid Id { get; set; }
 
-    public string Code { get; set; } = string.Empty;
+    public string Code { get; set; } = default!;
 
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }

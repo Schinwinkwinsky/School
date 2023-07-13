@@ -4,7 +4,7 @@ namespace School.Application.Models;
 
 public class CourseModel : IModel<Course>
 {
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = default!;
 
     public Course ToEntity()
     {

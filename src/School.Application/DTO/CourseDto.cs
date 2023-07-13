@@ -5,7 +5,7 @@ namespace School.Application.DTO;
 public class CourseDto : IDto<Course>
 {
     public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = default!;
 
     public ICollection<SubjectDto>? Subjects { get; set; }
 

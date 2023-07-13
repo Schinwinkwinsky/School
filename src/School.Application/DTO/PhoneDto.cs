@@ -4,9 +4,9 @@ namespace School.Application.DTO;
 
 public class PhoneDto
 {
-    public string GlobalCode { get; set; } = string.Empty;
-    public string LocalCode { get; set; } = string.Empty;
-    public string Number { get; set; } = string.Empty;
+    public string GlobalCode { get; set; } = default!;
+    public string LocalCode { get; set; } = default!;
+    public string Number { get; set; } = default!;
 
     public string? Description { get; set; }
 

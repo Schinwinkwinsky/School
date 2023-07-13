@@ -4,7 +4,7 @@ namespace School.Application.Models;
 
 public class EmailModel
 {
-    public string Address { get; set; } = string.Empty;
+    public string Address { get; set; } = default!;
 
     public string? Description { get; set; }
 

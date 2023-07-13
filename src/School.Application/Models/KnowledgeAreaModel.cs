@@ -4,7 +4,7 @@ namespace School.Application.Models;
 
 public class KnowledgeAreaModel : IModel<KnowledgeArea>
 {
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = default!;
     public string? Description { get; set; }
 
     public KnowledgeArea ToEntity()

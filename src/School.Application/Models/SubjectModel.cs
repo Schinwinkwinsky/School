@@ -4,7 +4,7 @@ namespace School.Application.Models;
 
 public class SubjectModel : IModel<Subject>
 {
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = default!;
 
     public Subject ToEntity()
     {

@@ -5,7 +5,7 @@ namespace School.Application.Models;
 
 public class PersonModel : IModel<Person>
 {
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = default!;
     public DateTime Birth { get; set; }
 
     public ICollection<AddressModel>? Addresses { get; set; }

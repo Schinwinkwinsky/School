@@ -4,7 +4,7 @@ namespace School.Application.Models;
 
 public class PeriodModel : IModel<Period>
 {
-    public string Code { get; set; } = string.Empty;
+    public string Code { get; set; } = default!;
 
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }

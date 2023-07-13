@@ -6,7 +6,7 @@ public class SchoolClassDto : IDto<SchoolClass>
 {
     public Guid Id { get; set; }
 
-    public string Code { get; set; } = string.Empty;
+    public string Code { get; set; } = default!;
 
     // Navigation properties.
     public Guid PeriodId { get; set; }

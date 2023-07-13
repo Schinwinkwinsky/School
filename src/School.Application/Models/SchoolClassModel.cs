@@ -4,7 +4,7 @@ namespace School.Application.Models;
 
 public class SchoolClassModel : IModel<SchoolClass>
 {
-    public string Code { get; set; } = string.Empty;
+    public string Code { get; set; } = default!;
 
     // Navigation properties.
     public Guid PeriodId { get; set; }

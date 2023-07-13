@@ -6,12 +6,12 @@ namespace School.Application.DTO;
 public class PersonDto : IDto<Person>
 {
     public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = default!;
     public DateTime Birth { get; set; }
 
-    public ICollection<AddressDto> Addresses { get; set; } = new List<AddressDto>();
-    public ICollection<EmailDto> Emails { get; set; } = new List<EmailDto>();
-    public ICollection<PhoneDto> Phones { get; set; } = new List<PhoneDto>();
+    public ICollection<AddressDto> Addresses { get; set; } = default!;
+    public ICollection<EmailDto> Emails { get; set; } = default!;
+    public ICollection<PhoneDto> Phones { get; set; } = default!;
 
     public void CopyToEntity(Person person)
     {

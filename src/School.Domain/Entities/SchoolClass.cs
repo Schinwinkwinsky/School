@@ -2,17 +2,17 @@
 
 public class SchoolClass : EntityBase
 {
-    public string Code { get; set; } = string.Empty;
+    public string Code { get; set; } = default!;
 
     // Navigation properties.
     public Guid PeriodId { get; set; }
-    public virtual Period Period { get; set; } = new();
+    public virtual Period Period { get; set; } = default!;
 
     public Guid SubjectId { get; set; }
-    public virtual Subject Subject { get; set; } = new();
+    public virtual Subject Subject { get; set; } = default!;
 
     public Guid TeacherId { get; set; }
-    public virtual Teacher Teacher { get; set; } = new();
+    public virtual Teacher Teacher { get; set; } = default!;
 
-    public virtual ICollection<Student> Students { get; set; } = new List<Student>();
+    public virtual ICollection<Student> Students { get; set; } = default!;
 }

@@ -5,7 +5,7 @@ namespace School.Application.DTO;
 public class SubjectDto : IDto<Subject>
 {
     public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = default!;
 
     // Navigation properties.
     public ICollection<KnowledgeAreaDto>? KnowledgeAreas { get; set; }
