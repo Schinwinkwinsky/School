@@ -6,21 +6,19 @@ using School.Application.DTO;
 using School.Application.Models;
 using School.Domain.Entities;
 
-namespace School.WebAPI.Controllers
+namespace School.WebAPI.Controllers;
+
+[Route("api/[controller]")]
+public class CoursesController : ApiControllerBase<
+    Course,
+    CourseModel,
+    CourseDto,
+    GetAllRequest<Course>,
+    GetByIdRequest<Course>,
+    PostRequest<Course, CourseModel>,
+    PutRequest<Course, CourseDto>,
+    DeleteRequest<Course>>
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CoursesController : ApiControllerBase<
-        Course,
-        CourseModel,
-        CourseDto,
-        GetAllRequest<Course>,
-        GetByIdRequest<Course>,
-        PostRequest<Course, CourseModel>,
-        PutRequest<Course, CourseDto>,
-        DeleteRequest<Course>>
-    {
-        public CoursesController(IMapper mapper, IMediator mediator)
-            : base(mapper, mediator) { }
-    }
+    public CoursesController(IMapper mapper, IMediator mediator)
+        : base(mapper, mediator) { }
 }

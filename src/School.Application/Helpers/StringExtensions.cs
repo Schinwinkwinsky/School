@@ -1,10 +1,9 @@
-﻿namespace School.Application.Helpers
+﻿namespace School.Application.Helpers;
+
+public static class StringExtensions
 {
-    public static class StringExtensions
+    public static string Capitalize(this string value)
     {
-        public static string Capitalize(this string value)
-        {
-            return value.Substring(0, 1).ToUpper() + value.Substring(1);
-        }
+        return value.Substring(0, 1).ToUpper() + value.Substring(1);
     }
 }

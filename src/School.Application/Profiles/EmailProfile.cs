@@ -2,13 +2,12 @@
 using School.Application.DTO;
 using School.Domain.ValueObjects;
 
-namespace School.Application.Profiles
+namespace School.Application.Profiles;
+
+public class EmailProfile : Profile
 {
-    public class EmailProfile : Profile
+    public EmailProfile()
     {
-        public EmailProfile()
-        {
-            CreateMap<Email, EmailDto>();
-        }
+        CreateMap<Email, EmailDto>();
     }
 }

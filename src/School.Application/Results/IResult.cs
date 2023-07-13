@@ -1,14 +1,13 @@
-﻿namespace School.Application.Results
+﻿namespace School.Application.Results;
+
+public interface IResult
 {
-    public interface IResult
-    {
-        IEnumerable<string>? Messages { get; set; }
+    IEnumerable<string>? Messages { get; set; }
 
-        bool Succeeded { get; set; }
-    }
+    bool Succeeded { get; set; }
+}
 
-    public interface IResult<out T> : IResult
-    {
-        T? Data { get; }
-    }
+public interface IResult<out T> : IResult
+{
+    T? Data { get; }
 }

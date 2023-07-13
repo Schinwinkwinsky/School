@@ -3,36 +3,35 @@ using School.Domain;
 using School.Domain.Entities;
 using System.Net;
 
-namespace School.Application.CQRS.Generics
+namespace School.Application.CQRS.Generics;
+
+public class GetByIdRequest<T> : IRequest<IQueryable<T>> 
+    where T : EntityBase
 {
-    public class GetByIdRequest<T> : IRequest<IQueryable<T>> 
-        where T : EntityBase
+    public Guid Id { get; set; }
+
+    public GetByIdRequest(Guid id)
+        => Id = id;
+}
+
+public class GetByIdRequestHandler<T> : IRequestHandler<GetByIdRequest<T>, IQueryable<T>> where T : EntityBase
+{
+    private readonly IUnitOfWork _unitOfWork;
+
+    public GetByIdRequestHandler(IUnitOfWork unitOfWork)
+        => _unitOfWork = unitOfWork;
+
+    public async Task<IQueryable<T>> Handle(GetByIdRequest<T> request, CancellationToken cancellationToken)
     {
-        public Guid Id { get; set; }
+        var items = _unitOfWork.Repository<T>()
+            .GetAll()
+            .Where(i => i.Id == request.Id
+                && i.DeletedAt == DateTime.MinValue
+                && i.DeletedBy == 0);
 
-        public GetByIdRequest(Guid id)
-            => Id = id;
-    }
+        if (!items.Any())
+            throw new HttpRequestException($"{ typeof(T).Name } with id = { request.Id } was not found.", null, HttpStatusCode.NotFound);
 
-    public class GetByIdRequestHandler<T> : IRequestHandler<GetByIdRequest<T>, IQueryable<T>> where T : EntityBase
-    {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public GetByIdRequestHandler(IUnitOfWork unitOfWork)
-            => _unitOfWork = unitOfWork;
-
-        public async Task<IQueryable<T>> Handle(GetByIdRequest<T> request, CancellationToken cancellationToken)
-        {
-            var items = _unitOfWork.Repository<T>()
-                .GetAll()
-                .Where(i => i.Id == request.Id
-                    && i.DeletedAt == DateTime.MinValue
-                    && i.DeletedBy == 0);
-
-            if (!items.Any())
-                throw new HttpRequestException($"{ typeof(T).Name } with id = { request.Id } was not found.", null, HttpStatusCode.NotFound);
-
-            return await Task.FromResult(items);
-        }
+        return await Task.FromResult(items);
     }
 }

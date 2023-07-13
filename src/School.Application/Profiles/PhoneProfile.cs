@@ -2,13 +2,12 @@
 using School.Application.DTO;
 using School.Domain.ValueObjects;
 
-namespace School.Application.Profiles
+namespace School.Application.Profiles;
+
+public class PhoneProfile : Profile
 {
-    public class PhoneProfile : Profile
+    public PhoneProfile()
     {
-        public PhoneProfile()
-        {
-            CreateMap<Phone, PhoneDto>();
-        }
+        CreateMap<Phone, PhoneDto>();
     }
 }

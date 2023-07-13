@@ -1,11 +1,10 @@
 ﻿using School.Domain.Entities;
 
-namespace School.Application.DTO
-{
-    public interface IDto<T> where T : EntityBase
-    {
-        public Guid Id { get; set; }
+namespace School.Application.DTO;
 
-        void CopyToEntity(T item);
-    }
+public interface IDto<T> where T : EntityBase
+{
+    public Guid Id { get; set; }
+
+    void CopyToEntity(T item);
 }

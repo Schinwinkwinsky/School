@@ -2,44 +2,43 @@
 using System.Collections;
 using School.Data.Repositories;
 
-namespace School.Data
+namespace School.Data;
+
+public class UnitOfWork : IUnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    private readonly DataContext _context;
+    private readonly Hashtable _repositories = new();
+
+    public UnitOfWork(DataContext context)
+        => _context = context;
+
+    public IRepository<T> Repository<T>() where T : class
     {
-        private readonly DataContext _context;
-        private readonly Hashtable _repositories = new();
+        var type = typeof(T).Name;
 
-        public UnitOfWork(DataContext context)
-            => _context = context;
-
-        public IRepository<T> Repository<T>() where T : class
+        if (!_repositories.ContainsKey(type))
         {
-            var type = typeof(T).Name;
+            var repositoryType = typeof(Repository<>);
 
-            if (!_repositories.ContainsKey(type))
-            {
-                var repositoryType = typeof(Repository<>);
+            var repositoryInstance =
+                Activator.CreateInstance(repositoryType
+                    .MakeGenericType(typeof(T)), _context);
 
-                var repositoryInstance =
-                    Activator.CreateInstance(repositoryType
-                        .MakeGenericType(typeof(T)), _context);
-
-                _repositories.Add(type, repositoryInstance);
-            }
-
-            return (IRepository<T>)_repositories[type]!;
+            _repositories.Add(type, repositoryInstance);
         }
 
-        public void SaveChanges()
-            => _context.SaveChanges();
+        return (IRepository<T>)_repositories[type]!;
+    }
 
-        public async Task SaveChangesAsync(CancellationToken cancellationToken)
-            => await _context.SaveChangesAsync(cancellationToken);
+    public void SaveChanges()
+        => _context.SaveChanges();
 
-        public void Dispose()
-        {
-            _context.Dispose();
-            GC.SuppressFinalize(this);
-        }
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+        => await _context.SaveChangesAsync(cancellationToken);
+
+    public void Dispose()
+    {
+        _context.Dispose();
+        GC.SuppressFinalize(this);
     }
 }

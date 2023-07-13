@@ -1,14 +1,19 @@
 ﻿using School.Domain.Entities;
 
-namespace School.Application.DTO
+namespace School.Application.DTO;
+
+public class StudentDto : IDto<Student>
 {
-    public class StudentDto
+    public Guid Id { get; set; }
+
+    public Guid PersonId { get; set; }
+    public PersonDto? Person { get; set; }
+
+    public ICollection<SchoolClassDto>? SchoolClasses { get; set; }
+
+    public void CopyToEntity(Student student)
     {
-        public Guid Id { get; set; }
-
-        public int PersonId { get; set; }
-        public virtual Person Person { get; set; } = default!;
-
-        public virtual ICollection<SchoolClass> SchoolClasses { get; set; } = default!;
+        student.Id = Id;
+        student.PersonId = PersonId;
     }
 }

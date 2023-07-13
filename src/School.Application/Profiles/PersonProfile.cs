@@ -2,13 +2,12 @@
 using School.Application.DTO;
 using School.Domain.Entities;
 
-namespace School.Application.Profiles
+namespace School.Application.Profiles;
+
+public class PersonProfile : Profile
 {
-    public class PersonProfile : Profile
+    public PersonProfile()
     {
-        public PersonProfile()
-        {
-            CreateMap<Person, PersonDto>();
-        }            
-    }
+        CreateMap<Person, PersonDto>();
+    }            
 }

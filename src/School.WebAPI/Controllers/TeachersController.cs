@@ -6,21 +6,20 @@ using School.Application.DTO;
 using School.Application.Models;
 using School.Domain.Entities;
 
-namespace School.WebAPI.Controllers
+namespace School.WebAPI.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class TeachersController : ApiControllerBase<
+    Teacher,
+    TeacherModel,
+    TeacherDto,
+    GetAllRequest<Teacher>,
+    GetByIdRequest<Teacher>,
+    PostRequest<Teacher, TeacherModel>,
+    PutRequest<Teacher, TeacherDto>,
+    DeleteRequest<Teacher>>
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TeachersController : ApiControllerBase<
-        Teacher,
-        TeacherModel,
-        TeacherDto,
-        GetAllRequest<Teacher>,
-        GetByIdRequest<Teacher>,
-        PostRequest<Teacher, TeacherModel>,
-        PutRequest<Teacher, TeacherDto>,
-        DeleteRequest<Teacher>>
-    {
-        public TeachersController(IMapper mapper, IMediator mediator)
-            : base(mapper, mediator) { }
-    }
+    public TeachersController(IMapper mapper, IMediator mediator)
+        : base(mapper, mediator) { }
 }

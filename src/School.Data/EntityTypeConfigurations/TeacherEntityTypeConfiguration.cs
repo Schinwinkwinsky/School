@@ -2,16 +2,15 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using School.Domain.Entities;
 
-namespace School.Data.EntityTypeConfigurations
+namespace School.Data.EntityTypeConfigurations;
+
+public class TeacherEntityTypeConfiguration : IEntityTypeConfiguration<Teacher>
 {
-    public class TeacherEntityTypeConfiguration : IEntityTypeConfiguration<Teacher>
+    public void Configure(EntityTypeBuilder<Teacher> builder)
     {
-        public void Configure(EntityTypeBuilder<Teacher> builder)
-        {
-            builder.HasOne<Person>(t => t.Person)
-                .WithMany()
-                .HasForeignKey(t => t.PersonId)
-                .OnDelete(DeleteBehavior.Restrict);
-        }
+        builder.HasOne<Person>(t => t.Person)
+            .WithMany()
+            .HasForeignKey(t => t.PersonId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

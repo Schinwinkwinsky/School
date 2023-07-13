@@ -3,39 +3,38 @@ using School.Domain;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace School.Data.Repositories
+namespace School.Data.Repositories;
+
+public class Repository<T> : IRepository<T> where T : class
 {
-    public class Repository<T> : IRepository<T> where T : class
-    {
-        protected readonly DataContext _context;
+    protected readonly DataContext _context;
 
-        public Repository(DataContext context) => _context = context;
+    public Repository(DataContext context) => _context = context;
 
-        public IQueryable<T> GetAll() => _context.Set<T>();
+    public IQueryable<T> GetAll() => _context.Set<T>();
 
-        public T? Get(Guid id) => _context.Set<T>().Find(id);
+    public T? Get(Guid id) => _context.Set<T>().Find(id);
 
-        public async Task<T?> GetAsync(Guid id, CancellationToken cancellationToken) 
-            => await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken:cancellationToken);
+    public async Task<T?> GetAsync(Guid id, CancellationToken cancellationToken) 
+        => await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken:cancellationToken);
 
-        public EntityEntry<T> Add(T entity) => _context.Set<T>().Add(entity);
+    public EntityEntry<T> Add(T entity) => _context.Set<T>().Add(entity);
 
-        public async Task<EntityEntry<T>> AddAsync(T entity, CancellationToken cancellationToken)
-            => await _context.Set<T>().AddAsync(entity, cancellationToken);
+    public async Task<EntityEntry<T>> AddAsync(T entity, CancellationToken cancellationToken)
+        => await _context.Set<T>().AddAsync(entity, cancellationToken);
 
-        public bool Any(Expression<Func<T, bool>> predicate) => _context.Set<T>().Any(predicate);
+    public bool Any(Expression<Func<T, bool>> predicate) => _context.Set<T>().Any(predicate);
 
-        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate) 
-            => await _context.Set<T>().AnyAsync(predicate);
+    public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate) 
+        => await _context.Set<T>().AnyAsync(predicate);
 
-        public void AddRange(IEnumerable<T> entities) => _context.Set<T>().AddRange(entities);
+    public void AddRange(IEnumerable<T> entities) => _context.Set<T>().AddRange(entities);
 
-        public EntityEntry<T> Attach(T entity) => _context.Set<T>().Attach(entity);
+    public EntityEntry<T> Attach(T entity) => _context.Set<T>().Attach(entity);
 
-        public EntityEntry<T> Update(T entity) => _context.Set<T>().Update(entity);
+    public EntityEntry<T> Update(T entity) => _context.Set<T>().Update(entity);
 
-        public EntityEntry<T> Remove(T entity) => _context.Set<T>().Remove(entity);
+    public EntityEntry<T> Remove(T entity) => _context.Set<T>().Remove(entity);
 
-        public void RemoveRange(IEnumerable<T> entities) => _context.Set<T>().RemoveRange(entities);        
-    }
+    public void RemoveRange(IEnumerable<T> entities) => _context.Set<T>().RemoveRange(entities);        
 }

@@ -3,18 +3,17 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.OData.Query;
 using School.Application.Results;
 
-namespace School.WebAPI.Attributes
+namespace School.WebAPI.Attributes;
+
+public class EnableQueryResultAttribute : EnableQueryAttribute
 {
-    public class EnableQueryResultAttribute : EnableQueryAttribute
+    public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
     {
-        public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
-        {
-            if (actionExecutedContext.Exception != null) return;
+        if (actionExecutedContext.Exception != null) return;
 
-            base.OnActionExecuted(actionExecutedContext);
+        base.OnActionExecuted(actionExecutedContext);
 
-            if (actionExecutedContext.Result is ObjectResult obj && obj.Value is not null)
-                actionExecutedContext.Result = new ObjectResult(Result<object>.Success(obj.Value!));
-        }
+        if (actionExecutedContext.Result is ObjectResult obj && obj.Value is not null)
+            actionExecutedContext.Result = new ObjectResult(Result<object>.Success(obj.Value!));
     }
 }

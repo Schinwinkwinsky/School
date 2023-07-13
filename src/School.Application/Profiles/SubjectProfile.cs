@@ -2,14 +2,13 @@
 using School.Application.DTO;
 using School.Domain.Entities;
 
-namespace School.Application.Profiles
+namespace School.Application.Profiles;
+
+public class SubjectProfile : Profile
 {
-    public class SubjectProfile : Profile
+    public SubjectProfile()
     {
-        public SubjectProfile()
-        {
-            CreateMap<Subject, SubjectDto>()
-                .ForMember(s => s.KnowledgeAreas, opt => opt.ExplicitExpansion());
-        }
+        CreateMap<Subject, SubjectDto>()
+            .ForMember(s => s.KnowledgeAreas, opt => opt.ExplicitExpansion());
     }
 }
