@@ -19,7 +19,8 @@ public class SchoolClassModel : IModel<SchoolClass>
         {
             Code = Code,
             PeriodId = PeriodId,
-            SubjectId = SubjectId
+            SubjectId = SubjectId,
+            TeacherId = TeacherId
         };
     }
 }
