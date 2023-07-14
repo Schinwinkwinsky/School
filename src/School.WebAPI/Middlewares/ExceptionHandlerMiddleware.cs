@@ -28,9 +28,9 @@ public class ExceptionHandlerMiddleware : IMiddleware
     {
         switch (exception)
         {
-            case HttpRequestException ex:
+            case HttpRequestException httpReqEx:
                 _logger.LogInformation(exception.Message);
-                context.Response.StatusCode = (int)ex.StatusCode!;
+                context.Response.StatusCode = (int)httpReqEx.StatusCode!;
                 break;
 
             case ValidationException validEx:

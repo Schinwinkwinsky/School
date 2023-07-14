@@ -5,7 +5,7 @@ using School.Application.Models;
 using School.Domain;
 using School.Domain.Entities;
 
-namespace School.Application.Validators;
+namespace School.Application.Validators.SchoolClassValidators;
 
 public class PostSchoolClassValidator : AbstractValidator<PostRequest<SchoolClass, SchoolClassModel>>
 {
@@ -15,11 +15,22 @@ public class PostSchoolClassValidator : AbstractValidator<PostRequest<SchoolClas
     {
         _unitOfWork = unitOfWork;
 
-        RuleFor(r => r).MustAsync(CheckIfPeriodCourseContainsSubject)
-            .WithMessage("Subject must be one of the Period.Course.Subjects.");
+        RuleFor(r => r.Model.Code).NotEmpty();
+        RuleFor(r => r.Model.PeriodId).NotEmpty();
+        RuleFor(r => r.Model.SubjectId).NotEmpty();
+        RuleFor(r => r.Model.TeacherId).NotEmpty();
 
-        RuleFor(r => r).MustAsync(CheckIfSubjectAndTeacherHasOneCommonKnowledgeArea)
-            .WithMessage("Subject and Teacher must have at least one common KnowledgeArea.");
+        When(r => r.Model.PeriodId != default, () =>
+        {
+            RuleFor(r => r).MustAsync(CheckIfPeriodCourseContainsSubject)
+                .WithMessage("Subject must be one of the Period.Course.Subjects.");
+        });
+
+        When(r => r.Model.SubjectId != default && r.Model.TeacherId != default, () =>
+        {
+            RuleFor(r => r).MustAsync(CheckIfSubjectAndTeacherHasOneCommonKnowledgeArea)
+                    .WithMessage("Subject and Teacher must have at least one common KnowledgeArea.");
+        });
     }
 
     private async Task<bool> CheckIfSubjectAndTeacherHasOneCommonKnowledgeArea(PostRequest<SchoolClass, SchoolClassModel> request, CancellationToken cancellationToken)
@@ -33,7 +44,7 @@ public class PostSchoolClassValidator : AbstractValidator<PostRequest<SchoolClas
         var teacher = await _unitOfWork.Repository<Teacher>()
             .GetAll()
             .Where(t => t.Id == request.Model.TeacherId)
-            .Include (t => t.KnowledgeAreas)
+            .Include(t => t.KnowledgeAreas)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (subject is null || teacher is null)

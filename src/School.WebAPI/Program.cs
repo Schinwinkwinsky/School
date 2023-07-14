@@ -2,11 +2,8 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OData.ModelBuilder;
 using School.Data;
 using School.Domain;
-using School.Domain.Entities;
-using School.Domain.ValueObjects;
 using School.WebAPI.Behaviors;
 using School.WebAPI.Extensions;
 using School.WebAPI.Middlewares;
@@ -17,17 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var modelBuilder = new ODataConventionModelBuilder();
-modelBuilder.EntitySet<KnowledgeArea>("KnowledgeAreas");
-modelBuilder.EntitySet<Subject>("Subjects");
-modelBuilder.EntitySet<Person>("People");
-modelBuilder.EntitySet<Teacher>("Teachers");
-modelBuilder.ComplexType<Address>();
-modelBuilder.ComplexType<Phone>();
-modelBuilder.ComplexType<Email>();
-
 builder.Services.AddControllers(opt => opt.ModelValidatorProviders.Clear())
-    .AddOData(options => options.EnableQueryFeatures(100).AddRouteComponents("odata", modelBuilder.GetEdmModel()))
+    .AddOData(options => options.EnableQueryFeatures(100))
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb")));
