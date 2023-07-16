@@ -2,8 +2,11 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
+using School.Application.CQRS.Generics;
+using School.Application.Validators;
 using School.Data;
 using School.Domain;
+using School.Domain.Entities;
 using School.WebAPI.Behaviors;
 using School.WebAPI.Extensions;
 using School.WebAPI.Middlewares;
@@ -25,6 +28,7 @@ builder.Services.RegisterMediatrHandlers();
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("School.Application"));
+builder.Services.RegisterGenericValidators();
 
 builder.Services.AddAutoMapper(Assembly.Load("School.Application"));
 

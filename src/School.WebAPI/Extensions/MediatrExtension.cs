@@ -11,77 +11,77 @@ public static class MediatrExtension
     public static void RegisterMediatrHandlers(this IServiceCollection services)
     {
         // Course
-        services.AddTransient(typeof(IRequestHandler<GetAllRequest<Course>, IQueryable<Course>>), typeof(GetAllRequestHandler<Course>));
-        services.AddTransient(typeof(IRequestHandler<GetByIdRequest<Course>, IQueryable<Course>>), typeof(GetByIdRequestHandler<Course>));
-        services.AddTransient(typeof(IRequestHandler<PostRequest<Course, CourseModel>, Course>), typeof(PostRequestHandler<Course, CourseModel>));
-        services.AddTransient(typeof(IRequestHandler<PutRequest<Course, CourseDto>, Course>), typeof(PutRequestHandler<Course, CourseDto>));
-        services.AddTransient(typeof(IRequestHandler<DeleteRequest<Course>>), typeof(DeleteRequestHandler<Course>));
-        services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<Course, Subject>, Course>), typeof(AddRelatedEntitiesHandler<Course, Subject>));
-        services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<Course, Subject>, Course>), typeof(RemoveRelatedEntitiesHandler<Course, Subject>));
-        
+        services.AddTransient<IRequestHandler<GetAllRequest<Course>, IQueryable<Course>>, GetAllRequestHandler<Course>>();
+        services.AddTransient<IRequestHandler<GetByIdRequest<Course>, IQueryable<Course>>, GetByIdRequestHandler<Course>>();
+        services.AddTransient<IRequestHandler<PostRequest<Course, CourseModel>, Course>, PostRequestHandler<Course, CourseModel>>();
+        services.AddTransient<IRequestHandler<PutRequest<Course, CourseDto>, Course>, PutRequestHandler<Course, CourseDto>>();
+        services.AddTransient<IRequestHandler<DeleteRequest<Course>>, DeleteRequestHandler<Course>>();
+        services.AddTransient<IRequestHandler<AddRelatedEntitiesRequest<Course, Subject>, Course>, AddRelatedEntitiesHandler<Course, Subject>>();
+        services.AddTransient<IRequestHandler<RemoveRelatedEntitiesRequest<Course, Subject>, Course>, RemoveRelatedEntitiesHandler<Course, Subject>>();
+
         // KnowledgeArea
-        services.AddTransient(typeof(IRequestHandler<GetAllRequest<KnowledgeArea>, IQueryable<KnowledgeArea>>), typeof(GetAllRequestHandler<KnowledgeArea>));
-        services.AddTransient(typeof(IRequestHandler<GetByIdRequest<KnowledgeArea>, IQueryable<KnowledgeArea>>), typeof(GetByIdRequestHandler<KnowledgeArea>));
-        services.AddTransient(typeof(IRequestHandler<PostRequest<KnowledgeArea, KnowledgeAreaModel>, KnowledgeArea>), typeof(PostRequestHandler<KnowledgeArea, KnowledgeAreaModel>));
-        services.AddTransient(typeof(IRequestHandler<PutRequest<KnowledgeArea, KnowledgeAreaDto>, KnowledgeArea>), typeof(PutRequestHandler<KnowledgeArea, KnowledgeAreaDto>));
-        services.AddTransient(typeof(IRequestHandler<DeleteRequest<KnowledgeArea>>), typeof(DeleteRequestHandler<KnowledgeArea>));
-        services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<KnowledgeArea, Subject>, KnowledgeArea>), typeof(AddRelatedEntitiesHandler<KnowledgeArea, Subject>));
-        services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<KnowledgeArea, Subject>, KnowledgeArea>), typeof(RemoveRelatedEntitiesHandler<KnowledgeArea, Subject>));
-        services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<KnowledgeArea, Teacher>, KnowledgeArea>), typeof(AddRelatedEntitiesHandler<KnowledgeArea, Teacher>));
-        services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<KnowledgeArea, Teacher>, KnowledgeArea>), typeof(RemoveRelatedEntitiesHandler<KnowledgeArea, Teacher>));
+        services.AddTransient<IRequestHandler<GetAllRequest<KnowledgeArea>, IQueryable<KnowledgeArea>>, GetAllRequestHandler<KnowledgeArea>>();
+        services.AddTransient<IRequestHandler<GetByIdRequest<KnowledgeArea>, IQueryable<KnowledgeArea>>, GetByIdRequestHandler<KnowledgeArea>>();
+        services.AddTransient<IRequestHandler<PostRequest<KnowledgeArea, KnowledgeAreaModel>, KnowledgeArea>, PostRequestHandler<KnowledgeArea, KnowledgeAreaModel>>();
+        services.AddTransient<IRequestHandler<PutRequest<KnowledgeArea, KnowledgeAreaDto>, KnowledgeArea>, PutRequestHandler<KnowledgeArea, KnowledgeAreaDto>>();
+        services.AddTransient<IRequestHandler<DeleteRequest<KnowledgeArea>>, DeleteRequestHandler<KnowledgeArea>>();
+        services.AddTransient<IRequestHandler<AddRelatedEntitiesRequest<KnowledgeArea, Subject>, KnowledgeArea>, AddRelatedEntitiesHandler<KnowledgeArea, Subject>>();
+        services.AddTransient<IRequestHandler<RemoveRelatedEntitiesRequest<KnowledgeArea, Subject>, KnowledgeArea>, RemoveRelatedEntitiesHandler<KnowledgeArea, Subject>>();
+        services.AddTransient<IRequestHandler<AddRelatedEntitiesRequest<KnowledgeArea, Teacher>, KnowledgeArea>, AddRelatedEntitiesHandler<KnowledgeArea, Teacher>>();
+        services.AddTransient<IRequestHandler<RemoveRelatedEntitiesRequest<KnowledgeArea, Teacher>, KnowledgeArea>, RemoveRelatedEntitiesHandler<KnowledgeArea, Teacher>>();
 
         // Period
-        services.AddTransient(typeof(IRequestHandler<GetAllRequest<Period>, IQueryable<Period>>), typeof(GetAllRequestHandler<Period>));
-        services.AddTransient(typeof(IRequestHandler<GetByIdRequest<Period>, IQueryable<Period>>), typeof(GetByIdRequestHandler<Period>));
-        services.AddTransient(typeof(IRequestHandler<PostRequest<Period, PeriodModel>, Period>), typeof(PostRequestHandler<Period, PeriodModel>));
-        services.AddTransient(typeof(IRequestHandler<PutRequest<Period, PeriodDto>, Period>), typeof(PutRequestHandler<Period, PeriodDto>));
-        services.AddTransient(typeof(IRequestHandler<DeleteRequest<Period>>), typeof(DeleteRequestHandler<Period>));
-        services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<Period, SchoolClass>, Period>), typeof(AddRelatedEntitiesHandler<Period, SchoolClass>));
-        services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<Period, SchoolClass>, Period>), typeof(RemoveRelatedEntitiesHandler<Period, SchoolClass>));
-        
+        services.AddTransient<IRequestHandler<GetAllRequest<Period>, IQueryable<Period>>, GetAllRequestHandler<Period>>();
+        services.AddTransient<IRequestHandler<GetByIdRequest<Period>, IQueryable<Period>>, GetByIdRequestHandler<Period>>();
+        services.AddTransient<IRequestHandler<PostRequest<Period, PeriodModel>, Period>, PostRequestHandler<Period, PeriodModel>>();
+        services.AddTransient<IRequestHandler<PutRequest<Period, PeriodDto>, Period>, PutRequestHandler<Period, PeriodDto>>();
+        services.AddTransient<IRequestHandler<DeleteRequest<Period>>, DeleteRequestHandler<Period>>();
+        services.AddTransient<IRequestHandler<AddRelatedEntitiesRequest<Period, SchoolClass>, Period>, AddRelatedEntitiesHandler<Period, SchoolClass>>();
+        services.AddTransient<IRequestHandler<RemoveRelatedEntitiesRequest<Period, SchoolClass>, Period>, RemoveRelatedEntitiesHandler<Period, SchoolClass>>();
+
         // Person
-        services.AddTransient(typeof(IRequestHandler<GetAllRequest<Person>, IQueryable<Person>>), typeof(GetAllRequestHandler<Person>));
-        services.AddTransient(typeof(IRequestHandler<GetByIdRequest<Person>, IQueryable<Person>>), typeof(GetByIdRequestHandler<Person>));
-        services.AddTransient(typeof(IRequestHandler<PostRequest<Person, PersonModel>, Person>), typeof(PostRequestHandler<Person, PersonModel>));
-        services.AddTransient(typeof(IRequestHandler<PutRequest<Person, PersonDto>, Person>), typeof(PutRequestHandler<Person, PersonDto>));
-        services.AddTransient(typeof(IRequestHandler<DeleteRequest<Person>>), typeof(DeleteRequestHandler<Person>));
+        services.AddTransient<IRequestHandler<GetAllRequest<Person>, IQueryable<Person>>, GetAllRequestHandler<Person>>();
+        services.AddTransient<IRequestHandler<GetByIdRequest<Person>, IQueryable<Person>>, GetByIdRequestHandler<Person>>();
+        services.AddTransient<IRequestHandler<PostRequest<Person, PersonModel>, Person>, PostRequestHandler<Person, PersonModel>>();
+        services.AddTransient<IRequestHandler<PutRequest<Person, PersonDto>, Person>, PutRequestHandler<Person, PersonDto>>();
+        services.AddTransient<IRequestHandler<DeleteRequest<Person>>, DeleteRequestHandler<Person>>();
 
         // SchoolClass
-        services.AddTransient(typeof(IRequestHandler<GetAllRequest<SchoolClass>, IQueryable<SchoolClass>>), typeof(GetAllRequestHandler<SchoolClass>));
-        services.AddTransient(typeof(IRequestHandler<GetByIdRequest<SchoolClass>, IQueryable<SchoolClass>>), typeof(GetByIdRequestHandler<SchoolClass>));
-        services.AddTransient(typeof(IRequestHandler<PostRequest<SchoolClass, SchoolClassModel>, SchoolClass>), typeof(PostRequestHandler<SchoolClass, SchoolClassModel>));
-        services.AddTransient(typeof(IRequestHandler<PutRequest<SchoolClass, SchoolClassDto>, SchoolClass>), typeof(PutRequestHandler<SchoolClass, SchoolClassDto>));
-        services.AddTransient(typeof(IRequestHandler<DeleteRequest<SchoolClass>>), typeof(DeleteRequestHandler<SchoolClass>));
-        services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<SchoolClass, Student>, SchoolClass>), typeof(AddRelatedEntitiesHandler<SchoolClass, Student>));
-        services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<SchoolClass, Student>, SchoolClass>), typeof(RemoveRelatedEntitiesHandler<SchoolClass, Student>));
+        services.AddTransient<IRequestHandler<GetAllRequest<SchoolClass>, IQueryable<SchoolClass>>, GetAllRequestHandler<SchoolClass>>();
+        services.AddTransient<IRequestHandler<GetByIdRequest<SchoolClass>, IQueryable<SchoolClass>>, GetByIdRequestHandler<SchoolClass>>();
+        services.AddTransient<IRequestHandler<PostRequest<SchoolClass, SchoolClassModel>, SchoolClass>, PostRequestHandler<SchoolClass, SchoolClassModel>>();
+        services.AddTransient<IRequestHandler<PutRequest<SchoolClass, SchoolClassDto>, SchoolClass>, PutRequestHandler<SchoolClass, SchoolClassDto>>();
+        services.AddTransient<IRequestHandler<DeleteRequest<SchoolClass>>, DeleteRequestHandler<SchoolClass>>();
+        services.AddTransient<IRequestHandler<AddRelatedEntitiesRequest<SchoolClass, Student>, SchoolClass>, AddRelatedEntitiesHandler<SchoolClass, Student>>();
+        services.AddTransient<IRequestHandler<RemoveRelatedEntitiesRequest<SchoolClass, Student>, SchoolClass>, RemoveRelatedEntitiesHandler<SchoolClass, Student>>();
 
         // Student
-        services.AddTransient(typeof(IRequestHandler<GetAllRequest<Student>, IQueryable<Student>>), typeof(GetAllRequestHandler<Student>));
-        services.AddTransient(typeof(IRequestHandler<GetByIdRequest<Student>, IQueryable<Student>>), typeof(GetByIdRequestHandler<Student>));
-        services.AddTransient(typeof(IRequestHandler<PostRequest<Student, StudentModel>, Student>), typeof(PostRequestHandler<Student, StudentModel>));
-        services.AddTransient(typeof(IRequestHandler<PutRequest<Student, StudentDto>, Student>), typeof(PutRequestHandler<Student, StudentDto>));
-        services.AddTransient(typeof(IRequestHandler<DeleteRequest<Student>>), typeof(DeleteRequestHandler<Student>));
-        services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<Student, SchoolClass>, Student>), typeof(AddRelatedEntitiesHandler<Student, SchoolClass>));
-        services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<Student, SchoolClass>, Student>), typeof(RemoveRelatedEntitiesHandler<Student, SchoolClass>));
+        services.AddTransient<IRequestHandler<GetAllRequest<Student>, IQueryable<Student>>, GetAllRequestHandler<Student>>();
+        services.AddTransient<IRequestHandler<GetByIdRequest<Student>, IQueryable<Student>>, GetByIdRequestHandler<Student>>();
+        services.AddTransient<IRequestHandler<PostRequest<Student, StudentModel>, Student>, PostRequestHandler<Student, StudentModel>>();
+        services.AddTransient<IRequestHandler<PutRequest<Student, StudentDto>, Student>, PutRequestHandler<Student, StudentDto>>();
+        services.AddTransient<IRequestHandler<DeleteRequest<Student>>, DeleteRequestHandler<Student>>();
+        services.AddTransient<IRequestHandler<AddRelatedEntitiesRequest<Student, SchoolClass>, Student>, AddRelatedEntitiesHandler<Student, SchoolClass>>();
+        services.AddTransient<IRequestHandler<RemoveRelatedEntitiesRequest<Student, SchoolClass>, Student>, RemoveRelatedEntitiesHandler<Student, SchoolClass>>();
 
         // Subject
-        services.AddTransient(typeof(IRequestHandler<GetAllRequest<Subject>, IQueryable<Subject>>), typeof(GetAllRequestHandler<Subject>));
-        services.AddTransient(typeof(IRequestHandler<GetByIdRequest<Subject>, IQueryable<Subject>>), typeof(GetByIdRequestHandler<Subject>));
-        services.AddTransient(typeof(IRequestHandler<PostRequest<Subject, SubjectModel>, Subject>), typeof(PostRequestHandler<Subject, SubjectModel>));
-        services.AddTransient(typeof(IRequestHandler<PutRequest<Subject, SubjectDto>, Subject>), typeof(PutRequestHandler<Subject, SubjectDto>));
-        services.AddTransient(typeof(IRequestHandler<DeleteRequest<Subject>>), typeof(DeleteRequestHandler<Subject>));
-        services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<Subject, KnowledgeArea>, Subject>), typeof(AddRelatedEntitiesHandler<Subject, KnowledgeArea>));
-        services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<Subject, KnowledgeArea>, Subject>), typeof(RemoveRelatedEntitiesHandler<Subject, KnowledgeArea>));
+        services.AddTransient<IRequestHandler<GetAllRequest<Subject>, IQueryable<Subject>>, GetAllRequestHandler<Subject>>();
+        services.AddTransient<IRequestHandler<GetByIdRequest<Subject>, IQueryable<Subject>>, GetByIdRequestHandler<Subject>>();
+        services.AddTransient<IRequestHandler<PostRequest<Subject, SubjectModel>, Subject>, PostRequestHandler<Subject, SubjectModel>>();
+        services.AddTransient<IRequestHandler<PutRequest<Subject, SubjectDto>, Subject>, PutRequestHandler<Subject, SubjectDto>>();
+        services.AddTransient<IRequestHandler<DeleteRequest<Subject>>, DeleteRequestHandler<Subject>>();
+        services.AddTransient<IRequestHandler<AddRelatedEntitiesRequest<Subject, KnowledgeArea>, Subject>, AddRelatedEntitiesHandler<Subject, KnowledgeArea>>();
+        services.AddTransient<IRequestHandler<RemoveRelatedEntitiesRequest<Subject, KnowledgeArea>, Subject>, RemoveRelatedEntitiesHandler<Subject, KnowledgeArea>>();
 
         // Teacher
-        services.AddTransient(typeof(IRequestHandler<GetAllRequest<Teacher>, IQueryable<Teacher>>), typeof(GetAllRequestHandler<Teacher>));
-        services.AddTransient(typeof(IRequestHandler<GetByIdRequest<Teacher>, IQueryable<Teacher>>), typeof(GetByIdRequestHandler<Teacher>));
-        services.AddTransient(typeof(IRequestHandler<PostRequest<Teacher, TeacherModel>, Teacher>), typeof(PostRequestHandler<Teacher, TeacherModel>));
-        services.AddTransient(typeof(IRequestHandler<PutRequest<Teacher, TeacherDto>, Teacher>), typeof(PutRequestHandler<Teacher, TeacherDto>));
-        services.AddTransient(typeof(IRequestHandler<DeleteRequest<Teacher>>), typeof(DeleteRequestHandler<Teacher>));
-        services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<Teacher, KnowledgeArea>, Teacher>), typeof(AddRelatedEntitiesHandler<Teacher, KnowledgeArea>));
-        services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<Teacher, KnowledgeArea>, Teacher>), typeof(RemoveRelatedEntitiesHandler<Teacher, KnowledgeArea>));
-        services.AddTransient(typeof(IRequestHandler<AddRelatedEntitiesRequest<Teacher, SchoolClass>, Teacher>), typeof(AddRelatedEntitiesHandler<Teacher, SchoolClass>));
-        services.AddTransient(typeof(IRequestHandler<RemoveRelatedEntitiesRequest<Teacher, SchoolClass>, Teacher>), typeof(RemoveRelatedEntitiesHandler<Teacher, SchoolClass>));
+        services.AddTransient<IRequestHandler<GetAllRequest<Teacher>, IQueryable<Teacher>>, GetAllRequestHandler<Teacher>>();
+        services.AddTransient<IRequestHandler<GetByIdRequest<Teacher>, IQueryable<Teacher>>, GetByIdRequestHandler<Teacher>>();
+        services.AddTransient<IRequestHandler<PostRequest<Teacher, TeacherModel>, Teacher>, PostRequestHandler<Teacher, TeacherModel>>();
+        services.AddTransient<IRequestHandler<PutRequest<Teacher, TeacherDto>, Teacher>, PutRequestHandler<Teacher, TeacherDto>>();
+        services.AddTransient<IRequestHandler<DeleteRequest<Teacher>>, DeleteRequestHandler<Teacher>>();
+        services.AddTransient<IRequestHandler<AddRelatedEntitiesRequest<Teacher, KnowledgeArea>, Teacher>, AddRelatedEntitiesHandler<Teacher, KnowledgeArea>>();
+        services.AddTransient<IRequestHandler<RemoveRelatedEntitiesRequest<Teacher, KnowledgeArea>, Teacher>, RemoveRelatedEntitiesHandler<Teacher, KnowledgeArea>>();
+        services.AddTransient<IRequestHandler<AddRelatedEntitiesRequest<Teacher, SchoolClass>, Teacher>, AddRelatedEntitiesHandler<Teacher, SchoolClass>>();
+        services.AddTransient<IRequestHandler<RemoveRelatedEntitiesRequest<Teacher, SchoolClass>, Teacher>, RemoveRelatedEntitiesHandler<Teacher, SchoolClass>>();
     }
 }
