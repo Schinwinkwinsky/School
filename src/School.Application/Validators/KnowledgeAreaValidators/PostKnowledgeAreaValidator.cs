@@ -5,9 +5,9 @@ using School.Domain.Entities;
 
 namespace School.Application.Validators.KnowledgeAreaValidators
 {
-    public class KnowledgeAreaValidator : AbstractValidator<PostRequest<KnowledgeArea, KnowledgeAreaModel>>
+    public class PostKnowledgeAreaValidator : AbstractValidator<PostRequest<KnowledgeArea, KnowledgeAreaModel>>
     {
-        public KnowledgeAreaValidator()
+        public PostKnowledgeAreaValidator()
         {
             RuleFor(r => r.Model.Name).NotEmpty();
         }
