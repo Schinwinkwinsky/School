@@ -44,7 +44,7 @@ public class ApiControllerBase<
 
     [HttpGet]
     [EnableQueryPaginatedResult(MaxExpansionDepth = 3, MaxAnyAllExpressionDepth = 2)]
-    public async Task<IQueryable<TDto>> GetAllAsync(ODataQueryOptions options, CancellationToken cancellationToken)
+    public async Task<IQueryable<TDto>> GetAllAsync([FromServices] ODataQueryOptions options, CancellationToken cancellationToken)
     {
         var request = Activator.CreateInstance<TGetAllRequest>();
 
@@ -59,7 +59,7 @@ public class ApiControllerBase<
 
     [HttpGet("{id}")]
     [EnableQueryResult]
-    public async Task<IQueryable<TDto>> GetByIdAsync(ODataQueryOptions options, Guid id, bool includeDeleted, CancellationToken cancellationToken)
+    public async Task<IQueryable<TDto>> GetByIdAsync([FromServices] ODataQueryOptions options, Guid id, bool includeDeleted, CancellationToken cancellationToken)
     {
         var request = Activator.CreateInstance(typeof(TGetByIdRequest), id);
 

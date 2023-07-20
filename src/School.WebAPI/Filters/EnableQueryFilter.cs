@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using School.WebAPI.Attributes;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -6,36 +7,58 @@ namespace School.WebAPI.Filters;
 
 public class EnableQueryFilter : IOperationFilter
 {
-    static List<OpenApiParameter> enableQueryResultParameters = new List<(string Name, string Description)>
-    {
-        ("$select", "Specifies a subset of properties to return. Use a comma separated list."),
-        ("$expand", "Use to add related query data.")
-    }.Select(pair => new OpenApiParameter
-    {
-        Name = pair.Name,
-        Required = false,
-        Schema = new OpenApiSchema { Type = "String" },
-        In = ParameterLocation.Query,
-        Description = pair.Description
-    }).ToList();
+    private List<OpenApiParameter> enableQueryResultParameters;
+    private List<OpenApiParameter> enableQueryPaginatedResultParameters;
 
-    static List<OpenApiParameter> enableQueryPaginatedResultParameters = new List<(string Name, string Description)>
+    public EnableQueryFilter()
     {
-        ( "$top", "The max number of records."),
-        ( "$skip", "The number of records to skip."),
-        ( "$filter", "A function that must evaluate to true for a record to be returned."),
-        ( "$select", "Specifies a subset of properties to return. Use a comma separated list."),
-        ( "$orderby", "Determines what values are used to order a collection of records."),
-        ( "$expand", "Use to add related query data.")
-    }.Select(pair => new OpenApiParameter
-    {
-        Name = pair.Name,
-        Required = false,
-        Schema = new OpenApiSchema { Type = "String" },
-        In = ParameterLocation.Query,
-        Description = pair.Description
+        enableQueryResultParameters = new List<(string Name, string Description)>
+        {
+            ("$select", "Specifies a subset of properties to return. Use a comma separated list."),
+            ("$expand", "Use to add related query data.")
+        }.Select(pair => new OpenApiParameter
+        {
+            Name = pair.Name,
+            Required = false,
+            Schema = new OpenApiSchema { Type = "string" },
+            In = ParameterLocation.Query,
+            Description = pair.Description
+        }).ToList();
 
-    }).ToList();
+        enableQueryPaginatedResultParameters = new List<OpenApiParameter>();
+
+        enableQueryPaginatedResultParameters.Add(new OpenApiParameter
+        {
+            Name = "$count",
+            Required = false,
+            Schema = new OpenApiSchema
+            {
+                Type = "boolean",
+                Enum = { new OpenApiBoolean(true),  new OpenApiBoolean(false) }
+            },
+            In = ParameterLocation.Query,
+            Description = "The total number of records."
+        });
+
+        var parameters = new List<(string Name, string Description)>
+        {
+            ( "$top", "The max number of records."),
+            ( "$skip", "The number of records to skip."),
+            ( "$filter", "A function that must evaluate to true for a record to be returned."),
+            ( "$select", "Specifies a subset of properties to return. Use a comma separated list."),
+            ( "$orderby", "Determines what values are used to order a collection of records."),
+            ( "$expand", "Use to add related query data.")
+        }.Select(pair => new OpenApiParameter
+        {
+            Name = pair.Name,
+            Required = false,
+            Schema = new OpenApiSchema { Type = "string" },
+            In = ParameterLocation.Query,
+            Description = pair.Description
+        }).ToList();
+
+        enableQueryPaginatedResultParameters.AddRange(parameters);
+    }
 
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
