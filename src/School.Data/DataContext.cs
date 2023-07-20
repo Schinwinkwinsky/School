@@ -9,7 +9,9 @@ public class DataContext : DbContext
     public DataContext(DbContextOptions<DataContext> options) 
         : base(options) { }
 
+    public DbSet<Course> Courses { get; set; } = default!;
     public DbSet<KnowledgeArea> KnowledgeAreas { get; set; } = default!;
+    public DbSet<Period> Periods { get; set; } = default!;
     public DbSet<Person> People { get; set; } = default!;
     public DbSet<SchoolClass> SchoolClasses { get; set; } = default!;
     public DbSet<Student> Students { get; set; } = default!;

@@ -1,6 +1,5 @@
 ﻿using School.Domain;
 using System.Collections;
-using School.Data.Repositories;
 
 namespace School.Data;
 

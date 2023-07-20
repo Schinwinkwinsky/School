@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.Data;
 
@@ -11,9 +12,10 @@ using School.Data;
 namespace School.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230720205109_RenameCourseAndPeriodTables")]
+    partial class RenameCourseAndPeriodTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,6 +287,9 @@ namespace School.Data.Migrations
                     b.Property<Guid>("PersonId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("PersonId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -294,6 +299,8 @@ namespace School.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId");
+
+                    b.HasIndex("PersonId1");
 
                     b.ToTable("Students");
                 });
@@ -352,6 +359,9 @@ namespace School.Data.Migrations
                     b.Property<Guid>("PersonId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("PersonId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -361,6 +371,8 @@ namespace School.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId");
+
+                    b.HasIndex("PersonId1");
 
                     b.ToTable("Teachers");
                 });
@@ -599,6 +611,10 @@ namespace School.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("School.Domain.Entities.Person", null)
+                        .WithMany("Students")
+                        .HasForeignKey("PersonId1");
+
                     b.Navigation("Person");
                 });
 
@@ -609,6 +625,10 @@ namespace School.Data.Migrations
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("School.Domain.Entities.Person", null)
+                        .WithMany("Teachers")
+                        .HasForeignKey("PersonId1");
 
                     b.Navigation("Person");
                 });

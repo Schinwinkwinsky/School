@@ -16,8 +16,4 @@
     <ProjectReference Include="..\School.Domain\School.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validators\TeacherValidators\" />
-  </ItemGroup>
-
 </Project>
