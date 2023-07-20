@@ -7,4 +7,5 @@ public class Subject : EntityBase
     // Navigation properties.
     public virtual ICollection<Course> Courses { get; set; } = default!;
     public virtual ICollection<KnowledgeArea> KnowledgeAreas { get; set; } = default!;
+    public virtual ICollection<SchoolClass> SchoolClasses { get; set; } = default!;    
 }

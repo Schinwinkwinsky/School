@@ -9,6 +9,8 @@ public class SubjectProfile : Profile
     public SubjectProfile()
     {
         CreateMap<Subject, SubjectDto>()
-            .ForMember(s => s.KnowledgeAreas, opt => opt.ExplicitExpansion());
+            .ForMember(s => s.Courses, opt => opt.ExplicitExpansion())
+            .ForMember(s => s.KnowledgeAreas, opt => opt.ExplicitExpansion())
+            .ForMember(s => s.SchoolClasses, opt => opt.ExplicitExpansion());
     }
 }

@@ -13,6 +13,10 @@ public class PersonDto : IDto<Person>
     public ICollection<EmailDto> Emails { get; set; } = default!;
     public ICollection<PhoneDto> Phones { get; set; } = default!;
 
+    // Navigation properties.
+    public ICollection<StudentDto> Students { get; set; } = default!;
+    public ICollection<TeacherDto> Teachers { get; set; } = default!;
+
     public void CopyToEntity(Person person)
     {
         person.Id = Id;

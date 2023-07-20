@@ -13,7 +13,7 @@ public class PeriodDto : IDto<Period>
 
     // Navigation properties.
     public Guid CourseId { get; set; }
-    public Course? Course { get; set; }
+    public CourseDto? Course { get; set; }
 
     public ICollection<SchoolClassDto>? SchoolClasses { get; set; }
 

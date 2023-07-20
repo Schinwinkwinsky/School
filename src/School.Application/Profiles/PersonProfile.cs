@@ -8,6 +8,8 @@ public class PersonProfile : Profile
 {
     public PersonProfile()
     {
-        CreateMap<Person, PersonDto>();
+        CreateMap<Person, PersonDto>()
+            .ForMember(p => p.Students, opt => opt.ExplicitExpansion())
+            .ForMember(p => p.Teachers, opt => opt.ExplicitExpansion());
     }            
 }
