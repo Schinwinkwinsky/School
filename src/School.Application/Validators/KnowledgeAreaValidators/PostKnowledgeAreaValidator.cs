@@ -9,7 +9,7 @@ namespace School.Application.Validators.KnowledgeAreaValidators
     {
         public PostKnowledgeAreaValidator()
         {
-            RuleFor(r => r.Model.Name).NotEmpty();
+            RuleFor(r => r.Model).SetValidator(new KnowledgeAreaModelValidator());
         }
     }
 }

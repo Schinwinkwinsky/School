@@ -9,8 +9,7 @@ namespace School.Application.Validators.PersonValidators
     {
         public PostPersonValidator() 
         {
-            RuleFor(r => r.Model.Name).NotEmpty();
-            RuleFor(r => r.Model.Birth).NotEmpty();
+            RuleFor(r => r.Model).SetValidator(new PersonModelValidator());
 
             RuleForEach(r => r.Model.Addresses).SetValidator(new AddressValidator());
             RuleForEach(r => r.Model.Emails).SetValidator(new EmailValidator());

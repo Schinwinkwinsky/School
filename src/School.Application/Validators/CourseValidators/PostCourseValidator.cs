@@ -9,7 +9,7 @@ namespace School.Application.Validators.CourseValidators
     {
         public PostCourseValidator()
         {
-            RuleFor(r => r.Model.Name).NotEmpty();
+            RuleFor(r => r.Model).SetValidator(new CourseModelValidator());
         }
     }
 }

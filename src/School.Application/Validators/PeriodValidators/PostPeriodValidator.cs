@@ -15,7 +15,7 @@ public class PostPeriodValidator : AbstractValidator<PostRequest<Period, PeriodM
     {
         _unitOfWork = unitOfWork;
 
-        RuleFor(p => p.Model.Code).NotEmpty();
+        RuleFor(p => p.Model).SetValidator(new PeriodModelValidator());
 
         When(p => !string.IsNullOrEmpty(p.Model.Code), () =>
         {

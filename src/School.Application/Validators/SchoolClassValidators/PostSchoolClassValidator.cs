@@ -15,10 +15,7 @@ public class PostSchoolClassValidator : AbstractValidator<PostRequest<SchoolClas
     {
         _unitOfWork = unitOfWork;
 
-        RuleFor(r => r.Model.Code).NotEmpty();
-        RuleFor(r => r.Model.PeriodId).NotEmpty();
-        RuleFor(r => r.Model.SubjectId).NotEmpty();
-        RuleFor(r => r.Model.TeacherId).NotEmpty();
+        RuleFor(r => r.Model).SetValidator(new SchoolClassModelValidator());
 
         When(r => r.Model.PeriodId != default, () =>
         {
