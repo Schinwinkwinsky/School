@@ -9,7 +9,7 @@ public class TeacherEntityTypeConfiguration : IEntityTypeConfiguration<Teacher>
     public void Configure(EntityTypeBuilder<Teacher> builder)
     {
         builder.HasOne<Person>(t => t.Person)
-            .WithMany()
+            .WithMany(p => p.Teachers)
             .HasForeignKey(t => t.PersonId)
             .OnDelete(DeleteBehavior.Restrict);
     }

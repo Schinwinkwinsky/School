@@ -9,7 +9,7 @@ public class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
     public void Configure(EntityTypeBuilder<Student> builder)
     {
         builder.HasOne<Person>(s => s.Person)
-            .WithMany()
+            .WithMany(p => p.Students)
             .HasForeignKey(s => s.PersonId)
             .OnDelete(DeleteBehavior.Restrict);
     }

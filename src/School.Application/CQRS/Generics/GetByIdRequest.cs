@@ -27,7 +27,7 @@ public class GetByIdRequestHandler<T> : IRequestHandler<GetByIdRequest<T>, IQuer
             .GetAll()
             .Where(i => i.Id == request.Id
                 && i.DeletedAt == DateTime.MinValue
-                && i.DeletedBy == 0);
+                && i.DeletedBy != null);
 
         if (!items.Any())
             throw new HttpRequestException($"{ typeof(T).Name } with id = { request.Id } was not found.", null, HttpStatusCode.NotFound);

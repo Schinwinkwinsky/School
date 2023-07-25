@@ -19,7 +19,7 @@ public class GetAllRequestHandler<T> : IRequestHandler<GetAllRequest<T>, IQuerya
     {
         var items = _unitOfWork.Repository<T>().GetAll()
             .Where(i => i.DeletedAt == DateTime.MinValue
-                && i.DeletedBy == 0);
+                && i.DeletedBy != null);
 
         return await Task.FromResult(items);
     }
