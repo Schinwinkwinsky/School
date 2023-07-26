@@ -3,13 +3,10 @@ using Microsoft.OData.UriParser;
 
 namespace School.WebAPI.Helpers;
 
-public static class Expand
+public static class ODataExpandHelper
 {
-
-    public static string[]? GetMembersToExpandNames(ODataQueryOptions options)
-    {
-        return GetExpandPropertyPaths(GetExpandItems(options.SelectExpand?.SelectExpandClause)).ToArray();
-    }
+    public static Func<ODataQueryOptions,string[]?> GetMembersToExpandNames = (ODataQueryOptions options) 
+        => GetExpandPropertyPaths(GetExpandItems(options.SelectExpand?.SelectExpandClause)).ToArray();
 
     private static IEnumerable<string> GetExpandPropertyPaths(IEnumerable<ExpandedNavigationSelectItem> items, string prefix = "")
     {

@@ -50,7 +50,7 @@ public class ApiControllerBase<
 
         var items = await _mediator.Send(request!, cancellationToken) as IQueryable<T>;
 
-        var expand = Expand.GetMembersToExpandNames(options);
+        var expand = ODataExpandHelper.GetMembersToExpandNames(options);
 
         var itemsDto = items!.ProjectTo<TDto>(_mapper.ConfigurationProvider, null, expand);
 
@@ -65,7 +65,7 @@ public class ApiControllerBase<
 
         var items = await _mediator.Send(request!, cancellationToken) as IQueryable<T>;
 
-        var expand = Expand.GetMembersToExpandNames(options);
+        var expand = ODataExpandHelper.GetMembersToExpandNames(options);
 
         var itemsDto = items.ProjectTo<TDto>(_mapper.ConfigurationProvider, null, expand);
 
