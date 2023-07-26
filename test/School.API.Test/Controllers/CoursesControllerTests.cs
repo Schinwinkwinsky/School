@@ -55,13 +55,13 @@ public class CoursesControllerTests
         _mapper.Setup(m => m.ConfigurationProvider).Returns(config);
 
         // IMediator
-        _mediator = new Mock<IMediator>();
+        _mediator = new Mock<IMediator>(); 
 
         _controller = new CoursesController(_mapper.Object, _mediator.Object);
     }
 
     [Fact]
-    public async Task GetAllCoursesShouldBringAllItems()
+    public async Task GetAllCoursesShouldReturnAllItems()
     {
         // arrange
         _mediator.Setup(m => m.Send(It.IsAny<GetAllRequest<Course>>(), It.IsAny<CancellationToken>())).ReturnsAsync(_courses.AsQueryable());
