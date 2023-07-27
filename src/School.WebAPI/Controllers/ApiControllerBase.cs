@@ -46,7 +46,7 @@ public class ApiControllerBase<
     [EnableQueryPaginatedResult(MaxExpansionDepth = 3, MaxAnyAllExpressionDepth = 2)]
     public async Task<IQueryable<TDto>> GetAllAsync([FromServices] ODataQueryOptions options, CancellationToken cancellationToken)
     {
-        var request = Activator.CreateInstance<TGetAllRequest>();
+        var request = Activator.CreateInstance<TGetAllRequest>() as GetAllRequest<T>;
 
         var items = await _mediator.Send(request!, cancellationToken) as IQueryable<T>;
 
@@ -61,7 +61,7 @@ public class ApiControllerBase<
     [EnableQueryResult]
     public async Task<IQueryable<TDto>> GetByIdAsync([FromServices] ODataQueryOptions options, Guid id, bool includeDeleted, CancellationToken cancellationToken)
     {
-        var request = Activator.CreateInstance(typeof(TGetByIdRequest), id);
+        var request = Activator.CreateInstance(typeof(TGetByIdRequest), id) as GetByIdRequest<T>;
 
         var items = await _mediator.Send(request!, cancellationToken) as IQueryable<T>;
 
@@ -75,7 +75,7 @@ public class ApiControllerBase<
     [HttpPost]
     public async Task<IActionResult> PostAsync(TModel model, CancellationToken cancellationToken)
     {
-        var request = Activator.CreateInstance(typeof(TPostRequest), model);
+        var request = Activator.CreateInstance(typeof(TPostRequest), model) as PostRequest<T, TModel>;
 
         var item = await _mediator.Send(request!, cancellationToken) as T;
 
@@ -91,7 +91,7 @@ public class ApiControllerBase<
     {
         dto.Id = id;
 
-        var request = Activator.CreateInstance(typeof(TPutRequest), dto);
+        var request = Activator.CreateInstance(typeof(TPutRequest), dto) as PutRequest<T, TDto>;
 
         var item = await _mediator.Send(request!, cancellationToken) as T;
 
@@ -105,7 +105,7 @@ public class ApiControllerBase<
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var request = Activator.CreateInstance(typeof(TDeleteRequest), id);
+        var request = Activator.CreateInstance(typeof(TDeleteRequest), id) as DeleteRequest<T>;
 
         await _mediator.Send(request!, cancellationToken);
 
