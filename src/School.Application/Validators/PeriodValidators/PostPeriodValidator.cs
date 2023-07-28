@@ -17,6 +17,8 @@ public class PostPeriodValidator : AbstractValidator<PostRequest<Period, PeriodM
 
         RuleFor(p => p.Model).SetValidator(new PeriodModelValidator());
 
+        RuleFor(p => p.Model.EndDate).GreaterThan(p => p.Model.StartDate);
+
         When(p => !string.IsNullOrEmpty(p.Model.Code), () =>
         {
             RuleFor(r => r).MustAsync(CheckIfThereIsAnotherPeriodWithSameCode)
