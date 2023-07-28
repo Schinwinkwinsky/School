@@ -70,6 +70,8 @@ public static class MediatrExtension
         services.AddTransient<IRequestHandler<PostRequest<Subject, SubjectModel>, Subject>, PostRequestHandler<Subject, SubjectModel>>();
         services.AddTransient<IRequestHandler<PutRequest<Subject, SubjectDto>, Subject>, PutRequestHandler<Subject, SubjectDto>>();
         services.AddTransient<IRequestHandler<DeleteRequest<Subject>>, DeleteRequestHandler<Subject>>();
+        services.AddTransient<IRequestHandler<AddRelatedEntitiesRequest<Subject, Course>, Subject>, AddRelatedEntitiesHandler<Subject, Course>>();
+        services.AddTransient<IRequestHandler<RemoveRelatedEntitiesRequest<Subject, Course>, Subject>, RemoveRelatedEntitiesHandler<Subject, Course>>();
         services.AddTransient<IRequestHandler<AddRelatedEntitiesRequest<Subject, KnowledgeArea>, Subject>, AddRelatedEntitiesHandler<Subject, KnowledgeArea>>();
         services.AddTransient<IRequestHandler<RemoveRelatedEntitiesRequest<Subject, KnowledgeArea>, Subject>, RemoveRelatedEntitiesHandler<Subject, KnowledgeArea>>();
 
