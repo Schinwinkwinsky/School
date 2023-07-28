@@ -45,8 +45,6 @@ public class RemoveRelatedEntitiesHandler<T, TRelated> : IRequestHandler<RemoveR
 
         PropertyInfo property = typeof(T).GetProperty(request.PropertyName)!;
 
-        bool isItemUpdated = false;
-
         foreach (var id in request.ItemsIds)
         {
             var item = await _unitOfWork.Repository<TRelated>().GetAsync(id, cancellationToken);
@@ -55,17 +53,10 @@ public class RemoveRelatedEntitiesHandler<T, TRelated> : IRequestHandler<RemoveR
             {
                 var method = property.PropertyType.GetMethod("Remove");
                 method?.Invoke(property.GetValue(entity), new object[] { item });
-
-                isItemUpdated = true;
             }
         }
 
-        if (isItemUpdated)
-        {
-            entity.UpdatedAt = DateTime.UtcNow;
-
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-        }
+        await _unitOfWork.SaveChangesAsync(cancellationToken);        
 
         return entity;
     }
