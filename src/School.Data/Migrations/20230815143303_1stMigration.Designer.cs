@@ -12,7 +12,7 @@ using School.Data;
 namespace School.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230725120459_1stMigration")]
+    [Migration("20230815143303_1stMigration")]
     partial class _1stMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
