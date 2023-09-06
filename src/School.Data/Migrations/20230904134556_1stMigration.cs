@@ -236,21 +236,27 @@ namespace School.Data.Migrations
                 name: "CourseSubject",
                 columns: table => new
                 {
-                    CoursesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SubjectsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseSubject", x => new { x.CoursesId, x.SubjectsId });
+                    table.PrimaryKey("PK_CourseSubject", x => new { x.CourseId, x.SubjectId });
                     table.ForeignKey(
-                        name: "FK_CourseSubject_Courses_CoursesId",
-                        column: x => x.CoursesId,
+                        name: "FK_CourseSubject_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CourseSubject_Subjects_SubjectsId",
-                        column: x => x.SubjectsId,
+                        name: "FK_CourseSubject_Subjects_SubjectId",
+                        column: x => x.SubjectId,
                         principalTable: "Subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -368,9 +374,9 @@ namespace School.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CourseSubject_SubjectsId",
+                name: "IX_CourseSubject_SubjectId",
                 table: "CourseSubject",
-                column: "SubjectsId");
+                column: "SubjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_KnowledgeAreaSubject_SubjectsId",

@@ -7,7 +7,7 @@ using School.Domain.Entities;
 
 namespace School.Application.Validators.PeriodValidators;
 
-public class PostPeriodValidator : AbstractValidator<PostRequest<Period, PeriodModel>>
+public class PostPeriodValidator : AbstractValidator<InsertRequest<Period, PeriodModel>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -26,7 +26,7 @@ public class PostPeriodValidator : AbstractValidator<PostRequest<Period, PeriodM
         });
     }
 
-    private async Task<bool> CheckIfThereIsAnotherPeriodWithSameCode(PostRequest<Period, PeriodModel> request, CancellationToken cancellationToken)
+    private async Task<bool> CheckIfThereIsAnotherPeriodWithSameCode(InsertRequest<Period, PeriodModel> request, CancellationToken cancellationToken)
     {
         return !await _unitOfWork.Repository<Period>()
             .GetAll()

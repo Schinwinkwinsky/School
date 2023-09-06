@@ -6,17 +6,17 @@ using System.Net;
 
 namespace School.Application.CQRS.Generics;
 
-public class PutRequest<T, TDto> : IRequest<T>
+public class UpdateRequest<T, TDto> : IRequest<T>
     where T : EntityBase
     where TDto : IDto<T>
 {
     public TDto Dto { get; set; } = default!;
 
-    public PutRequest(TDto dto)
+    public UpdateRequest(TDto dto)
         => Dto = dto;
 }
 
-public class PutRequestHandler<T, TDto> : IRequestHandler<PutRequest<T, TDto>, T>
+public class PutRequestHandler<T, TDto> : IRequestHandler<UpdateRequest<T, TDto>, T>
     where T : EntityBase
     where TDto : IDto<T>
 {
@@ -25,7 +25,7 @@ public class PutRequestHandler<T, TDto> : IRequestHandler<PutRequest<T, TDto>, T
     public PutRequestHandler(IUnitOfWork unitOfWork)
         => _unitOfWork = unitOfWork;
 
-    public async Task<T> Handle(PutRequest<T, TDto> request, CancellationToken cancellationToken)
+    public async Task<T> Handle(UpdateRequest<T, TDto> request, CancellationToken cancellationToken)
     {
         var item = await _unitOfWork.Repository<T>()
             .GetAsync(request.Dto.Id, cancellationToken);

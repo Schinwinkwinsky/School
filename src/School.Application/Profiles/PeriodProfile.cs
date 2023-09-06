@@ -10,6 +10,10 @@ public class PeriodProfile : Profile
     {
         CreateMap<Period, PeriodDto>()
             .ForMember(p => p.Course, opt => opt.ExplicitExpansion())
-            .ForMember(p => p.SchoolClasses, opt => opt.ExplicitExpansion());
+            .ForMember(p => p.SchoolClasses, opt =>
+            {
+                opt.ExplicitExpansion();
+                opt.MapFrom(p => p.SchoolClasses.Where(sc => sc.DeletedAt == default));
+            });
     }
 }

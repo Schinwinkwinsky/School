@@ -10,6 +10,10 @@ public class StudentProfile : Profile
     {
         CreateMap<Student, StudentDto>()
             .ForMember(s => s.Person, opt => opt.ExplicitExpansion())
-            .ForMember(s => s.SchoolClasses, opt => opt.ExplicitExpansion());
+            .ForMember(s => s.SchoolClasses, opt =>
+            {
+                opt.ExplicitExpansion();
+                opt.MapFrom(s => s.SchoolClasses.Where(sc => sc.DeletedAt == default));
+            });
     }
 }

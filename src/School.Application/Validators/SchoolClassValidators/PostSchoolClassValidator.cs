@@ -7,7 +7,7 @@ using School.Domain.Entities;
 
 namespace School.Application.Validators.SchoolClassValidators;
 
-public class PostSchoolClassValidator : AbstractValidator<PostRequest<SchoolClass, SchoolClassModel>>
+public class PostSchoolClassValidator : AbstractValidator<InsertRequest<SchoolClass, SchoolClassModel>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -30,7 +30,7 @@ public class PostSchoolClassValidator : AbstractValidator<PostRequest<SchoolClas
         });
     }
 
-    private async Task<bool> CheckIfSubjectAndTeacherHasOneCommonKnowledgeArea(PostRequest<SchoolClass, SchoolClassModel> request, CancellationToken cancellationToken)
+    private async Task<bool> CheckIfSubjectAndTeacherHasOneCommonKnowledgeArea(InsertRequest<SchoolClass, SchoolClassModel> request, CancellationToken cancellationToken)
     {
         var subject = await _unitOfWork.Repository<Subject>()
             .GetAll()
@@ -50,7 +50,7 @@ public class PostSchoolClassValidator : AbstractValidator<PostRequest<SchoolClas
         return subject.KnowledgeAreas.Intersect(teacher.KnowledgeAreas).Any();
     }
 
-    private async Task<bool> CheckIfPeriodCourseContainsSubject(PostRequest<SchoolClass, SchoolClassModel> request, CancellationToken cancellationToken)
+    private async Task<bool> CheckIfPeriodCourseContainsSubject(InsertRequest<SchoolClass, SchoolClassModel> request, CancellationToken cancellationToken)
     {
         var period = await _unitOfWork.Repository<Period>()
             .GetAll()

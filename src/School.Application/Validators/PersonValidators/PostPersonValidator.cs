@@ -5,7 +5,7 @@ using School.Domain.Entities;
 
 namespace School.Application.Validators.PersonValidators
 {
-    public class PostPersonValidator : AbstractValidator<PostRequest<Person, PersonModel>>
+    public class PostPersonValidator : AbstractValidator<InsertRequest<Person, PersonModel>>
     {
         public PostPersonValidator() 
         {

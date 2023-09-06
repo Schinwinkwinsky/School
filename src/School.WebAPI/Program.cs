@@ -26,7 +26,6 @@ builder.Services.RegisterMediatrHandlers();
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("School.Application"));
-builder.Services.RegisterGenericValidators();
 
 builder.Services.AddAutoMapper(Assembly.Load("School.Application"));
 

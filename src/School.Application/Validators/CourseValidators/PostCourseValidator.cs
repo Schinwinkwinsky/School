@@ -5,7 +5,7 @@ using School.Domain.Entities;
 
 namespace School.Application.Validators.CourseValidators
 {
-    public class PostCourseValidator : AbstractValidator<PostRequest<Course, CourseModel>>
+    public class PostCourseValidator : AbstractValidator<InsertRequest<Course, CourseModel>>
     {
         public PostCourseValidator()
         {

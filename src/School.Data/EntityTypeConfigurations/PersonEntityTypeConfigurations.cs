@@ -5,7 +5,7 @@ using School.Domain.ValueObjects;
 
 namespace School.Data.EntityTypeConfigurations;
 
-public class PersonEntityTypeConfiguration : IEntityTypeConfiguration<Person>
+public class PersonEntityTypeConfigurations : IEntityTypeConfiguration<Person>
 {
     public void Configure(EntityTypeBuilder<Person> builder)
     {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.OData.Query;
 using Moq;
 using School.Application.CQRS.Generics;
+using School.Application.CQRS.Relations.Courses;
 using School.Application.DTO;
 using School.Application.Models;
 using School.Application.Profiles;
@@ -107,7 +108,7 @@ public class CoursesControllerTests
     }
 
     [Fact]
-    public async Task PostCourseActionResultStatusCodeShouldBe201()
+    public async Task InsertCourseActionResultStatusCodeShouldBe201()
     {
         // arrange
         var courseId = Guid.NewGuid();
@@ -127,12 +128,12 @@ public class CoursesControllerTests
             Name = courseName
         };
 
-        _mediator.Setup(m => m.Send(It.IsAny<PostRequest<Course, CourseModel>>(), It.IsAny<CancellationToken>())).ReturnsAsync(course);
+        _mediator.Setup(m => m.Send(It.IsAny<InsertRequest<Course, CourseModel>>(), It.IsAny<CancellationToken>())).ReturnsAsync(course);
 
         _mapper.Setup(m => m.Map<CourseDto>(course)).Returns(courseDto);
 
         // act
-        var result = await _controller.PostAsync(It.IsAny<CourseModel>(), It.IsAny<CancellationToken>());
+        var result = await _controller.InsertAsync(It.IsAny<CourseModel>(), It.IsAny<CancellationToken>());
 
         var statusCodeActionResult = (IStatusCodeActionResult)result;
 
@@ -141,7 +142,7 @@ public class CoursesControllerTests
     }
 
     [Fact]
-    public async Task PutCourseActionResultStatusCodeShouldBe200()
+    public async Task UpdateCourseActionResultStatusCodeShouldBe200()
     {
         // arrange
         var courseId = Guid.NewGuid();
@@ -161,12 +162,12 @@ public class CoursesControllerTests
             Name = courseName
         };
 
-        _mediator.Setup(m => m.Send(It.IsAny<PutRequest<Course, CourseDto>>(), It.IsAny<CancellationToken>())).ReturnsAsync(course);
+        _mediator.Setup(m => m.Send(It.IsAny<UpdateRequest<Course, CourseDto>>(), It.IsAny<CancellationToken>())).ReturnsAsync(course);
 
         _mapper.Setup(m => m.Map<CourseDto>(course)).Returns(courseDto);
 
         // act
-        var result = await _controller.PutAsync(courseDto, courseId, It.IsAny<CancellationToken>());
+        var result = await _controller.UpdateAsync(courseDto, courseId, It.IsAny<CancellationToken>());
 
         var statusCodeActionResult = (IStatusCodeActionResult)result;
 
@@ -175,12 +176,12 @@ public class CoursesControllerTests
     }
 
     [Fact]
-    public async Task DeleteCourseActionResultStatusCodeShouldBe204()
+    public async Task RemoveCourseActionResultStatusCodeShouldBe204()
     {
         // arrange
 
         // act
-        var result = await _controller.DeleteAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>());
+        var result = await _controller.RemoveAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>());
 
         var statusCodeActionResult = (IStatusCodeActionResult)result;
 
@@ -189,40 +190,13 @@ public class CoursesControllerTests
     }
 
     [Fact]
-    public async Task AddRelatedItemsShouldBe404WhenEntityHasNoProperty()
+    public async Task AddSubjectsActionResultStatusCodeShouldBe200()
     {
         // arrange
-        var property = "property";
-
-        // act
-        var result = await _controller.AddRelatedItems(It.IsAny<Guid>(), property, It.IsAny<RelatedEntitiesModel>(), It.IsAny<CancellationToken>());
-
-        var statusCodeActionResult = (IStatusCodeActionResult)result;
-
-        // assert
-        statusCodeActionResult.StatusCode.ShouldBe(404);
-    }
-
-    [Fact]
-    public async Task AddRelatedItemsShouldBe404WhenEntityPropertyIsNotACollection()
-    {
-        // arrange
-        var property = "name";
-
-        // act
-        var result = await _controller.AddRelatedItems(It.IsAny<Guid>(), property, It.IsAny<RelatedEntitiesModel>(), It.IsAny<CancellationToken>());
-
-        var statusCodeActionResult = (IStatusCodeActionResult)result;
-
-        // assert
-        statusCodeActionResult.StatusCode.ShouldBe(404);
-    }
-
-    [Fact]
-    public async Task AddRelatedItemsActionResultStatusCodeShouldBe200()
-    {
-        // arrange
-        var property = "subjects";
+        var subject = new Subject
+        {
+            Id = Guid.NewGuid()
+        };
 
         var courseId = Guid.NewGuid();
         var courseName = "Course1";
@@ -241,17 +215,12 @@ public class CoursesControllerTests
             Name = courseName
         };
 
-        var relatedEntitiesModel = new RelatedEntitiesModel
-        {
-            ItemsIds = new Guid[] { Guid.NewGuid() }
-        };
-
-        _mediator.Setup(m => m.Send(It.IsAny<object>(), It.IsAny<CancellationToken>())).ReturnsAsync(course);
+        _mediator.Setup(m => m.Send(It.IsAny<CourseAddSubjectsRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(course);
 
         _mapper.Setup(m => m.Map<CourseDto>(course)).Returns(courseDto);
 
         // act
-        var result = await _controller.AddRelatedItems(courseId, property, relatedEntitiesModel, It.IsAny<CancellationToken>());
+        var result = await _controller.AddSubjects(courseId, new[] { subject.Id }, It.IsAny<CancellationToken>());
 
         var statusCodeActionResult = (IStatusCodeActionResult)result;
 
@@ -260,40 +229,13 @@ public class CoursesControllerTests
     }
 
     [Fact]
-    public async Task RemoveRelatedItemsShouldBe404WhenEntityHasNoProperty()
+    public async Task RemoveSubjectsActionResultStatusCodeShouldBe200()
     {
         // arrange
-        var property = "property";
-
-        // act
-        var result = await _controller.RemoveRelatedItems(It.IsAny<Guid>(), property, It.IsAny<RelatedEntitiesModel>(), It.IsAny<CancellationToken>());
-
-        var statusCodeActionResult = (IStatusCodeActionResult)result;
-
-        // assert
-        statusCodeActionResult.StatusCode.ShouldBe(404);
-    }
-
-    [Fact]
-    public async Task RemoveRelatedItemsShouldBe404WhenEntityPropertyIsNotACollection()
-    {
-        // arrange
-        var property = "name";
-
-        // act
-        var result = await _controller.RemoveRelatedItems(It.IsAny<Guid>(), property, It.IsAny<RelatedEntitiesModel>(), It.IsAny<CancellationToken>());
-
-        var statusCodeActionResult = (IStatusCodeActionResult)result;
-
-        // assert
-        statusCodeActionResult.StatusCode.ShouldBe(404);
-    }
-
-    [Fact]
-    public async Task RemoveRelatedItemsActionResultStatusCodeShouldBe200()
-    {
-        // arrange
-        var property = "subjects";
+        var subject = new Subject
+        {
+            Id = Guid.NewGuid()
+        };
 
         var courseId = Guid.NewGuid();
         var courseName = "Course1";
@@ -312,17 +254,12 @@ public class CoursesControllerTests
             Name = courseName
         };
 
-        var relatedEntitiesModel = new RelatedEntitiesModel
-        {
-            ItemsIds = new Guid[] { Guid.NewGuid() }
-        };
-
-        _mediator.Setup(m => m.Send(It.IsAny<object>(), It.IsAny<CancellationToken>())).ReturnsAsync(course);
+        _mediator.Setup(m => m.Send(It.IsAny<CourseRemoveSubjectsRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(course);
 
         _mapper.Setup(m => m.Map<CourseDto>(course)).Returns(courseDto);
 
         // act
-        var result = await _controller.RemoveRelatedItems(courseId, property, relatedEntitiesModel, It.IsAny<CancellationToken>());
+        var result = await _controller.RemoveSubjects(courseId, new[] {subject.Id}, It.IsAny<CancellationToken>());
 
         var statusCodeActionResult = (IStatusCodeActionResult)result;
 

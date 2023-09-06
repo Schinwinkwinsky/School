@@ -1,6 +1,6 @@
 ﻿namespace School.Domain.Entities;
 
-public class EntityBase
+public class EntityBase : IAuditable
 {
     public Guid Id { get; set; }
 

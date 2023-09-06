@@ -5,16 +5,16 @@ using System.Net;
 
 namespace School.Application.CQRS.Generics;
 
-public class DeleteRequest<T> : IRequest
+public class RemoveRequest<T> : IRequest
     where T : EntityBase
 {
     public Guid Id { get; set; }
 
-    public DeleteRequest(Guid id)
+    public RemoveRequest(Guid id)
         => Id = id;
 }
 
-public class DeleteRequestHandler<T> : IRequestHandler<DeleteRequest<T>>
+public class DeleteRequestHandler<T> : IRequestHandler<RemoveRequest<T>>
     where T : EntityBase
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -22,7 +22,7 @@ public class DeleteRequestHandler<T> : IRequestHandler<DeleteRequest<T>>
     public DeleteRequestHandler(IUnitOfWork unitOfWork)
         => _unitOfWork = unitOfWork;
 
-    public async Task Handle(DeleteRequest<T> request, CancellationToken cancellationToken)
+    public async Task Handle(RemoveRequest<T> request, CancellationToken cancellationToken)
     {
         var item = await _unitOfWork.Repository<T>().GetAsync(request.Id, cancellationToken);
 

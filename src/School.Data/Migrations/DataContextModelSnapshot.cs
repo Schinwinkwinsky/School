@@ -22,51 +22,6 @@ namespace School.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("CourseSubject", b =>
-                {
-                    b.Property<Guid>("CoursesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SubjectsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CoursesId", "SubjectsId");
-
-                    b.HasIndex("SubjectsId");
-
-                    b.ToTable("CourseSubject");
-                });
-
-            modelBuilder.Entity("KnowledgeAreaSubject", b =>
-                {
-                    b.Property<Guid>("KnowledgeAreasId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SubjectsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("KnowledgeAreasId", "SubjectsId");
-
-                    b.HasIndex("SubjectsId");
-
-                    b.ToTable("KnowledgeAreaSubject");
-                });
-
-            modelBuilder.Entity("KnowledgeAreaTeacher", b =>
-                {
-                    b.Property<Guid>("KnowledgeAreasId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TeachersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("KnowledgeAreasId", "TeachersId");
-
-                    b.HasIndex("TeachersId");
-
-                    b.ToTable("KnowledgeAreaTeacher");
-                });
-
             modelBuilder.Entity("School.Domain.Entities.Course", b =>
                 {
                     b.Property<Guid>("Id")
@@ -365,64 +320,136 @@ namespace School.Data.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("SchoolClassStudent", b =>
+            modelBuilder.Entity("School.Domain.Relations.CourseSubject", b =>
                 {
-                    b.Property<Guid>("SchoolClassesId")
+                    b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StudentsId")
+                    b.Property<Guid>("SubjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("SchoolClassesId", "StudentsId");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("StudentsId");
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.ToTable("SchoolClassStudent");
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CourseId", "SubjectId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("CourseSubject", (string)null);
                 });
 
-            modelBuilder.Entity("CourseSubject", b =>
+            modelBuilder.Entity("School.Domain.Relations.KnowledgeAreaSubject", b =>
                 {
-                    b.HasOne("School.Domain.Entities.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("KnowledgeAreaId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasOne("School.Domain.Entities.Subject", null)
-                        .WithMany()
-                        .HasForeignKey("SubjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("KnowledgeAreaId", "SubjectId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("KnowledgeAreaSubject", (string)null);
                 });
 
-            modelBuilder.Entity("KnowledgeAreaSubject", b =>
+            modelBuilder.Entity("School.Domain.Relations.KnowledgeAreaTeacher", b =>
                 {
-                    b.HasOne("School.Domain.Entities.KnowledgeArea", null)
-                        .WithMany()
-                        .HasForeignKey("KnowledgeAreasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("KnowledgeAreaId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasOne("School.Domain.Entities.Subject", null)
-                        .WithMany()
-                        .HasForeignKey("SubjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("KnowledgeAreaId", "TeacherId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("KnowledgeAreaTeacher", (string)null);
                 });
 
-            modelBuilder.Entity("KnowledgeAreaTeacher", b =>
+            modelBuilder.Entity("School.Domain.Relations.SchoolClassStudent", b =>
                 {
-                    b.HasOne("School.Domain.Entities.KnowledgeArea", null)
-                        .WithMany()
-                        .HasForeignKey("KnowledgeAreasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("SchoolClassId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasOne("School.Domain.Entities.Teacher", null)
-                        .WithMany()
-                        .HasForeignKey("TeachersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SchoolClassId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("SchoolClassStudent", (string)null);
                 });
 
             modelBuilder.Entity("School.Domain.Entities.Period", b =>
@@ -613,24 +640,94 @@ namespace School.Data.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("SchoolClassStudent", b =>
+            modelBuilder.Entity("School.Domain.Relations.CourseSubject", b =>
                 {
-                    b.HasOne("School.Domain.Entities.SchoolClass", null)
-                        .WithMany()
-                        .HasForeignKey("SchoolClassesId")
+                    b.HasOne("School.Domain.Entities.Course", "Course")
+                        .WithMany("CourseSubject")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("School.Domain.Entities.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsId")
+                    b.HasOne("School.Domain.Entities.Subject", "Subject")
+                        .WithMany("CourseSubject")
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("School.Domain.Relations.KnowledgeAreaSubject", b =>
+                {
+                    b.HasOne("School.Domain.Entities.KnowledgeArea", "KnowledgeArea")
+                        .WithMany("KnowledgeAreaSubject")
+                        .HasForeignKey("KnowledgeAreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("School.Domain.Entities.Subject", "Subject")
+                        .WithMany("KnowledgeAreaSubject")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KnowledgeArea");
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("School.Domain.Relations.KnowledgeAreaTeacher", b =>
+                {
+                    b.HasOne("School.Domain.Entities.KnowledgeArea", "KnowledgeArea")
+                        .WithMany("KnowledgeAreaTeacher")
+                        .HasForeignKey("KnowledgeAreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("School.Domain.Entities.Teacher", "Teacher")
+                        .WithMany("KnowledgeAreaTeacher")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KnowledgeArea");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("School.Domain.Relations.SchoolClassStudent", b =>
+                {
+                    b.HasOne("School.Domain.Entities.SchoolClass", "SchoolClass")
+                        .WithMany("SchoolClassStudent")
+                        .HasForeignKey("SchoolClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("School.Domain.Entities.Student", "Student")
+                        .WithMany("SchoolClassStudent")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SchoolClass");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("School.Domain.Entities.Course", b =>
                 {
+                    b.Navigation("CourseSubject");
+
                     b.Navigation("Periods");
+                });
+
+            modelBuilder.Entity("School.Domain.Entities.KnowledgeArea", b =>
+                {
+                    b.Navigation("KnowledgeAreaSubject");
+
+                    b.Navigation("KnowledgeAreaTeacher");
                 });
 
             modelBuilder.Entity("School.Domain.Entities.Period", b =>
@@ -645,13 +742,29 @@ namespace School.Data.Migrations
                     b.Navigation("Teachers");
                 });
 
+            modelBuilder.Entity("School.Domain.Entities.SchoolClass", b =>
+                {
+                    b.Navigation("SchoolClassStudent");
+                });
+
+            modelBuilder.Entity("School.Domain.Entities.Student", b =>
+                {
+                    b.Navigation("SchoolClassStudent");
+                });
+
             modelBuilder.Entity("School.Domain.Entities.Subject", b =>
                 {
+                    b.Navigation("CourseSubject");
+
+                    b.Navigation("KnowledgeAreaSubject");
+
                     b.Navigation("SchoolClasses");
                 });
 
             modelBuilder.Entity("School.Domain.Entities.Teacher", b =>
                 {
+                    b.Navigation("KnowledgeAreaTeacher");
+
                     b.Navigation("SchoolClasses");
                 });
 #pragma warning restore 612, 618

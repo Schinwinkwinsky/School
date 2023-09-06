@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using School.Application.CQRS.Generics;
 using School.Application.DTO;
-using School.Application.Helpers;
 using School.Application.Models;
 using School.Application.Results;
 using School.Domain.Entities;
@@ -21,17 +20,17 @@ public class ApiControllerBase<
     TDto,
     TGetAllRequest,
     TGetByIdRequest,
-    TPostRequest,
-    TPutRequest,
-    TDeleteRequest> : ControllerBase 
+    TInsertRequest,
+    TUpdateRequest,
+    TRemoveRequest> : ControllerBase 
     where T : EntityBase
     where TModel : IModel<T>
     where TDto : IDto<T>
     where TGetAllRequest : IRequest<IQueryable<T>>
     where TGetByIdRequest : IRequest<IQueryable<T>>
-    where TPostRequest : IRequest<T>
-    where TPutRequest : IRequest<T>
-    where TDeleteRequest : IRequest
+    where TInsertRequest : IRequest<T>
+    where TUpdateRequest : IRequest<T>
+    where TRemoveRequest : IRequest
 {
     protected readonly IMapper _mapper;
     protected readonly IMediator _mediator;
@@ -73,9 +72,9 @@ public class ApiControllerBase<
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostAsync(TModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> InsertAsync(TModel model, CancellationToken cancellationToken)
     {
-        var request = Activator.CreateInstance(typeof(TPostRequest), model) as PostRequest<T, TModel>;
+        var request = Activator.CreateInstance(typeof(TInsertRequest), model) as InsertRequest<T, TModel>;
 
         var item = await _mediator.Send(request!, cancellationToken) as T;
 
@@ -87,11 +86,11 @@ public class ApiControllerBase<
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutAsync(TDto dto, Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync(TDto dto, Guid id, CancellationToken cancellationToken)
     {
         dto.Id = id;
 
-        var request = Activator.CreateInstance(typeof(TPutRequest), dto) as PutRequest<T, TDto>;
+        var request = Activator.CreateInstance(typeof(TUpdateRequest), dto) as UpdateRequest<T, TDto>;
 
         var item = await _mediator.Send(request!, cancellationToken) as T;
 
@@ -103,70 +102,12 @@ public class ApiControllerBase<
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
+    public virtual async Task<IActionResult> RemoveAsync(Guid id, CancellationToken cancellationToken)
     {
-        var request = Activator.CreateInstance(typeof(TDeleteRequest), id) as DeleteRequest<T>;
+        var request = Activator.CreateInstance(typeof(TRemoveRequest), id) as RemoveRequest<T>;
 
         await _mediator.Send(request!, cancellationToken);
 
         return NoContent();
-    }
-
-    [HttpPost("{id}/{propertyName}/add")]
-    public async Task<IActionResult> AddRelatedItems(Guid id, string propertyName, RelatedEntitiesModel model, CancellationToken cancellationToken)
-    {
-        var normalizedPropertyName = propertyName.Capitalize();
-
-        var property = typeof(T).GetProperty(normalizedPropertyName);
-
-        if (property is null)
-            return NotFound();
-
-        var relatedType = property.PropertyType.GenericTypeArguments.FirstOrDefault();
-
-        if (relatedType is null
-            || property.PropertyType != typeof(ICollection<>).MakeGenericType(relatedType))
-            return NotFound();
-
-        var request = Activator.CreateInstance(
-            typeof(AddRelatedEntitiesRequest<,>).MakeGenericType(typeof(T), relatedType),
-            new object[] { id, normalizedPropertyName, model.ItemsIds });
-
-        var item = await _mediator.Send(request!, cancellationToken) as T;
-
-        var itemDto = _mapper.Map<TDto>(item);
-
-        var result = Result<TDto>.Success(itemDto);
-
-        return Ok(result);
-    }
-
-    [HttpPost("{id}/{propertyName}/remove")]
-    public async Task<IActionResult> RemoveRelatedItems(Guid id, string propertyName, RelatedEntitiesModel model, CancellationToken cancellationToken)
-    {
-        var normalizedPropertyName = propertyName.Capitalize();
-
-        var property = typeof(T).GetProperty(normalizedPropertyName);
-
-        if (property is null)
-            return NotFound();
-
-        var relatedType = property.PropertyType.GenericTypeArguments.FirstOrDefault();
-
-        if (relatedType is null 
-            || property.PropertyType != typeof(ICollection<>).MakeGenericType(relatedType))
-            return NotFound();
-
-        var request = Activator.CreateInstance(
-            typeof(RemoveRelatedEntitiesRequest<,>).MakeGenericType(typeof(T), relatedType),
-            new object[] { id, normalizedPropertyName, model.ItemsIds });
-
-        var item = await _mediator.Send(request!, cancellationToken) as T;
-
-        var itemDto = _mapper.Map<TDto>(item);
-
-        var result = Result<TDto>.Success(itemDto);
-
-        return Ok(result);
     }
 }

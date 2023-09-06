@@ -1,4 +1,6 @@
-﻿namespace School.Domain.Entities;
+﻿using School.Domain.Relations;
+
+namespace School.Domain.Entities;
 
 public class SchoolClass : EntityBase
 {
@@ -15,4 +17,6 @@ public class SchoolClass : EntityBase
     public virtual Teacher Teacher { get; set; } = default!;
 
     public virtual ICollection<Student> Students { get; set; } = default!;
+
+    public virtual ICollection<SchoolClassStudent> SchoolClassStudent { get; set; } = default!;
 }

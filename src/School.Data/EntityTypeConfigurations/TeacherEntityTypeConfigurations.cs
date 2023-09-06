@@ -4,7 +4,7 @@ using School.Domain.Entities;
 
 namespace School.Data.EntityTypeConfigurations;
 
-public class TeacherEntityTypeConfiguration : IEntityTypeConfiguration<Teacher>
+public class TeacherEntityTypeConfigurations : IEntityTypeConfiguration<Teacher>
 {
     public void Configure(EntityTypeBuilder<Teacher> builder)
     {

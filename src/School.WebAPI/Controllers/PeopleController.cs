@@ -15,9 +15,9 @@ public class PeopleController : ApiControllerBase<
     PersonDto,
     GetAllRequest<Person>,
     GetByIdRequest<Person>,
-    PostRequest<Person, PersonModel>,
-    PutRequest<Person, PersonDto>,
-    DeleteRequest<Person>>
+    InsertRequest<Person, PersonModel>,
+    UpdateRequest<Person, PersonDto>,
+    RemoveRequest<Person>>
 {
     public PeopleController(IMapper mapper, IMediator mediator)
         : base(mapper, mediator) { }

@@ -5,7 +5,7 @@ using School.Domain.Entities;
 
 namespace School.Application.Validators.KnowledgeAreaValidators
 {
-    public class PostKnowledgeAreaValidator : AbstractValidator<PostRequest<KnowledgeArea, KnowledgeAreaModel>>
+    public class PostKnowledgeAreaValidator : AbstractValidator<InsertRequest<KnowledgeArea, KnowledgeAreaModel>>
     {
         public PostKnowledgeAreaValidator()
         {

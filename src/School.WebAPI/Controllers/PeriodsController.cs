@@ -15,9 +15,9 @@ public class PeriodsController : ApiControllerBase<
     PeriodDto,
     GetAllRequest<Period>,
     GetByIdRequest<Period>,
-    PostRequest<Period, PeriodModel>,
-    PutRequest<Period, PeriodDto>,
-    DeleteRequest<Period>>
+    InsertRequest<Period, PeriodModel>,
+    UpdateRequest<Period, PeriodDto>,
+    RemoveRequest<Period>>
 {
     public PeriodsController(IMapper mapper, IMediator mediator)
         : base(mapper, mediator) { }
