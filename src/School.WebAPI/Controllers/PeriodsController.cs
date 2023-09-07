@@ -9,7 +9,7 @@ using School.Domain.Entities;
 namespace School.WebAPI.Controllers;
 
 [Route("api/[controller]")]
-public class PeriodsController : ApiControllerBase<
+public class PeriodsController : ApiBaseController<
     Period,
     PeriodModel,
     PeriodDto,

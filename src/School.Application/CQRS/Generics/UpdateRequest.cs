@@ -16,13 +16,13 @@ public class UpdateRequest<T, TDto> : IRequest<T>
         => Dto = dto;
 }
 
-public class PutRequestHandler<T, TDto> : IRequestHandler<UpdateRequest<T, TDto>, T>
+public class UpdateRequestHandler<T, TDto> : IRequestHandler<UpdateRequest<T, TDto>, T>
     where T : EntityBase
     where TDto : IDto<T>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public PutRequestHandler(IUnitOfWork unitOfWork)
+    public UpdateRequestHandler(IUnitOfWork unitOfWork)
         => _unitOfWork = unitOfWork;
 
     public async Task<T> Handle(UpdateRequest<T, TDto> request, CancellationToken cancellationToken)

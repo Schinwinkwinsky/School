@@ -14,12 +14,12 @@ public class RemoveRequest<T> : IRequest
         => Id = id;
 }
 
-public class DeleteRequestHandler<T> : IRequestHandler<RemoveRequest<T>>
+public class RemoveRequestHandler<T> : IRequestHandler<RemoveRequest<T>>
     where T : EntityBase
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteRequestHandler(IUnitOfWork unitOfWork)
+    public RemoveRequestHandler(IUnitOfWork unitOfWork)
         => _unitOfWork = unitOfWork;
 
     public async Task Handle(RemoveRequest<T> request, CancellationToken cancellationToken)

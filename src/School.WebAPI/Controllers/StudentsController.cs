@@ -11,7 +11,7 @@ using School.Domain.Entities;
 namespace School.WebAPI.Controllers;
 
 [Route("api/[controller]")]
-public class StudentsController : ApiControllerBase<
+public class StudentsController : ApiBaseController<
     Student,
     StudentModel,
     StudentDto,

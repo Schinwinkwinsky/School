@@ -11,7 +11,7 @@ using School.Domain.Entities;
 namespace School.WebAPI.Controllers;
 
 [Route("api/[controller]")]
-public class KnowledgeAreasController : ApiControllerBase<
+public class KnowledgeAreasController : ApiBaseController<
     KnowledgeArea,
     KnowledgeAreaModel,
     KnowledgeAreaDto,

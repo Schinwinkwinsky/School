@@ -9,7 +9,7 @@ using School.Domain.Entities;
 namespace School.WebAPI.Controllers;
 
 [Route("api/[controller]")]
-public class PeopleController : ApiControllerBase<
+public class PeopleController : ApiBaseController<
     Person,
     PersonModel,
     PersonDto,

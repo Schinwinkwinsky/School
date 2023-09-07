@@ -14,7 +14,7 @@ using School.WebAPI.Helpers;
 namespace School.WebAPI.Controllers;
 
 [ApiController]
-public class ApiControllerBase<
+public class ApiBaseController<
     T,
     TModel,
     TDto,
@@ -35,7 +35,7 @@ public class ApiControllerBase<
     protected readonly IMapper _mapper;
     protected readonly IMediator _mediator;
 
-    public ApiControllerBase(IMapper mapper, IMediator mediator)
+    public ApiBaseController(IMapper mapper, IMediator mediator)
     {
         _mapper = mapper;
         _mediator = mediator;

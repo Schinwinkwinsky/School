@@ -15,13 +15,13 @@ public class InsertRequest<T, TModel> : IRequest<T>
         => Model = model;
 }
 
-public class PostRequestHandler<T, TModel> : IRequestHandler<InsertRequest<T, TModel>, T> 
+public class InsertRequestHandler<T, TModel> : IRequestHandler<InsertRequest<T, TModel>, T> 
     where T : EntityBase
     where TModel : IModel<T>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public PostRequestHandler(IUnitOfWork unitOfWork)
+    public InsertRequestHandler(IUnitOfWork unitOfWork)
         => _unitOfWork = unitOfWork;
 
     public async Task<T> Handle(InsertRequest<T, TModel> request, CancellationToken cancellationToken)
