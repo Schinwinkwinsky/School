@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.WebAPI", "src\School
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{629FDCAF-6C69-4C35-91BE-E2BFC7E4EDE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.WebAPI.Test", "test\School.API.Test\School.WebAPI.Test.csproj", "{BBAE434E-4AB2-4BCF-AD43-F46A48C3C9EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.WebAPI.Test", "test\School.API.Test\School.WebAPI.Test.csproj", "{BBAE434E-4AB2-4BCF-AD43-F46A48C3C9EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
