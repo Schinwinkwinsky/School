@@ -16,11 +16,11 @@ public class StudentRemoveRelationsRequest : IRequest
     }
 }
 
-public class StudentClassRemoveRelationsRequestHandler : IRequestHandler<StudentRemoveRelationsRequest>
+public class StudentRemoveRelationsRequestHandler : IRequestHandler<StudentRemoveRelationsRequest>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public StudentClassRemoveRelationsRequestHandler(IUnitOfWork unitOfWork)
+    public StudentRemoveRelationsRequestHandler(IUnitOfWork unitOfWork)
         => _unitOfWork = unitOfWork;
 
     public async Task Handle(StudentRemoveRelationsRequest request, CancellationToken cancellationToken)

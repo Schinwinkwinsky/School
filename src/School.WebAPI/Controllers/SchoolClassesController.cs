@@ -35,7 +35,7 @@ RemoveRequest<SchoolClass>>
     }
 
     [HttpPost("{id}/students/add")]
-    public async Task<IActionResult> AddStudents(Guid id, Guid[] studentIds, CancellationToken cancellationToken)
+    public async Task<IActionResult> AddStudentsAsync(Guid id, Guid[] studentIds, CancellationToken cancellationToken)
     {
         var request = new SchoolClassAddStudentsRequest(id, studentIds);
 
@@ -49,7 +49,7 @@ RemoveRequest<SchoolClass>>
     }
 
     [HttpPost("{id}/students/remove")]
-    public async Task<IActionResult> RemoveStudents(Guid id, Guid[] studentIds, CancellationToken cancellationToken)
+    public async Task<IActionResult> RemoveStudentsAsync(Guid id, Guid[] studentIds, CancellationToken cancellationToken)
     {
         var request = new SchoolClassRemoveStudentsRequest(id, studentIds);
 

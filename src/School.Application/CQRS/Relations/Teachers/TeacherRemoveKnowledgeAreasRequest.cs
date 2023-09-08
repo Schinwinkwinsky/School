@@ -18,11 +18,11 @@ public class TeacherRemoveKnowledgeAreasRequest : IRequest<Teacher>
     }
 }
 
-public class KnowledgeAreaRemoveTeachersRequestHandler : IRequestHandler<TeacherRemoveKnowledgeAreasRequest, Teacher>
+public class TeacherRemoveKnowledgeAreasRequestHandler : IRequestHandler<TeacherRemoveKnowledgeAreasRequest, Teacher>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public KnowledgeAreaRemoveTeachersRequestHandler(IUnitOfWork unitOfWork)
+    public TeacherRemoveKnowledgeAreasRequestHandler(IUnitOfWork unitOfWork)
         => _unitOfWork = unitOfWork;
 
     public async Task<Teacher> Handle(TeacherRemoveKnowledgeAreasRequest request, CancellationToken cancellationToken)

@@ -35,7 +35,7 @@ public class SubjectsController : ApiBaseController<
     }
 
     [HttpPost("{id}/courses/add")]
-    public async Task<IActionResult> AddCourses(Guid id, Guid[] courseIds, CancellationToken cancellationToken)
+    public async Task<IActionResult> AddCoursesAsync(Guid id, Guid[] courseIds, CancellationToken cancellationToken)
     {
         var request = new SubjectAddCoursesRequest(id, courseIds);
 
@@ -49,7 +49,7 @@ public class SubjectsController : ApiBaseController<
     }
 
     [HttpPost("{id}/knowledgeAreas/add")]
-    public async Task<IActionResult> AddKnowledgeAreas(Guid id, Guid[] knowledgeAreaIds, CancellationToken cancellationToken)
+    public async Task<IActionResult> AddKnowledgeAreasAsync(Guid id, Guid[] knowledgeAreaIds, CancellationToken cancellationToken)
     {
         var request = new SubjectAddKnowledgeAreasRequest(id, knowledgeAreaIds);
 
@@ -63,7 +63,7 @@ public class SubjectsController : ApiBaseController<
     }
 
     [HttpPost("{id}/courses/remove")]
-    public async Task<IActionResult> RemoveCourses(Guid id, Guid[] courseIds, CancellationToken cancellationToken)
+    public async Task<IActionResult> RemoveCoursesAsync(Guid id, Guid[] courseIds, CancellationToken cancellationToken)
     {
         var request = new SubjectRemoveCoursesRequest(id, courseIds);
 
@@ -77,7 +77,7 @@ public class SubjectsController : ApiBaseController<
     }
 
     [HttpPost("{id}/knowledgeAreas/remove")]
-    public async Task<IActionResult> RemoveKnowledgeAreas(Guid id, Guid[] knowledgeAreaIds, CancellationToken cancellationToken)
+    public async Task<IActionResult> RemoveKnowledgeAreasAsync(Guid id, Guid[] knowledgeAreaIds, CancellationToken cancellationToken)
     {
         var request = new SubjectRemoveKnowledgeAreasRequest(id, knowledgeAreaIds);
 

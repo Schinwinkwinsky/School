@@ -35,7 +35,7 @@ public class StudentsController : ApiBaseController<
     }
 
     [HttpPost("{id}/schoolClasses/add")]
-    public async Task<IActionResult> AddSchoolClasses(Guid id, Guid[] schoolClassIds, CancellationToken cancellationToken)
+    public async Task<IActionResult> AddSchoolClassesAsync(Guid id, Guid[] schoolClassIds, CancellationToken cancellationToken)
     {
         var request = new StudentAddSchoolClassesRequest(id, schoolClassIds);
 
@@ -49,7 +49,7 @@ public class StudentsController : ApiBaseController<
     }
 
     [HttpPost("{id}/schoolClasses/remove")]
-    public async Task<IActionResult> RemoveSchoolClasses(Guid id, Guid[] schoolClassIds, CancellationToken cancellationToken)
+    public async Task<IActionResult> RemoveSchoolClassesAsync(Guid id, Guid[] schoolClassIds, CancellationToken cancellationToken)
     {
         var request = new StudentRemoveSchoolClassesRequest(id, schoolClassIds);
 

@@ -38,11 +38,7 @@ public class CoursesControllerTests
     public async Task RemoveCourseActionResultStatusCodeShouldBe204()
     {
         // arrange
-        var course = new Course
-        {
-            Id = Guid.NewGuid(),
-            Name = "Course1"
-        };
+        var course = new Course { Id = Guid.NewGuid() };
 
         // act
         var result = await _controller.RemoveAsync(course.Id, It.IsAny<CancellationToken>());
@@ -57,27 +53,13 @@ public class CoursesControllerTests
     public async Task AddSubjectsActionResultStatusCodeShouldBe200()
     {
         // arrange
-        var subject = new Subject
-        {
-            Id = Guid.NewGuid()
-        };
+        var subject = new Subject { Id = Guid.NewGuid() };
 
         var courseId = Guid.NewGuid();
-        var courseName = "Course1";
 
-        var course = new Course
-        {
-            Id = courseId,
-            Name = courseName,
-            CreatedAt = DateTime.Now,
-            CreatedBy = Guid.NewGuid()
-        };
+        var course = new Course { Id =  courseId };
 
-        var courseDto = new CourseDto
-        {
-            Id = courseId,
-            Name = courseName
-        };
+        var courseDto = new CourseDto { Id = courseId };
 
         _mediator.Setup(m => m.Send(It.IsAny<CourseAddSubjectsRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(course);
 
@@ -96,27 +78,13 @@ public class CoursesControllerTests
     public async Task RemoveSubjectsActionResultStatusCodeShouldBe200()
     {
         // arrange
-        var subject = new Subject
-        {
-            Id = Guid.NewGuid()
-        };
+        var subject = new Subject { Id = Guid.NewGuid() };
 
         var courseId = Guid.NewGuid();
-        var courseName = "Course1";
 
-        var course = new Course
-        {
-            Id = courseId,
-            Name = courseName,
-            CreatedAt = DateTime.Now,
-            CreatedBy = Guid.NewGuid()
-        };
+        var course = new Course { Id = courseId };
 
-        var courseDto = new CourseDto
-        {
-            Id = courseId,
-            Name = courseName
-        };
+        var courseDto = new CourseDto { Id = courseId };
 
         _mediator.Setup(m => m.Send(It.IsAny<CourseRemoveSubjectsRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(course);
 

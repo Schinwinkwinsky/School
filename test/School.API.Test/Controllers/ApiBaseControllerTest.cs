@@ -102,17 +102,9 @@ public class ApiBaseControllerTest
         // arrange
         var itemId = Guid.NewGuid();
 
-        var item = new TestItem
-        {
-            Id = itemId,
-            CreatedAt = DateTime.Now,
-            CreatedBy = Guid.NewGuid()
-        };
+        var item = new TestItem { Id = itemId };
 
-        var itemDto = new TestItemDto
-        {
-            Id = itemId
-        };
+        var itemDto = new TestItemDto { Id = itemId };
 
         _mediator.Setup(m => m.Send(It.IsAny<InsertRequest<TestItem, TestItemModel>>(), It.IsAny<CancellationToken>())).ReturnsAsync(item);
 
@@ -133,17 +125,9 @@ public class ApiBaseControllerTest
         // arrange
         var itemId = Guid.NewGuid();
 
-        var item = new TestItem
-        {
-            Id = itemId,
-            CreatedAt = DateTime.Now,
-            CreatedBy = Guid.NewGuid()
-        };
+        var item = new TestItem { Id = itemId };
 
-        var itemDto = new TestItemDto
-        {
-            Id = itemId
-        };
+        var itemDto = new TestItemDto { Id = itemId };
 
         _mediator.Setup(m => m.Send(It.IsAny<UpdateRequest<TestItem, TestItemDto>>(), It.IsAny<CancellationToken>())).ReturnsAsync(item);
 
@@ -173,6 +157,7 @@ public class ApiBaseControllerTest
     }
 
     class TestItem : EntityBase { }
+
     class TestItemModel : IModel<TestItem>
     {
         public TestItem ToEntity()
@@ -180,6 +165,7 @@ public class ApiBaseControllerTest
             throw new NotImplementedException();
         }
     }
+
     class TestItemDto : IDto<TestItem>
     {
         public Guid Id { get; set; }

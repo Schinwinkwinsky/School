@@ -18,11 +18,11 @@ public class SubjectRemoveCoursesRequest : IRequest<Subject>
     }
 }
 
-public class StudentRemoveSchoolClassesRequestHandler : IRequestHandler<SubjectRemoveCoursesRequest, Subject>
+public class SubjectRemoveCoursesRequestRequestHandler : IRequestHandler<SubjectRemoveCoursesRequest, Subject>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public StudentRemoveSchoolClassesRequestHandler(IUnitOfWork unitOfWork)
+    public SubjectRemoveCoursesRequestRequestHandler(IUnitOfWork unitOfWork)
         => _unitOfWork = unitOfWork;
 
     public async Task<Subject> Handle(SubjectRemoveCoursesRequest request, CancellationToken cancellationToken)

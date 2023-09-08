@@ -35,7 +35,7 @@ public class TeachersController : ApiBaseController<
     }
 
     [HttpPost("{id}/knowledgeAreas/add")]
-    public async Task<IActionResult> AddKnowledgeAreas(Guid id, Guid[] knowledgeAreaIds, CancellationToken cancellationToken)
+    public async Task<IActionResult> AddKnowledgeAreasAsync(Guid id, Guid[] knowledgeAreaIds, CancellationToken cancellationToken)
     {
         var request = new TeacherAddKnowledgeAreasRequest(id, knowledgeAreaIds);
 
@@ -49,7 +49,7 @@ public class TeachersController : ApiBaseController<
     }
 
     [HttpPost("{id}/knowledgeAreas/remove")]
-    public async Task<IActionResult> RemoveKnowledgeAreas(Guid id, Guid[] knowledgeAreaIds, CancellationToken cancellationToken)
+    public async Task<IActionResult> RemoveKnowledgeAreasAsync(Guid id, Guid[] knowledgeAreaIds, CancellationToken cancellationToken)
     {
         var request = new TeacherRemoveKnowledgeAreasRequest(id, knowledgeAreaIds);
 

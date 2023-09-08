@@ -38,11 +38,7 @@ public class KnowledgeAreasControllerTest
     public async Task RemoveKnowledgeAreaActionResultStatusCodeShouldBe204()
     {
         // arrange
-        var course = new Course
-        {
-            Id = Guid.NewGuid(),
-            Name = "Course1"
-        };
+        var course = new Course { Id = Guid.NewGuid() };
 
         // act
         var result = await _controller.RemoveAsync(course.Id, It.IsAny<CancellationToken>());
@@ -57,27 +53,13 @@ public class KnowledgeAreasControllerTest
     public async Task AddSubjectsActionResultStatusCodeShouldBe200()
     {
         // arrange
-        var subject = new Subject
-        {
-            Id = Guid.NewGuid()
-        };
+        var subject = new Subject { Id = Guid.NewGuid() };
 
         var knowledgeAreaId = Guid.NewGuid();
-        var knowledgeAreaName = "KnowledgeArea1";
 
-        var knowledgeArea = new KnowledgeArea
-        {
-            Id = knowledgeAreaId,
-            Name = knowledgeAreaName,
-            CreatedAt = DateTime.Now,
-            CreatedBy = Guid.NewGuid()
-        };
+        var knowledgeArea = new KnowledgeArea { Id = knowledgeAreaId };
 
-        var knowledgeAreaDto = new KnowledgeAreaDto
-        {
-            Id = knowledgeAreaId,
-            Name = knowledgeAreaName
-        };
+        var knowledgeAreaDto = new KnowledgeAreaDto { Id = knowledgeAreaId };
 
         _mediator.Setup(m => m.Send(It.IsAny<KnowledgeAreaAddSubjectsRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(knowledgeArea);
 
@@ -96,27 +78,13 @@ public class KnowledgeAreasControllerTest
     public async Task AddTeachersActionResultStatusCodeShouldBe200()
     {
         // arrange
-        var teacher = new Teacher
-        {
-            Id = Guid.NewGuid()
-        };
+        var teacher = new Teacher { Id = Guid.NewGuid() };
 
         var knowledgeAreaId = Guid.NewGuid();
-        var knowledgeAreaName = "KnowledgeArea1";
 
-        var knowledgeArea = new KnowledgeArea
-        {
-            Id = knowledgeAreaId,
-            Name = knowledgeAreaName,
-            CreatedAt = DateTime.Now,
-            CreatedBy = Guid.NewGuid()
-        };
+        var knowledgeArea = new KnowledgeArea { Id = knowledgeAreaId };
 
-        var knowledgeAreaDto = new KnowledgeAreaDto
-        {
-            Id = knowledgeAreaId,
-            Name = knowledgeAreaName
-        };
+        var knowledgeAreaDto = new KnowledgeAreaDto { Id = knowledgeAreaId };
 
         _mediator.Setup(m => m.Send(It.IsAny<KnowledgeAreaAddTeachersRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(knowledgeArea);
 
@@ -135,27 +103,13 @@ public class KnowledgeAreasControllerTest
     public async Task RemoveSubjectsActionResultStatusCodeShouldBe200()
     {
         // arrange
-        var subject = new Subject
-        {
-            Id = Guid.NewGuid()
-        };
+        var subject = new Subject { Id = Guid.NewGuid() };
 
         var knowledgeAreaId = Guid.NewGuid();
-        var knowledgeAreaName = "KnowledgeArea1";
 
-        var knowledgeArea = new KnowledgeArea
-        {
-            Id = knowledgeAreaId,
-            Name = knowledgeAreaName,
-            CreatedAt = DateTime.Now,
-            CreatedBy = Guid.NewGuid()
-        };
+        var knowledgeArea = new KnowledgeArea { Id = knowledgeAreaId };
 
-        var knowledgeAreaDto = new KnowledgeAreaDto
-        {
-            Id = knowledgeAreaId,
-            Name = knowledgeAreaName
-        };
+        var knowledgeAreaDto = new KnowledgeAreaDto { Id = knowledgeAreaId };
 
         _mediator.Setup(m => m.Send(It.IsAny<KnowledgeAreaRemoveSubjectsRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(knowledgeArea);
 
@@ -174,27 +128,13 @@ public class KnowledgeAreasControllerTest
     public async Task RemoveTeachersActionResultStatusCodeShouldBe200()
     {
         // arrange
-        var teacher = new Teacher
-        {
-            Id = Guid.NewGuid()
-        };
+        var teacher = new Teacher { Id = Guid.NewGuid() };
 
         var knowledgeAreaId = Guid.NewGuid();
-        var knowledgeAreaName = "KnowledgeArea1";
 
-        var knowledgeArea = new KnowledgeArea
-        {
-            Id = knowledgeAreaId,
-            Name = knowledgeAreaName,
-            CreatedAt = DateTime.Now,
-            CreatedBy = Guid.NewGuid()
-        };
+        var knowledgeArea = new KnowledgeArea { Id = knowledgeAreaId };
 
-        var knowledgeAreaDto = new KnowledgeAreaDto
-        {
-            Id = knowledgeAreaId,
-            Name = knowledgeAreaName
-        };
+        var knowledgeAreaDto = new KnowledgeAreaDto { Id = knowledgeAreaId };
 
         _mediator.Setup(m => m.Send(It.IsAny<KnowledgeAreaRemoveTeachersRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(knowledgeArea);
 
