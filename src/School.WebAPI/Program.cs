@@ -19,7 +19,8 @@ builder.Services.AddControllers(opt => opt.ModelValidatorProviders.Clear())
     .AddOData(options => options.EnableQueryFeatures(100))
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb")));
+string connectionString = builder.Configuration.GetConnectionString("SchoolDb") ?? string.Empty;
+builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(connectionString));
 
 builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.Load("School.Application")));
 builder.Services.RegisterMediatrHandlers();
